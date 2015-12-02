@@ -49,7 +49,7 @@ public abstract class Generators implements Maze3dGenerator {
 	 */
 	@Override
 	public Position getCurectPosition(){
-		return maze.getCurect();
+		return maze.getCorrect();
 	}
 	/**
 	 * check the possible moves from your position.
@@ -59,7 +59,7 @@ public abstract class Generators implements Maze3dGenerator {
 	@Override
 	public ArrayList<Position> getPossibleMoves(Position p) {
 		ArrayList<Position> posibleMoves = new ArrayList<Position>();
-		posibleMoves = maze.posiboleMoves(maze.getCurect());
+		posibleMoves = maze.posiboleMoves(maze.getCorrect());
 		return posibleMoves;
 	}
 	/**
@@ -67,7 +67,7 @@ public abstract class Generators implements Maze3dGenerator {
 	 */
 	@Override
 	public Position getGoalPosition() {
-		return maze.getGoul();
+		return maze.getGoal();
 	}
 	/**
 	 * print 2d matrix.

@@ -42,7 +42,7 @@ public class Maze3dSearchable implements Searchable<Position>{
 	 */
 	@Override
 	public State<Position> getGoulState() {
-		State<Position> goulstate = new State<Position>(maze.getGoul());
+		State<Position> goulstate = new State<Position>(maze.getGoal());
 		goulstate.setCost(1);
 		return goulstate;
 	}

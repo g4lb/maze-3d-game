@@ -34,7 +34,7 @@ public class SimpleMaze3dGenerator extends Generators {
 				}
 			}
 			maze.setMatrix(0, 0, i, 0);
-			maze.setCurect(0,0,i);
+			maze.setCorrect(0,0,i);
 		}
 		
 		Random rand = new Random();
@@ -64,7 +64,7 @@ public class SimpleMaze3dGenerator extends Generators {
 			
 			}
 		maze.setMatrix(x-1, y-1, z-1, 0);
-		maze.setGoul(jx, jy, z);
+		maze.setGoal(jx, jy, z);
 		return maze;
 	}
 

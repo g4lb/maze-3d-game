@@ -11,9 +11,9 @@ import java.util.ArrayList;
  */
 public class Maze3d {
 	
-
+	
 	private int dimension,height,width;
-	private Position curect, goul, start;
+	private Position correct, goal, start;
 	protected int [][][] matrix;
 	
 	/**
@@ -28,8 +28,8 @@ public class Maze3d {
 		this.width = width;
 		matrix = new int[dim][height][width];
 		this.start = new Position(0,0,0);
-		this.goul = new Position(0,0,0);
-		this.curect = new Position(0,0,0);
+		this.goal = new Position(0,0,0);
+		this.correct = new Position(0,0,0);
 
 	}
 	/**
@@ -95,11 +95,11 @@ public class Maze3d {
 					arry.add((new Position(p.getX(),p.getY(),p.getZ()+1)));
 				break;
 			case 2:
-				if((p.getY() > 0)&&(getForWord(p) != 1))
+				if((p.getY() > 0)&&(getForward(p) != 1))
 					arry.add((new Position(p.getX(),p.getY()-1,p.getZ())));
 				break;
 			case 3:
-				if((p.getY() < (height-1)&&(getBackWord(p) != 1)))
+				if((p.getY() < (height-1)&&(getBackward(p) != 1)))
 					arry.add((new Position(p.getX(),p.getY()+1,p.getZ())));
 				break;
 			case 4:
@@ -171,13 +171,13 @@ public class Maze3d {
 			case 2:
 				if(p.getY()== 0)
 					break;
-				if(getForWord(p) == 0)
+				if(getForward(p) == 0)
 					neighbours++;
 				break;
 			case 3:
 				if(p.getY()== (height-1))
 					break;
-				if(getBackWord(p) == 0)
+				if(getBackward(p) == 0)
 					neighbours++;
 				break;
 			case 4:
@@ -221,7 +221,7 @@ public class Maze3d {
 	 * @param position
 	 * @return value
 	 */
-	public int getBackWord(Position p) {
+	public int getBackward(Position p) {
 		int value = matrix[p.getZ()][p.getY()+1][p.getX()];
 			return value;
 	}
@@ -230,7 +230,7 @@ public class Maze3d {
 	 * @param position
 	 * @return value
 	 */
-	public int getForWord(Position p) {
+	public int getForward(Position p) {
 		int value = matrix[p.getZ()][p.getY()-1][p.getX()];
 			return value;
 	}
@@ -255,44 +255,44 @@ public class Maze3d {
 	/**
 	 * move forward by position
 	 */
-	public void forWord() {
-			curect.setY((curect.getY())-1);
-			setMatrix(curect, 0);
+	public void forward() {
+			correct.setY((correct.getY())-1);
+			setMatrix(correct, 0);
 	}
 	/**
 	 * move backward by position
 	 */
 	public void backword() {
-			curect.setY(curect.getY()+1);
-			setMatrix(curect, 0);
+			correct.setY(correct.getY()+1);
+			setMatrix(correct, 0);
 	}
 	/**
 	 * move right by position
 	 */
 	public void right() {
-			curect.setX(curect.getX()+1);
-			setMatrix(curect, 0);
+			correct.setX(correct.getX()+1);
+			setMatrix(correct, 0);
 	}
 	/**
 	 * move left by position
 	 */
 	public void left() {
-			curect.setX(curect.getX()-1);
-			setMatrix(curect, 0);
+			correct.setX(correct.getX()-1);
+			setMatrix(correct, 0);
 	}
 	/**
 	 * move up by position
 	 */
 	public void up() {
-			curect.setZ(curect.getZ()+1);
-			setMatrix(curect, 0);
+			correct.setZ(correct.getZ()+1);
+			setMatrix(correct, 0);
 	}
 	/**
 	 * move down by position
 	 */
 	public void down() {
-			curect.setZ(curect.getZ()-1);
-			setMatrix(curect, 0);
+			correct.setZ(correct.getZ()-1);
+			setMatrix(correct, 0);
 	}
 /**
  * @return start position.
@@ -313,42 +313,42 @@ public class Maze3d {
 	 * 
 	 * @return goal position.
 	 */
-	public Position getGoul() {
-		return goul;
+	public Position getGoal() {
+		return goal;
 	}
 	/**
 	 * set the goal position of the maze.
 	 * @param x,y,z
 	 */
-	public void setGoul(int x, int y, int z) {
-		(this.goul).setX(x);
-		(this.goul).setY(y);
-		(this.goul).setZ(z);
+	public void setGoal(int x, int y, int z) {
+		(this.goal).setX(x);
+		(this.goal).setY(y);
+		(this.goal).setZ(z);
 	}
 	/**
 	 * return your correct position.
 	 * @return correct position
 	 */
-	public Position getCurect() {
-		return curect;
+	public Position getCorrect() {
+		return correct;
 	}
 	/**
 	 * set the correct position in the maze by 3 integers.
 	 * @param x,y,z.
 	 */
-	public void setCurect(int x ,int y, int z) {
-		(this.curect).setX(x);
-		(this.curect).setY(y);
-		(this.curect).setZ(z);
+	public void setCorrect(int x ,int y, int z) {
+		(this.correct).setX(x);
+		(this.correct).setY(y);
+		(this.correct).setZ(z);
 	}
 	/**
 	 * set the correct position in the maze by position.
 	 * @param ppsition
 	 */
-	public void setCurect(Position p) {
-		curect.setX(p.getX());
-		curect.setY(p.getY());
-		curect.setZ(p.getZ());
+	public void setCorrect(Position p) {
+		correct.setX(p.getX());
+		correct.setY(p.getY());
+		correct.setZ(p.getZ());
 	}
 	/**
 	 * return the dimension of the maze.

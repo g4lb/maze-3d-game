@@ -29,7 +29,7 @@ public class MyMaze3dGenerator extends Generators{
 		int  yRandom = rand.nextInt(y-1) + 0;
 		//int  zRandom = rand.nextInt(z-1) + 0;       
 		
-		maze.setGoul(xRandom, yRandom, z-1);
+		maze.setGoal(xRandom, yRandom, z-1);
 		
 		xRandom = rand.nextInt(x) + 0;
 		yRandom = rand.nextInt(y) + 0;
@@ -37,7 +37,7 @@ public class MyMaze3dGenerator extends Generators{
 		
 		maze.setStart(xRandom, yRandom, 0);
 		
-		maze.setCurect(maze.getStart());
+		maze.setCorrect(maze.getStart());
 		
 		//make a matrix of 1
 				for(int i=0; i < z ; i++)
@@ -53,13 +53,13 @@ public class MyMaze3dGenerator extends Generators{
 		//start
 		maze.setMatrix((maze.getStart()).getX(), (maze.getStart()).getY(), (maze.getStart()).getZ(), 2);
 		//end
-		maze.setMatrix((maze.getGoul()).getX(), (maze.getGoul()).getY(), (maze.getGoul()).getZ(), 3);
+		maze.setMatrix((maze.getGoal()).getX(), (maze.getGoal()).getY(), (maze.getGoal()).getZ(), 3);
 		
 		
 		
 		Stack<Position> stack = new Stack<Position>();
 		stack.push(maze.getStart());
-		maze.getCurect().setPai(maze.getStart());
+		maze.getCorrect().setPai(maze.getStart());
 		int flag = 0 ;
 		
 		while(!(stack.isEmpty()) || (flag != 1))
@@ -67,17 +67,17 @@ public class MyMaze3dGenerator extends Generators{
 			int move = rand.nextInt(6) +1;
 			switch (move) {
 			case 1:    // by z
-				Position up = new Position(maze.getCurect());
+				Position up = new Position(maze.getCorrect());
 				up.setZ(up.getZ()+1);
-				if((up.equals(maze.getGoul()))){
+				if((up.equals(maze.getGoal()))){
 					flag = 1;
 					break;
 				}
 				if(maze.cellValueReal(up)){
-					if((up.equals(maze.getCurect().getPai()))){
-						Position p = maze.getCurect().getCopy();
+					if((up.equals(maze.getCorrect().getPai()))){
+						Position p = maze.getCorrect().getCopy();
 						maze.up();
-						maze.getCurect().setPai(p);
+						maze.getCorrect().setPai(p);
 						if(stack.isEmpty()&&(flag !=1 ))
 							stack.push(maze.getStart());
 						stack.pop();
@@ -85,15 +85,15 @@ public class MyMaze3dGenerator extends Generators{
 					}
 					if((maze.numberOfNeighbours(up) <= 1))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.up();
 						break;
 					}
 					if((maze.numberOfNeighbours(up) > 1)&&(maze.cellValue(up) == 0))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.up();
 						break;
 					}
@@ -101,17 +101,17 @@ public class MyMaze3dGenerator extends Generators{
 				
 				break;
 			case 2:    // by z
-				Position down = new Position(maze.getCurect());
+				Position down = new Position(maze.getCorrect());
 				down.setZ(down.getZ()-1);
-				if((down.equals(maze.getGoul()))){
+				if((down.equals(maze.getGoal()))){
 					flag = 1;
 					break;
 				}
 				if(maze.cellValueReal(down)){
-					if((down.equals(maze.getCurect().getPai()))){
-						Position p = maze.getCurect().getCopy();
+					if((down.equals(maze.getCorrect().getPai()))){
+						Position p = maze.getCorrect().getCopy();
 						maze.down();
-						maze.getCurect().setPai(p);
+						maze.getCorrect().setPai(p);
 						if(stack.isEmpty()&&(flag !=1 ))
 							stack.push(maze.getStart());
 						stack.pop();
@@ -119,15 +119,15 @@ public class MyMaze3dGenerator extends Generators{
 					}
 					if((maze.numberOfNeighbours(down) <= 1))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.down();
 						break;
 					}
 					if((maze.numberOfNeighbours(down) > 1)&&(maze.cellValue(down) == 0))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.down();
 						break;
 					}
@@ -135,17 +135,17 @@ public class MyMaze3dGenerator extends Generators{
 				
 				break;
 			case 3:    // by y
-				Position forWord = new Position(maze.getCurect());
+				Position forWord = new Position(maze.getCorrect());
 				forWord.setY(forWord.getY()-1);
-				if((forWord.equals(maze.getGoul()))){
+				if((forWord.equals(maze.getGoal()))){
 					flag = 1;
 					break;
 				}
 				if(maze.cellValueReal(forWord)){
-					if((forWord.equals(maze.getCurect().getPai()))){
-						Position p = maze.getCurect().getCopy();
-						maze.forWord();
-						maze.getCurect().setPai(p);
+					if((forWord.equals(maze.getCorrect().getPai()))){
+						Position p = maze.getCorrect().getCopy();
+						maze.forward();
+						maze.getCorrect().setPai(p);
 						if(stack.isEmpty()&&(flag !=1 ))
 							stack.push(maze.getStart());
 						stack.pop();
@@ -153,33 +153,33 @@ public class MyMaze3dGenerator extends Generators{
 					}
 					if((maze.numberOfNeighbours(forWord) <= 1))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
-						maze.forWord();
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
+						maze.forward();
 						break;
 					}
 					if((maze.numberOfNeighbours(forWord) > 1)&&(maze.cellValue(forWord) == 0))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
-						maze.forWord();
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
+						maze.forward();
 						break;
 					}
 				}
 				
 				break;
 			case 4:    // by y
-				Position backword = new Position(maze.getCurect());
+				Position backword = new Position(maze.getCorrect());
 				backword.setY(backword.getY()+1);
-				if((backword.equals(maze.getGoul()))){
+				if((backword.equals(maze.getGoal()))){
 					flag = 1;
 					break;
 				}
 				if(maze.cellValueReal(backword)){
-					if((backword.equals(maze.getCurect().getPai()))){
-						Position p = maze.getCurect().getCopy();
+					if((backword.equals(maze.getCorrect().getPai()))){
+						Position p = maze.getCorrect().getCopy();
 						maze.backword();
-						maze.getCurect().setPai(p);
+						maze.getCorrect().setPai(p);
 						if(stack.isEmpty()&&(flag !=1 ))
 							stack.push(maze.getStart());
 						stack.pop();
@@ -187,15 +187,15 @@ public class MyMaze3dGenerator extends Generators{
 					}
 					if((maze.numberOfNeighbours(backword) <= 1))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.backword();
 						break;
 					}
 					if((maze.numberOfNeighbours(backword) > 1)&&(maze.cellValue(backword) == 0))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.backword();
 						break;
 					}
@@ -203,17 +203,17 @@ public class MyMaze3dGenerator extends Generators{
 				
 				break;
 			case 5:    // by x
-				Position right = new Position(maze.getCurect());
+				Position right = new Position(maze.getCorrect());
 				right.setX(right.getX()+1);
-				if((right.equals(maze.getGoul()))){
+				if((right.equals(maze.getGoal()))){
 					flag = 1;
 					break;
 				}
 				if(maze.cellValueReal(right)){
-					if((right.equals(maze.getCurect().getPai()))){
-						Position p = maze.getCurect().getCopy();
+					if((right.equals(maze.getCorrect().getPai()))){
+						Position p = maze.getCorrect().getCopy();
 						maze.right();
-						maze.getCurect().setPai(p);
+						maze.getCorrect().setPai(p);
 						if(stack.isEmpty()&&(flag !=1 ))
 							stack.push(maze.getStart());
 						stack.pop();
@@ -221,15 +221,15 @@ public class MyMaze3dGenerator extends Generators{
 					}
 					if(maze.numberOfNeighbours(right) <= 1)
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.right();
 						break;
 					}
 					if((maze.numberOfNeighbours(right) > 1)&&(maze.cellValue(right) == 0))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.right();
 						break;
 					}
@@ -237,17 +237,17 @@ public class MyMaze3dGenerator extends Generators{
 				
 				break;
 			case 6:    // by x
-				Position left = new Position(maze.getCurect());
+				Position left = new Position(maze.getCorrect());
 				left.setX(left.getX()-1);
-				if((left.equals(maze.getGoul()))){
+				if((left.equals(maze.getGoal()))){
 					flag = 1;
 					break;
 				}
 				if(maze.cellValueReal(left)){
-					if((left.equals(maze.getCurect().getPai()))){
-						Position p = maze.getCurect().getCopy();
+					if((left.equals(maze.getCorrect().getPai()))){
+						Position p = maze.getCorrect().getCopy();
 						maze.left();
-						maze.getCurect().setPai(p);
+						maze.getCorrect().setPai(p);
 						if(stack.isEmpty()&&(flag !=1 ))
 							stack.push(maze.getStart());
 						stack.pop();
@@ -255,15 +255,15 @@ public class MyMaze3dGenerator extends Generators{
 					}
 					if((maze.numberOfNeighbours(left) <= 1))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.left();
 						break;
 					}
 					if((maze.numberOfNeighbours(left) > 1)&&(maze.cellValue(left) == 0))
 					{
-						stack.push(new Position(maze.getCurect()));
-						maze.getCurect().setPai(maze.getCurect());
+						stack.push(new Position(maze.getCorrect()));
+						maze.getCorrect().setPai(maze.getCorrect());
 						maze.left();
 						break;
 					}
@@ -274,7 +274,7 @@ public class MyMaze3dGenerator extends Generators{
 				break;
 			}
 		}
-		maze.setCurect(maze.getStart());
+		maze.setCorrect(maze.getStart());
 		
 		return maze;
 	}
