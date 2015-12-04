@@ -17,6 +17,80 @@ public class Maze3d {
 	protected int [][][] matrix;
 	
 	/**
+	 * this C'tor get an Byte's ArrayList and build a maze3d
+	 * there is a importance to the order in the start.
+	 * * the order of the array is (by place):
+	 * 1. width - represented with the letter x
+	 * 2. height - represented with the letter y
+	 * 3. dim - represented with the letter z
+	 * *  start position:
+	 * 4. x of start
+	 * 5. y of start
+	 * 6. z of start 
+	 * *  goal position:
+	 * 7. x of goal
+	 * 8. y of goal
+	 * 9. z of goal
+	 **  correct position
+	 * 10. x of correct
+	 * 11. y of correct
+	 * 12. z of correct 
+	 * 7. content of maze
+	 * example:
+	 * 1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1...
+	 * changed to:
+	 * 1,7,0,10,1,6...
+	 * with all this data the method build a brand new maze3d
+	 * @param ArrayList<Byte> array via toByteArray() method
+	 */
+	public Maze3d(ArrayList<Byte> arr){
+		this.start = new Position(0,0,0);
+		this.goal = new Position(0,0,0);
+		this.correct = new Position(0,0,0);
+		this.width = arr.remove(0);
+		this.height = arr.remove(0);
+		this.dimension = arr.remove(0);
+		this.start.setX(arr.remove(0));
+		this.start.setY(arr.remove(0));
+		this.start.setZ(arr.remove(0));
+		this.goal.setX(arr.remove(0));
+		this.goal.setY(arr.remove(0));
+		this.goal.setZ(arr.remove(0));
+		this.correct.setX(arr.remove(0));
+		this.correct.setY(arr.remove(0));
+		this.correct.setZ(arr.remove(0));
+		ArrayList<Byte> arr2 = new ArrayList<>();
+		matrix = new int[dimension][height][width];
+		while(!arr.isEmpty())
+		{
+			int flag  = arr.remove(1);
+			if(arr.get(0) == 1){
+				while(flag!=0){
+					flag--;
+					arr2.add((byte)1);
+					}
+				}
+			else{
+				while(flag!=0){
+					flag--;
+					arr2.add((byte)0);
+				}	
+			}
+			arr.remove(0);
+		}
+		System.out.println(arr2);
+		for (int i = 0; i < getDimension()-1; i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				for (int j2 = 0; j2 < getWidth(); j2++) {
+					matrix[i][j][j2] = arr2.remove(0); 
+				}
+			}
+		}
+		
+		
+		
+	}
+	/**
 	 * the Constructor of the maze.
 	 * @param dim
 	 * @param height
@@ -371,5 +445,84 @@ public class Maze3d {
 	public int getWidth() {
 		return width;
 	}
+	/**
+	 * this method create an array of Bytes from the maze.
+	 * @param maze
+	 * @return ArrayList<Byte> 
+	 * the order of the array is (by place):
+	 * 1. width - represented with the letter x
+	 * 2. height - represented with the letter y
+	 * 3. dim - represented with the letter z
+	 * *  start position:
+	 * 4. x of start
+	 * 5. y of start
+	 * 6. z of start 
+	 * *  goal position:
+	 * 7. x of goal
+	 * 8. y of goal
+	 * 9. z of goal
+	 **  correct position
+	 * 10. x of correct
+	 * 11. y of correct
+	 * 12. z of correct 
+	 * 7. content of maze
+	 * example:
+	 * 1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1...
+	 * changed to:
+	 * 1,7,0,10,1,6...
+	 * 
+	 */
+	public ArrayList<Byte> toByteArray(){
+		ArrayList<Byte> byteArry = new ArrayList<Byte>();
+		int counter1 =0;
+		int counter0 =0;
+		int flag = matrix[0][0][0] ;
+		byteArry.add((byte) getWidth());
+		byteArry.add((byte) getHeight());
+		byteArry.add((byte) getDimension());
+		byteArry.add((byte) getStart().getX());
+		byteArry.add((byte) getStart().getY());
+		byteArry.add((byte) getStart().getZ());
+		byteArry.add((byte) getGoal().getX());
+		byteArry.add((byte) getGoal().getY());
+		byteArry.add((byte) getGoal().getZ());
+		byteArry.add((byte) getCorrect().getX());
+		byteArry.add((byte) getCorrect().getY());
+		byteArry.add((byte) getCorrect().getZ());
+		for (int i = 0; i < getDimension(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				for (int j2 = 0; j2 < getWidth(); j2++) {
+					if (matrix[i][j][j2] == 1){
+						if(flag == 0){
+							byteArry.add((byte) 0);
+							byteArry.add((byte) counter0);
+							counter0 = 0;
+							}
+						counter1++;
+						
+						flag = 1;
+					}
+					if (matrix[i][j][j2] == 0){
+						if(flag == 1){
+							byteArry.add((byte) 1);
+							byteArry.add((byte) counter1);
+							counter1 = 0;
+							}
+						counter0++;
+						flag = 0;
+					}
+				}
+				
+			}
+		}
+		return byteArry ; 
+	}
 	
 }
+
+
+
+
+
+
+

@@ -51,7 +51,7 @@ public class MyMaze3dGenerator extends Generators{
 						}
 					}
 		//start
-		maze.setMatrix((maze.getStart()).getX(), (maze.getStart()).getY(), (maze.getStart()).getZ(), 2);
+		maze.setMatrix((maze.getStart()).getX(), (maze.getStart()).getY(), (maze.getStart()).getZ(), 3);
 		//end
 		maze.setMatrix((maze.getGoal()).getX(), (maze.getGoal()).getY(), (maze.getGoal()).getZ(), 3);
 		
@@ -275,6 +275,10 @@ public class MyMaze3dGenerator extends Generators{
 			}
 		}
 		maze.setCorrect(maze.getStart());
+		//start
+		maze.setMatrix((maze.getStart()).getX(), (maze.getStart()).getY(), (maze.getStart()).getZ(), 0);
+		//end
+		maze.setMatrix((maze.getGoal()).getX(), (maze.getGoal()).getY(), (maze.getGoal()).getZ(), 0);
 		
 		return maze;
 	}
