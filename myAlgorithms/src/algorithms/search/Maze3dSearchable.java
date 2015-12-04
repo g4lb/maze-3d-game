@@ -1,10 +1,8 @@
-package algorithms.demo;
+package algorithms.search;
 
 import java.util.ArrayList;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
-import algorithms.search.Searchable;
-import algorithms.search.State;
 /**
  * <h1> Maze3dSearchable class </h1>
  * this class use object adapter by including of Maze3d object in the class
