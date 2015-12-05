@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * <h1> 3D Maze </h1>
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * @version 1.0
  *
  */
-public class Maze3d {
+public class Maze3d implements Serializable{
 	
 	
 	private int dimension,height,width;
@@ -43,7 +44,14 @@ public class Maze3d {
 	 * with all this data the method build a brand new maze3d
 	 * @param ArrayList<Byte> array via toByteArray() method
 	 */
-	public Maze3d(ArrayList<Byte> arr){
+	public Maze3d(byte[] array){
+		ArrayList<Byte> arr = new ArrayList<>();
+		for (int i = 0; i < array.length; i++) {
+			arr.add(array[i]);
+		}
+		
+		
+		
 		this.start = new Position(0,0,0);
 		this.goal = new Position(0,0,0);
 		this.correct = new Position(0,0,0);
@@ -88,7 +96,6 @@ public class Maze3d {
 		}
 		
 		
-		
 	}
 	/**
 	 * the Constructor of the maze.
@@ -105,6 +112,19 @@ public class Maze3d {
 		this.goal = new Position(0,0,0);
 		this.correct = new Position(0,0,0);
 
+	}
+	/**
+	 * C'tor by any type of maze3dgenerator
+	 * @param maze3dGenerator
+	 */
+	public Maze3d(Maze3dGenerator maze3dgenerator) {
+		this.correct = maze3dgenerator.getCurectPosition();
+		this.goal = maze3dgenerator.getGoalPosition();
+		this.start = maze3dgenerator.getStartPosition();
+		this.dimension = maze3dgenerator.getMaze().getDimension();
+		this.height = maze3dgenerator.getMaze().getHeight();
+		this.width = maze3dgenerator.getMaze().getWidth();
+		this.matrix = maze3dgenerator.getMaze().getMatrix();
 	}
 	/**
 	 * this method make the action of the = operator.
@@ -472,7 +492,7 @@ public class Maze3d {
 	 * 1,7,0,10,1,6...
 	 * 
 	 */
-	public ArrayList<Byte> toByteArray(){
+	public byte[] toByteArray(){
 		ArrayList<Byte> byteArry = new ArrayList<Byte>();
 		int counter1 =0;
 		int counter0 =0;
@@ -515,9 +535,17 @@ public class Maze3d {
 				
 			}
 		}
-		return byteArry ; 
+		byte[] barr = toByte(byteArry);
+		return barr ; 
 	}
-	
+	public byte[] toByte(ArrayList<Byte> arr){
+		byte[] barr = new byte[arr.size()];
+		for (int i = 0; i < arr.size(); i++) {
+			barr[i] = arr.get(i);			
+		}
+		return barr;
+	}
+
 }
 
 
