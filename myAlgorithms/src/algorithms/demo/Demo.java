@@ -1,12 +1,12 @@
 package algorithms.demo;
 
 import algorithms.mazeGenerators.Maze3dGenerator;
+import algorithms.mazeGenerators.Maze3dSearchable;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Astar;
 import algorithms.search.BFS;
 import algorithms.search.Heuristic;
-import algorithms.search.Maze3dSearchable;
 import algorithms.search.MazeAirDistance;
 import algorithms.search.MazeManhattanDistance;
 import algorithms.search.Searcher;
