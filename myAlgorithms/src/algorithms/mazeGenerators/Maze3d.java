@@ -49,9 +49,6 @@ public class Maze3d implements Serializable{
 		for (int i = 0; i < array.length; i++) {
 			arr.add(array[i]);
 		}
-		
-		
-		
 		this.start = new Position(0,0,0);
 		this.goal = new Position(0,0,0);
 		this.correct = new Position(0,0,0);
@@ -86,7 +83,6 @@ public class Maze3d implements Serializable{
 			}
 			arr.remove(0);
 		}
-		System.out.println(arr2);
 		for (int i = 0; i < getDimension()-1; i++) {
 			for (int j = 0; j < getHeight(); j++) {
 				for (int j2 = 0; j2 < getWidth(); j2++) {
@@ -538,6 +534,11 @@ public class Maze3d implements Serializable{
 		byte[] barr = toByte(byteArry);
 		return barr ; 
 	}
+	/**
+	 * this method took an arrayList and convert it to byte[]
+	 * @param arr
+	 * @return byte[] 
+	 */
 	public byte[] toByte(ArrayList<Byte> arr){
 		byte[] barr = new byte[arr.size()];
 		for (int i = 0; i < arr.size(); i++) {
@@ -545,7 +546,57 @@ public class Maze3d implements Serializable{
 		}
 		return barr;
 	}
-
+	/**
+	 * this method equals an object.
+	 * if the Object is Maze3d the equals use other equals
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return this.equals((Maze3d)(obj));
+	}
+	/**
+	 * this method equals between other Maze3d,
+	 *  the order of the array is (by place):
+	 * 1. width - represented with the letter x
+	 * 2. height - represented with the letter y
+	 * 3. dim - represented with the letter z
+	 * 4.  start position
+	 * 5. goal position
+	 * 6. correct position
+	 * 7. matrix of maze
+	 * @param Maze3d maze
+	 * @return true/false
+	 */
+	public boolean equals(Maze3d maze) {
+		if(this.getWidth()==maze.getWidth()){}
+		else
+			return false;
+		if(this.getHeight()==maze.getHeight()){}
+		else
+			return false;
+		if(this.getDimension()==maze.getDimension()){}
+		else
+			return false;
+		if(this.getStart().equals(maze.getStart())){}
+		else
+			return false;
+		if(this.getGoal().equals(maze.getGoal())){}
+		else
+			return false;
+		if(this.getCorrect().equals(maze.getCorrect())){}
+		else
+			return false;
+		for (int i = 0; i < maze.dimension-1; i++) {
+			for (int j = 0; j < maze.height; j++) {
+				for (int j2 = 0; j2 < maze.width; j2++) {
+					if(this.matrix[i][j][j2]!=maze.matrix[i][j][j2])
+						return false;	
+				}
+			}
+		}
+		return true;
+	}
+	
 }
 
 

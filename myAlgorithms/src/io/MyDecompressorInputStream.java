@@ -29,11 +29,9 @@ public class MyDecompressorInputStream extends InputStream {
 	
 
 	@Override
-	public int read(byte[]arr,int off,int len) throws IOException {
-		int byteRead = in.read(arr, off, len);
-		String coded = new String(arr);
-		
-		return byteRead;
+	public int read(byte[] b) throws IOException {
+		in.read(b);
+		return -1;
 	}
 
 	@Override

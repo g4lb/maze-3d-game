@@ -4,6 +4,13 @@ import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 
+/**
+ * <h1> Test demo </h1>
+ * this class create a maze3d and measure the algorithm time.
+ * 
+ * @author malcaga
+ *
+ */
 public class TestDemo {
 	void Run()
 	{
