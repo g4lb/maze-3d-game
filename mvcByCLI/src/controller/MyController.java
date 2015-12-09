@@ -6,6 +6,6 @@ package controller;
  * @author Gal Ben Evgi
  *
  */
-public class MyController implements Controller {
+public class MyController extends CommonController {
 
 }

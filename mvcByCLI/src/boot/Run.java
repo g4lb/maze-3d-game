@@ -36,7 +36,7 @@ public class Run {
 		PrintWriter out = new PrintWriter(System.out); 
 
 		CLI ui = new CLI(in,out,test);
-		ui.start();
+		
 		
 		ui.run();
 		

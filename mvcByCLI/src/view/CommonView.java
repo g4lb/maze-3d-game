@@ -1,6 +1,7 @@
 package view;
 
 import controller.Command;
+import controller.Controller;
 import controller.MyCommand;
 
 /**
@@ -8,20 +9,25 @@ import controller.MyCommand;
  * @author Gal Ben Evgi
  *
  */
-public abstract class CommonView extends Thread{
+public abstract class CommonView extends Thread implements View{
 
+	Controller ctr;
 	
-	Command c; 
 
 	public abstract void run();
-
-	public Command getC() {
-		return c;
+	
+	public CommonView(Controller ctr)
+	{
+		this.ctr = ctr;
 	}
 
-	public void setC(Command c) {
-		this.c = c;
-	}
+//	public Command getC() {
+//		return c;
+//	}
+//
+//	public void setC(Command c) {
+//		this.c = c;
+//	}
 	
 		
 

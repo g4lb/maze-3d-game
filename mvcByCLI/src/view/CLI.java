@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import controller.Command;
+import controller.Controller;
 
 /**
  * <h1> Class CLI - Command Line Interface </h1>
@@ -20,13 +21,11 @@ public class CLI extends CommonView{
 	PrintWriter out;
 	private HashMap<String,Command> hash;
 	
-	public CLI(Command c){
-		this.c = c;
-	}
+	
 	
 
-	public CLI(BufferedReader in, PrintWriter out, HashMap<String,Command> hash) {
-		super();
+	public CLI(BufferedReader in, PrintWriter out, HashMap<String,Command> hash, Controller ctr) {
+		super(ctr);
 		this.in = in;
 		this.out = out;
 		this.hash = hash;
@@ -64,7 +63,7 @@ public class CLI extends CommonView{
 		
 	}
 	
-	private void runTaskInThread(Command cmd){
+	private void runTaskInThread(final Command cmd){
 		new Thread(new Runnable() {
 			
 			@Override
