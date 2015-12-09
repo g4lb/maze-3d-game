@@ -13,6 +13,12 @@ public class RunMVC {
 		Controller ctr = new MyController();
 		Model m = new MyModel(ctr);
 		View v = new MyView(ctr);
+		ctr.setModel(m);
+		ctr.setView(v);
+		
+		v.start();
+		
+		
 
 	}
 

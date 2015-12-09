@@ -1,5 +1,8 @@
 package view;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import controller.Controller;
 
 /**
@@ -9,14 +12,33 @@ import controller.Controller;
  */
 public class MyView extends CommonView {
 
+	CLI cli;
+	
 	public MyView(Controller ctr) {
 		super(ctr);
+		this.cli = new CLI(ctr.getHash());
+	}
+	
+	@Override
+	public void printLearn() {
+		System.out.println("printLearn");
+		
 	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void start() {
+	
+		cli.run();
 		
 	}
+
+	public void displayDir(ArrayList<String> str){
+		for (String string : str) {
+			System.out.println(str);
+		}
+	}
+	
+
+
 
 }
