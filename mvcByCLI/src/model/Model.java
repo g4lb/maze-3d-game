@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * <h1> Class Model </h1>
@@ -11,7 +12,7 @@ import java.io.File;
  */
 public interface Model {
 	
-	void print();
 	void dir(File path);
+	void generateMaze(ArrayList<String> string);
 
 }

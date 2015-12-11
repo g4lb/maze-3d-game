@@ -1,8 +1,11 @@
 package model;
 
+import java.awt.geom.GeneralPath;
 import java.io.File;
 import java.util.ArrayList;
 
+import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.MyMaze3dGenerator;
 import controller.Controller;
 
 /**
@@ -21,11 +24,7 @@ public class MyModel extends CommonModel {
 
 
 
-	@Override
-	public void print() {
-		System.out.println("model printing");
-		
-	}
+	
 	@Override
 	public void dir(File path) {
 		ArrayList<String> results = new ArrayList<String>();
@@ -42,8 +41,26 @@ public class MyModel extends CommonModel {
 		
 		ctr.setSolutionForDir(results);
 		}
-		
+	
+	@Override
+	public void generateMaze(ArrayList<String> s) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int x = Integer.parseInt(s.get(1));
+				int y = Integer.parseInt(s.get(2));
+				int z = Integer.parseInt(s.get(3));
+				generator = new MyMaze3dGenerator();
+				Maze3d maze = generator.generate(x,y,z);
+				mazeHash.put(s.get(0), maze);
+				ctr.setReadyMaze("The maze "+s.get(0)+" is ready", maze);
+			}
+		}).start();
 	}
+
+		
+}
+
 
 
 	

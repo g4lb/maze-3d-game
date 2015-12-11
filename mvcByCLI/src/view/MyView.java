@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.util.ArrayList;
 
+import algorithms.mazeGenerators.Maze3d;
 import controller.Controller;
 
 /**
@@ -19,11 +20,6 @@ public class MyView extends CommonView {
 		this.cli = new CLI(ctr.getHash());
 	}
 	
-	@Override
-	public void printLearn() {
-		System.out.println("printLearn");
-		
-	}
 
 	@Override
 	public void start() {
@@ -33,12 +29,22 @@ public class MyView extends CommonView {
 	}
 
 	public void displayDir(ArrayList<String> str){
-		for (String string : str) {
+		
 			System.out.println(str);
-		}
 	}
+
+	@Override
+	public void displayMaze(String string, Maze3d maze) {
+		System.out.println(string);
+		maze.printMatrix();
+	}
+
+	
+
+	
 	
 
 
-
 }
+
+
