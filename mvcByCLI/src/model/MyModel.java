@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.geom.GeneralPath;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -43,7 +42,7 @@ public class MyModel extends CommonModel {
 		}
 	
 	@Override
-	public void generateMaze(ArrayList<String> s) {
+	public void generateMaze(final ArrayList<String> s) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
