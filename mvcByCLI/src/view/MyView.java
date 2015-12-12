@@ -43,15 +43,6 @@ public class MyView extends CommonView {
 	public void displayMazeReady(String str){
 		System.out.println(str);
 	}
-//	/**
-//	 * this method get a name of maze,the maze himself and display it for user
-//	 * this method is a solution from Controller
-//	 */
-//	@Override
-//	public void displayMaze(String string, Maze3d maze) {
-//		System.out.println("The Maze: " + string);
-//		maze.printMatrix();
-//	}
 	/**
 	 * this method get a list of mazes3d names and display it for user
 	 * this method is a solution from Controller
@@ -102,6 +93,18 @@ public class MyView extends CommonView {
 			}
 			System.out.println();
 		}
+		
+	}
+
+	@Override
+	public void displayMazeSaved(String string) {
+		System.out.println(string);
+		
+	}
+
+	@Override
+	public void displayMazeLoaded(String string) {
+		System.out.println(string);
 		
 	}
 	

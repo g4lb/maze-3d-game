@@ -17,14 +17,6 @@ public abstract class CommonView implements View{
 		this.ctr = ctr;
 	}
 
-//	public Command getC() {
-//		return c;
-//	}
-//
-//	public void setC(Command c) {
-//		this.c = c;
-//	}
-	
 		
 
 	

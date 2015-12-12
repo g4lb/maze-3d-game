@@ -17,6 +17,8 @@ public interface View {
 	void displayError(String string);
 	void display3dmaze(String name,int[][][] arr);
 	void displayCrossSection(int[][] mat);
+	void displayMazeSaved(String string);
+	void displayMazeLoaded(String string);
 		
 		
 

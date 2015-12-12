@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,7 +52,18 @@ public class MyController extends CommonController {
 				m.getCrossSection(string);
 			}
 		});
-		
+		this.hash.put("saveMaze", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) throws IOException {
+				m.saveMaze(string);
+			}
+		});
+		this.hash.put("loadMaze", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) throws IOException {
+				m.loadMaze(string);
+			}
+		});
 }
 	/**
 	 * a solution method for the View part in MVC
@@ -97,6 +109,16 @@ public class MyController extends CommonController {
 	@Override
 	public void crossSectionReady(int[][] mat) {
 		v.displayCrossSection(mat);
+		
+	}
+	@Override
+	public void mazeSaved(String string) {
+		v.displayMazeSaved(string);
+		
+	}
+	@Override
+	public void mazeLoaded(String string) {
+		v.displayMazeLoaded(string);
 		
 	}
 

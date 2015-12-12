@@ -1,11 +1,18 @@
 package model;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import controller.Controller;
+import io.MyCompressorOutputStream;
+import io.MyDecompressorInputStream;
 
 /**
  * <h1> Class MyModel </h1>
@@ -146,6 +153,56 @@ public class MyModel extends CommonModel {
 	        }
 		    // only got here if we didn't return false
 		    return true;
+	}
+
+
+
+
+	@Override
+	public void saveMaze(ArrayList<String> string) throws IOException {
+		if(!mazeHash.containsKey(string.get(0)))
+			ctr.setErrorToUser("maze not exist");
+		else {
+			OutputStream out = new MyCompressorOutputStream(new FileOutputStream(string.get(1)+".maz"));
+			out.write(mazeHash.get(string.get(0)).toByteArray());
+			savedHash.put(string.get(0), out);
+			out.flush();
+			out.close();
+			ctr.mazeSaved("the maze "+string.get(0)+" saved");
+		}
+	}
+
+
+
+
+	@Override
+	public void loadMaze(ArrayList<String> string) throws IOException  {
+
+			ArrayList<String> results = new ArrayList<String>();
+			File path = new File("C:\\Users\\Gal Ben Evgi\\git\\Java-Project\\mvcByCLI");
+			File[] files = path.listFiles();
+			
+
+			for (File file : files) {
+			    if (file.isFile()) {
+			        results.add(file.getName());
+			    }
+			}
+			if(!results.contains(string.get(0)+".maz"))
+				ctr.setErrorToUser("the file is not exist");
+			else{
+			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(0)+".maz"));
+			
+
+			byte [] b = new byte[100];
+			in.read(b);
+			in.close();
+			Maze3d loaded = new Maze3d(b);
+			loaded.printMatrix();
+			mazeHash.put(string.get(1), loaded);
+			ctr.mazeLoaded("the maze "+string.get(1)+" is loaded");
+		}
+		
 	}	
 	
 

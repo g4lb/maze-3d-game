@@ -1,6 +1,8 @@
 package model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -44,4 +46,6 @@ public interface Model {
 	 * @param string
 	 */
 	void getCrossSection(ArrayList<String> string);
+	void saveMaze(ArrayList<String> string) throws IOException;
+	void loadMaze(ArrayList<String> string) throws IOException;
 }

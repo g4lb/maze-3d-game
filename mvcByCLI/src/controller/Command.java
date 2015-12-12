@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -12,5 +13,5 @@ import java.util.ArrayList;
 public interface Command {
 
 
-	void doCommand(ArrayList<String> string);
+	void doCommand(ArrayList<String> string) throws IOException;
 }

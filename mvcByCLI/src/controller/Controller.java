@@ -24,6 +24,8 @@ public interface Controller {
 	void setErrorToUser(String string);
 	void setPrint3dMaze(String name,int[][][] arr);
 	void crossSectionReady(int[][] mat);
+	void mazeSaved(String string);
+	void mazeLoaded(String string);
 
 
 	
