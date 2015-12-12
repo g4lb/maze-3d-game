@@ -16,11 +16,14 @@ public interface View {
 	
 
 	void displayDir(ArrayList<String> results);
-	
-
+	void displayListOfNamesOfMaze(ArrayList<String> names);
+	void displayError(String string);
+	void display3dmaze(String name,int[][][] arr);
 	void displayMaze(String string, Maze3d maze);
-
-
 	void displayCrossSection(int[][] mat);
+	
+		
+		
+
 	
 }
