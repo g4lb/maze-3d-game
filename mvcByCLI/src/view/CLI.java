@@ -61,7 +61,7 @@ public class CLI extends Thread{
 		 while(true){
 			 out.flush();
 			 System.out.println("please insert the name of command (key)");
-			 System.out.println("1)printPath\n2)generateMaze");
+			 System.out.println("1)printPath\n2)generateMaze\n3)getCrossSection");
 			 str = in.nextLine();
 			 s.add(0,str);
 		 
@@ -84,7 +84,17 @@ public class CLI extends Thread{
 				 hash.get(s.get(0)).doCommand(arr);
 				 continue;
 			 	}
-		
+			 else if(s.get(0).equals("getCrossSection")){
+				 ArrayList<String> arr = new ArrayList<String>();
+				 String str2;
+				 System.out.println("please select the name of the maze ,Cross-sectional axis, index");
+				 for (int i = 0; i < 3; i++){
+				 str2 = in.nextLine();
+				 arr.add(i,str2);
+			 	 }
+				 hash.get(s.get(0)).doCommand(arr);
+				 continue;
+			 	}
 			 	hash.get(s.get(0)).doCommand(s);
 		 		}
 }	

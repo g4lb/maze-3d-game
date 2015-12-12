@@ -19,5 +19,8 @@ public interface View {
 	
 
 	void displayMaze(String string, Maze3d maze);
+
+
+	void displayCrossSection(int[][] mat);
 	
 }

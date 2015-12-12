@@ -76,4 +76,5 @@ public interface Maze3dGenerator {
 	 * @return this matrix.
 	 */
 	Maze3d getMaze();
+	void setMaze(Maze3d maze);
 }

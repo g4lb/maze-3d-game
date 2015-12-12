@@ -32,6 +32,12 @@ public class MyController extends CommonController {
 				m.generateMaze(string);
 			}
 		});
+		this.hash.put("getCrossSection", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) {
+				m.getCrossSection(string);
+			}
+		});
 
 		
 		
@@ -45,6 +51,11 @@ public class MyController extends CommonController {
 	@Override
 	public void setReadyMaze(String string, Maze3d maze) {
 		v.displayMaze(string,maze);
+		
+	}
+	@Override
+	public void crossSectionReady(int[][] mat) {
+		v.displayCrossSection(mat);
 		
 	}
 

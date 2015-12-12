@@ -14,5 +14,6 @@ public interface Model {
 	
 	void dir(File path);
 	void generateMaze(ArrayList<String> string);
+	void getCrossSection(ArrayList<String> string);
 
 }

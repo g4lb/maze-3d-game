@@ -14,6 +14,9 @@ public abstract class Generators implements Maze3dGenerator {
 	
 	protected Maze3d maze;
 	
+	public void setMaze(Maze3d maze) {
+		this.maze = maze;
+	}
 	/**
 	 * print a 3d maze
 	 */

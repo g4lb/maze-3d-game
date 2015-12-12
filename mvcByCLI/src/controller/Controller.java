@@ -21,6 +21,7 @@ public interface Controller {
 	public HashMap<String, Command> getHash();
 	void setSolutionForDir(ArrayList<String> results);
 	void setReadyMaze(String string, Maze3d maze);
+	void crossSectionReady(int[][] mat);
 
 
 	

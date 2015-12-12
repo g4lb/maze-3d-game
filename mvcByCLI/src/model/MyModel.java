@@ -40,7 +40,7 @@ public class MyModel extends CommonModel {
 		
 		ctr.setSolutionForDir(results);
 		}
-	
+	//to generate the is maze data mumber so we need to change this method
 	@Override
 	public void generateMaze(final ArrayList<String> s) {
 		new Thread(new Runnable() {
@@ -55,6 +55,40 @@ public class MyModel extends CommonModel {
 				ctr.setReadyMaze("The maze "+s.get(0)+" is ready", maze);
 			}
 		}).start();
+	}
+
+
+
+	//name,{x,y,z},index
+	@Override
+	public void getCrossSection(ArrayList<String> string) {
+		int flag=0;
+		if(!mazeHash.containsKey(string.get(0)))
+			System.out.println("Error: there is no maze who call "+string.get(0));
+		else{
+		generator.setMaze(mazeHash.get(string.get(0)));
+		if(string.get(1).equals("x")){
+			int x = Integer.parseInt(string.get(2));
+			int[][] mat = generator.getCrossSectionByX(x);
+			ctr.crossSectionReady(mat);
+			flag=1;
+		}
+		if(string.get(1).equals("y")){
+			int y = Integer.parseInt(string.get(2));
+			int[][] mat =generator.getCrossSectionByY(y);
+			ctr.crossSectionReady(mat);
+			flag=1;
+		}
+		if(string.get(1).equals("z")){
+			int z = Integer.parseInt(string.get(2));
+			int[][] mat =generator.getCrossSectionByZ(z);
+			ctr.crossSectionReady(mat);
+			flag=1;
+		}
+		else if(flag==0)
+		System.out.println("Error");
+		}
+		
 	}
 
 		
