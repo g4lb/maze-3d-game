@@ -45,7 +45,7 @@ public class MyModel extends CommonModel {
 		}
 	//to generate the is maze data mumber so we need to change this method
 	@Override
-	public void generateMaze(ArrayList<String> s){
+	public void generateMaze(final ArrayList<String> s){
 		if(this.mazeHash.containsKey(s.get(0)))
 			ctr.setErrorToUser("This Name of maze is already taken please choose another one");
 		else if(!this.isInteger(s.get(1)))
