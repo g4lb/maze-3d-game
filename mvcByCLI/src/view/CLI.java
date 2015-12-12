@@ -3,7 +3,6 @@ package view;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -12,6 +11,16 @@ import controller.Command;
 
 /**
  * <h1> Class CLI - Command Line Interface </h1>
+ * data members:
+ * BufferReader
+ * PrintWriter
+ * HashMap<String,Command> - every command has an uniqe key
+ * 
+ * run method - open a menu you can choose
+ * 1)printPath
+ * 2)generateMaze
+ * 3)displayMaze
+ * 4)showListOfMaze
  * 
  * @author Gal Ben Evgi
  *
@@ -58,10 +67,11 @@ public class CLI extends Thread{
 		
 
 		
+
 		 while(true){
 			 out.flush();
 			 System.out.println("please insert the name of command (key)");
-			 System.out.println("1)printPath\n2)generateMaze\n3)getCrossSection");
+			 System.out.println("1)printPath\n2)generateMaze\n3)displayMaze\n4)showListOfMaze\n5)getCrossSection");
 			 str = in.nextLine();
 			 s.add(0,str);
 		 
@@ -70,7 +80,7 @@ public class CLI extends Thread{
 				 continue;
 			 	}
 			 else if(s.get(0).equals("exit")){
-				 System.out.println("Bye Bye!");
+				 System.out.println("Bye Bye! ");
 				 break;
 			 	}
 			 else if(s.get(0).equals("generateMaze")){
@@ -84,6 +94,15 @@ public class CLI extends Thread{
 				 hash.get(s.get(0)).doCommand(arr);
 				 continue;
 			 	}
+			 else if(s.get(0).equals("displayMaze")){
+				 	ArrayList<String> arr = new ArrayList<String>();
+				 	String str2;
+			 		System.out.println("Please select the name of wanted maze");
+			 		str2 = in.nextLine();
+			 		arr.add(0,str2);
+			 		hash.get(s.get(0)).doCommand(arr);
+			 		continue;
+			 		}
 			 else if(s.get(0).equals("getCrossSection")){
 				 ArrayList<String> arr = new ArrayList<String>();
 				 String str2;
@@ -95,8 +114,9 @@ public class CLI extends Thread{
 				 hash.get(s.get(0)).doCommand(arr);
 				 continue;
 			 	}
-			 	hash.get(s.get(0)).doCommand(s);
-		 		}
+		 hash.get(s.get(0)).doCommand(s);
+	 }
+			
 }	
 }
 	

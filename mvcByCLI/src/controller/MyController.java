@@ -3,9 +3,6 @@ package controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
-
-import algorithms.mazeGenerators.Maze3d;
 
 /**
  * <h1> Class MyController </h1>
@@ -15,6 +12,9 @@ import algorithms.mazeGenerators.Maze3d;
  */
 public class MyController extends CommonController {
 
+	/**
+	 * all the commands for using MVC application design are here.
+	 */
 	@Override
 	public void initCommands() {
 		this.hash = new HashMap<String,Command>();
@@ -24,6 +24,7 @@ public class MyController extends CommonController {
 			@Override
 			public void doCommand(ArrayList<String> string) {
 				m.dir(new File("C:\\Users\\Gal Ben Evgi\\Documents"));
+				
 			}
 		});
 		this.hash.put("generateMaze", new Command() {
@@ -32,32 +33,73 @@ public class MyController extends CommonController {
 				m.generateMaze(string);
 			}
 		});
+		this.hash.put("displayMaze", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) {
+				m.displayMaze(string);
+			}
+		});
+		this.hash.put("showListOfMaze", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) {
+				m.showListOfMaze(string);
+			}
+		});
 		this.hash.put("getCrossSection", new Command() {
 			@Override
 			public void doCommand(ArrayList<String> string) {
 				m.getCrossSection(string);
 			}
 		});
-
 		
-		
-		
-	}
+}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void setSolutionForDir(ArrayList<String> results) {
 		v.displayDir(results);
 		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
+	@Override()
+	public void setGenerateMaze(String str) {
+		v.displayMazeReady(str);
+	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
-	public void setReadyMaze(String string, Maze3d maze) {
-		v.displayMaze(string,maze);
+	public void setNamesOfMazes(ArrayList<String> names) {
+		v.displayListOfNamesOfMaze(names);
+	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
+	@Override
+	public void setErrorToUser(String string) {
+		v.displayError(string);
 		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
+	@Override
+	public void setPrint3dMaze(String name,int[][][] arr){
+		v.display3dmaze(name,arr);
+		
+	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void crossSectionReady(int[][] mat) {
 		v.displayCrossSection(mat);
 		
 	}
+
 
 
 

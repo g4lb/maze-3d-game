@@ -7,6 +7,17 @@ import model.MyModel;
 import view.MyView;
 import view.View;
 
+/**
+ * <h1> Class RunMVC </h1>
+ * 
+ * this class has main method that run a MVC application design
+ * read about MVC:
+ * <p><a href="http://www.oracle.com/technetwork/articles/javase/index-142890.html">MVC</a> is a link to oracle website about MVC app design</p>
+
+
+ * @author Gal Ben Evgi
+ *
+ */
 public class RunMVC {
 
 	public static void main(String[] args) {

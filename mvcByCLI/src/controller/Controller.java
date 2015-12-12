@@ -3,7 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import algorithms.mazeGenerators.Maze3d;
 import model.Model;
 import view.View;
 
@@ -20,7 +19,10 @@ public interface Controller {
 	void initCommands();
 	public HashMap<String, Command> getHash();
 	void setSolutionForDir(ArrayList<String> results);
-	void setReadyMaze(String string, Maze3d maze);
+	void setGenerateMaze(String str);
+	void setNamesOfMazes(ArrayList<String> names);
+	void setErrorToUser(String string);
+	void setPrint3dMaze(String name,int[][][] arr);
 	void crossSectionReady(int[][] mat);
 
 

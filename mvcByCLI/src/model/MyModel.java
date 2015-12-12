@@ -10,7 +10,10 @@ import controller.Controller;
 /**
  * <h1> Class MyModel </h1>
  * @author Gal Ben Evgi
- *
+ * the methods in class:
+ * 1)get a problem from Controller - any problem
+ * 2)solve the problem
+ * 3)send the solution for Controller
  */
 public class MyModel extends CommonModel {
 
@@ -42,19 +45,55 @@ public class MyModel extends CommonModel {
 		}
 	//to generate the is maze data mumber so we need to change this method
 	@Override
-	public void generateMaze(final ArrayList<String> s) {
+	public void generateMaze(ArrayList<String> s){
+		if(this.mazeHash.containsKey(s.get(0)))
+			ctr.setErrorToUser("This Name of maze is already taken please choose another one");
+		else if(!this.isInteger(s.get(1)))
+			ctr.setErrorToUser("generate matrix works with integers positive numbers only!");
+		else if(!this.isInteger(s.get(2)))
+			ctr.setErrorToUser("generate matrix works with integers positive numbers only!");
+		else if(!this.isInteger(s.get(3)))
+			ctr.setErrorToUser("generate matrix works with integers positive numbers only!");
+		else{
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				
+				
 				int x = Integer.parseInt(s.get(1));
 				int y = Integer.parseInt(s.get(2));
 				int z = Integer.parseInt(s.get(3));
+				
 				generator = new MyMaze3dGenerator();
 				Maze3d maze = generator.generate(x,y,z);
 				mazeHash.put(s.get(0), maze);
-				ctr.setReadyMaze("The maze "+s.get(0)+" is ready", maze);
+				ctr.setGenerateMaze("The maze "+s.get(0)+" is ready");
+				//ctr.setReadyMaze("The maze "+s.get(0)+" is ready", maze);
 			}
 		}).start();
+		}
+	}
+	
+	@Override
+	public void displayMaze(ArrayList<String> string) {
+		if(this.mazeHash.containsKey(string.get(0))){
+			//ctr.setReadyMaze(string.get(0),mazeHash.get(string.get(0)));
+			ctr.setPrint3dMaze(string.get(0),mazeHash.get(string.get(0)).getMatrix());
+		}
+		
+		else
+			ctr.setErrorToUser("the maze " + string.get(0) + " is not exist!");
+		
+	}
+	
+	@Override
+	public void showListOfMaze(ArrayList<String> string) {
+		if(this.mazeHash.isEmpty())
+			ctr.setErrorToUser("The List is empty");
+		else{
+			ArrayList<String> list = new ArrayList<String>(this.mazeHash.keySet());
+			ctr.setNamesOfMazes(list);
+		}
 	}
 
 
@@ -90,6 +129,25 @@ public class MyModel extends CommonModel {
 		}
 		
 	}
+	
+
+	@Override
+	public boolean isInteger(String s) {
+		   try { 
+		        Integer.parseInt(s); 
+		    } catch(NumberFormatException e) { 
+		        return false; 
+		    } catch(NullPointerException e) {
+		        return false;
+		    }
+		   int x = Integer.parseInt(s);
+	        if(x <= 0){
+	        	return false;
+	        }
+		    // only got here if we didn't return false
+		    return true;
+	}	
+	
 
 		
 }
