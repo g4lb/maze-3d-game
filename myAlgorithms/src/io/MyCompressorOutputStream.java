@@ -23,12 +23,12 @@ public class MyCompressorOutputStream extends OutputStream {
 
 	@Override
 	public void write(int b) throws IOException {
-		out.write((int)b);	
+		out.write(b);	
 	}
 	@Override
 	public void write(byte[] b) throws IOException {
-			out.write((int)b.length);
-		for (int i = 4; i < intro+4; i++) {
+			out.write(b.length);
+		for (int i = 0; i < intro; i++) {
 			out.write(b[i]);			
 		}
 		for (int i = intro; i < b.length; i++) {

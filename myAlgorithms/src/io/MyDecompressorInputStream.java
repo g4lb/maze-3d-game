@@ -24,12 +24,14 @@ public class MyDecompressorInputStream extends InputStream {
 	
 	public MyDecompressorInputStream() throws FileNotFoundException, IOException {
 		in = new ObjectInputStream(new FileInputStream("out.txt"));
-		this.size=in.read();
 	}
 	
 	
 	
-
+	public int read(int b) throws IOException {
+		in.read();
+		return -1;
+	}
 	@Override
 	public int read(byte[] b) throws IOException {
 		in.read(b);
@@ -38,7 +40,7 @@ public class MyDecompressorInputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		return ((DataInputStream)in).readInt();
+		return 0;
 	}
 	
 

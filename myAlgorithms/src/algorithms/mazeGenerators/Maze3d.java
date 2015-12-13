@@ -46,7 +46,7 @@ public class Maze3d implements Serializable{
 	 */
 	public Maze3d(byte[] array){
 		ArrayList<Byte> arr = new ArrayList<>();
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 1; i < array.length; i++) {
 			arr.add(array[i]);
 		}
 		this.start = new Position(0,0,0);
