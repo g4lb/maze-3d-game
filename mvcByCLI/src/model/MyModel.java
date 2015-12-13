@@ -1,5 +1,6 @@
 package model;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -169,6 +170,7 @@ public class MyModel extends CommonModel {
 			out.flush();
 			out.close();
 			ctr.mazeSaved("the maze "+string.get(0)+" saved");
+			
 		}
 	}
 
@@ -179,7 +181,8 @@ public class MyModel extends CommonModel {
 	public void loadMaze(ArrayList<String> string) throws IOException  {
 
 			ArrayList<String> results = new ArrayList<String>();
-			File path = new File("C:\\Users\\Gal Ben Evgi\\git\\Java-Project\\mvcByCLI");
+			String current = new java.io.File( "." ).getCanonicalPath();
+			File path = new File(current);
 			File[] files = path.listFiles();
 			
 
@@ -193,8 +196,10 @@ public class MyModel extends CommonModel {
 			else{
 			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(0)+".maz"));
 			
-
-			byte [] b = new byte[100];
+			File file =new File(current+ "/"+string.get(0)+".maz");
+			System.out.println(file.length());
+			
+			byte [] b = new byte[(int) file.length()];
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);

@@ -23,7 +23,7 @@ public class IoTest {
 
 	public static void main(String[] args) throws IOException {
 		Maze3dGenerator maze1 = new MyMaze3dGenerator();
-		System.out.println(maze1.measureAlgorithmTime(5,2, 3)); 
+		System.out.println(maze1.measureAlgorithmTime(4,4, 3)); 
 		Maze3d maze = new Maze3d(maze1);
 		maze.printMatrix();
 	

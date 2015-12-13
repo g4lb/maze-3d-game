@@ -1,5 +1,6 @@
 package io;
 
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +23,8 @@ public class MyDecompressorInputStream extends InputStream {
 	}
 	
 	public MyDecompressorInputStream() throws FileNotFoundException, IOException {
-	in = new ObjectInputStream(new FileInputStream("out.txt"));
+		in = new ObjectInputStream(new FileInputStream("out.txt"));
+		this.size=in.read();
 	}
 	
 	
@@ -36,8 +38,7 @@ public class MyDecompressorInputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((DataInputStream)in).readInt();
 	}
 	
 
