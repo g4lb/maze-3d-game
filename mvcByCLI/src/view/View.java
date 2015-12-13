@@ -19,6 +19,8 @@ public interface View {
 	void displayCrossSection(int[][] mat);
 	void displayMazeSaved(String string);
 	void displayMazeLoaded(String string);
+
+	void displaySolveMaze(String string);
 		
 		
 

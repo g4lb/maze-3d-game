@@ -64,6 +64,12 @@ public class MyController extends CommonController {
 				m.loadMaze(string);
 			}
 		});
+		this.hash.put("solveMaze", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) throws IOException {
+				m.solveMaze(string);
+			}
+		});
 }
 	/**
 	 * a solution method for the View part in MVC
@@ -119,6 +125,11 @@ public class MyController extends CommonController {
 	@Override
 	public void mazeLoaded(String string) {
 		v.displayMazeLoaded(string);
+		
+	}
+	@Override
+	public void solveMaze(String string) {
+		v.displaySolveMaze(string);
 		
 	}
 

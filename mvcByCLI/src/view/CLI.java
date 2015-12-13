@@ -45,7 +45,7 @@ public class CLI extends Thread{
 			 out.flush();
 			 System.out.println("please insert the name of command (key)");
 			 System.out.println("1)printPath\n2)generateMaze\n3)displayMaze\n4)showListOfMaze\n5)getCrossSection\n"
-			 		+ "6)saveMaze\n7)loadMaze");
+			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze");
 			 str = in.nextLine();
 			 s.add(0,str);
 			 try {
@@ -103,6 +103,17 @@ public class CLI extends Thread{
 				 ArrayList<String> arr = new ArrayList<String>();
 				 String str2;
 				 System.out.println("please select the name of file, name of maze");
+				 for (int i = 0; i < 2; i++){
+				 str2 = in.nextLine();
+				 arr.add(i,str2);
+			 	 }
+				 hash.get(s.get(0)).doCommand(arr);
+				 continue;
+			 	}
+			 else if(s.get(0).equals("solveMaze")){
+				 ArrayList<String> arr = new ArrayList<String>();
+				 String str2;
+				 System.out.println("please select the name of maze and algorithm to solve");
 				 for (int i = 0; i < 2; i++){
 				 str2 = in.nextLine();
 				 arr.add(i,str2);

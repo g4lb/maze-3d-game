@@ -1,6 +1,5 @@
 package model;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,9 +7,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Maze3dSearchable;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
+import algorithms.search.BFS;
+import algorithms.search.Searcher;
+import algorithms.search.Solution;
 import controller.Controller;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
@@ -196,16 +200,48 @@ public class MyModel extends CommonModel {
 			else{
 			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(0)+".maz"));
 			
-			File file =new File(current+ "/"+string.get(0)+".maz");
-			System.out.println(file.length());
 			
-			byte [] b = new byte[(int) file.length()];
+			
+			Scanner s = new Scanner(in);
+			int length = s.nextInt();
+			
+			byte [] b = new byte[length];
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);
 			loaded.printMatrix();
 			mazeHash.put(string.get(1), loaded);
 			ctr.mazeLoaded("the maze "+string.get(1)+" is loaded");
+		}
+		
+	}
+
+
+
+
+	@Override
+	public void solveMaze(final ArrayList<String> string) {
+		if(!mazeHash.containsKey(string.get(0)))
+			ctr.setErrorToUser("maze not exist");
+		else if(!string.get(1).equals("BFS"))
+			ctr.setErrorToUser("algorithm not exist!");
+		else{
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+			generator.setMaze(mazeHash.get(string.get(0)));
+			if(string.get(1).equals("BFS")){
+				Searcher s2 = new BFS();
+				Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
+				soulHash.put(string.get(0),sol);
+				//TODO display method
+				ctr.solveMaze("the maze "+string.get(0)+" is solved");
+			}
+			
+			
+				}
+			}).start();
 		}
 		
 	}	

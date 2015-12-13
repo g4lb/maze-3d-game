@@ -26,6 +26,7 @@ public interface Controller {
 	void crossSectionReady(int[][] mat);
 	void mazeSaved(String string);
 	void mazeLoaded(String string);
+	void solveMaze(String string);
 
 
 	

@@ -48,4 +48,5 @@ public interface Model {
 	void getCrossSection(ArrayList<String> string);
 	void saveMaze(ArrayList<String> string) throws IOException;
 	void loadMaze(ArrayList<String> string) throws IOException;
+	void solveMaze(ArrayList<String> string);
 }
