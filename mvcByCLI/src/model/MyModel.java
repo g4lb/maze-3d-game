@@ -1,5 +1,7 @@
 package model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,12 +9,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dSearchable;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Astar;
 import algorithms.search.BFS;
+import algorithms.search.Heuristic;
+import algorithms.search.MazeAirDistance;
 import algorithms.search.Searcher;
 import algorithms.search.Solution;
 import controller.Controller;
@@ -42,19 +47,21 @@ public class MyModel extends CommonModel {
 	@Override
 	public void dir(File path) {
 		ArrayList<String> results = new ArrayList<String>();
-
+		
 		//"/path/to/the/directory"
 		File[] files = path.listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null. 
-
+		if (files!=null){
 		for (File file : files) {
 		    if (file.isFile()) {
 		        results.add(file.getName());
 		    }
 		}
-		
 		ctr.setSolutionForDir(results);
 		}
+		else 
+			ctr.setErrorToUser("wrong path!");
+	}
 	//to generate the is maze data mumber so we need to change this method
 	@Override
 	public void generateMaze(final ArrayList<String> s){
@@ -201,11 +208,8 @@ public class MyModel extends CommonModel {
 			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(0)+".maz"));
 			
 			
-			
-			Scanner s = new Scanner(in);
-			int length = s.nextInt();
-			
-			byte [] b = new byte[length];
+			byte[] b = new byte[1000];
+			System.out.println(b);
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);
@@ -223,7 +227,7 @@ public class MyModel extends CommonModel {
 	public void solveMaze(final ArrayList<String> string) {
 		if(!mazeHash.containsKey(string.get(0)))
 			ctr.setErrorToUser("maze not exist");
-		else if(!string.get(1).equals("BFS"))
+		else if(!string.get(1).equals("BFS")&&!string.get(1).equals("Astar"))
 			ctr.setErrorToUser("algorithm not exist!");
 		else{
 			new Thread(new Runnable() {
@@ -235,13 +239,34 @@ public class MyModel extends CommonModel {
 				Searcher s2 = new BFS();
 				Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
 				soulHash.put(string.get(0),sol);
-				//TODO display method
+				ctr.solveMaze("the maze "+string.get(0)+" is solved");
+			}
+			else {
+				Heuristic<Position> h = new MazeAirDistance();
+				Searcher s2 = new Astar<>(h);
+				Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
+				soulHash.put(string.get(0),sol);
 				ctr.solveMaze("the maze "+string.get(0)+" is solved");
 			}
 			
 			
 				}
 			}).start();
+		}
+		
+	}
+
+
+
+
+	@Override
+	public void displaySolution(ArrayList<String> string) {
+		if(!soulHash.containsKey(string.get(0)))
+			ctr.setErrorToUser("maze not exist");
+		else{
+			ctr.setSolution(soulHash.get(string.get(0)).toString());
+			
+			
 		}
 		
 	}	

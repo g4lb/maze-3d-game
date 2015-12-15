@@ -113,6 +113,12 @@ public class MyView extends CommonView {
 		System.out.println(string);
 		
 	}
+
+	@Override
+	public void displaySolution(String string) {
+		System.out.println(string);
+		
+	}
 	
 
 	

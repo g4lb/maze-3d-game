@@ -27,6 +27,7 @@ public interface Controller {
 	void mazeSaved(String string);
 	void mazeLoaded(String string);
 	void solveMaze(String string);
+	void setSolution(String string);
 
 
 	

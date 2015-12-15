@@ -21,10 +21,10 @@ public class MyController extends CommonController {
 		this.hash = new HashMap<String,Command>();
 	
 		
-		this.hash.put("printPath", new Command() {
+		this.hash.put("Dir", new Command() {
 			@Override
 			public void doCommand(ArrayList<String> string) {
-				m.dir(new File("C:\\Users\\Gal Ben Evgi\\Documents"));
+				m.dir(new File(string.get(0)));
 				
 			}
 		});
@@ -68,6 +68,12 @@ public class MyController extends CommonController {
 			@Override
 			public void doCommand(ArrayList<String> string) throws IOException {
 				m.solveMaze(string);
+			}
+		});
+		this.hash.put("displaySolution", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) throws IOException {
+				m.displaySolution(string);
 			}
 		});
 }
@@ -130,6 +136,11 @@ public class MyController extends CommonController {
 	@Override
 	public void solveMaze(String string) {
 		v.displaySolveMaze(string);
+		
+	}
+	@Override
+	public void setSolution(String string) {
+		v.displaySolution(string);
 		
 	}
 

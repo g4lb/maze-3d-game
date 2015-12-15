@@ -44,8 +44,8 @@ public class CLI extends Thread{
 		 while(true){
 			 out.flush();
 			 System.out.println("please insert the name of command (key)");
-			 System.out.println("1)printPath\n2)generateMaze\n3)displayMaze\n4)showListOfMaze\n5)getCrossSection\n"
-			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze");
+			 System.out.println("1)Dir\n2)generateMaze\n3)displayMaze\n4)showListOfMaze\n5)getCrossSection\n"
+			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze\n9)displaySolution");
 			 str = in.nextLine();
 			 s.add(0,str);
 			 try {
@@ -121,7 +121,25 @@ public class CLI extends Thread{
 				 hash.get(s.get(0)).doCommand(arr);
 				 continue;
 			 	}
-			 	hash.get(s.get(0)).doCommand(s);
+			 else if(s.get(0).equals("displaySolution")){
+				 ArrayList<String> arr = new ArrayList<String>();
+				 String str2;
+				 System.out.println("please select the name of maze");
+				 str2 = in.nextLine();
+				 arr.add(0,str2);
+				 hash.get(s.get(0)).doCommand(arr);
+				 continue;
+			 	}
+			 else if(s.get(0).equals("Dir")){
+				 ArrayList<String> arr = new ArrayList<String>();
+				 String str2;
+				 System.out.println("please select path");
+				 str2 = in.nextLine();
+				 arr.add(0,str2);
+				 hash.get(s.get(0)).doCommand(arr);
+				 continue;
+			 	}
+			 hash.get(s.get(0)).doCommand(s);
 			 		} catch (IOException e) {
 			 			e.printStackTrace();
 			 		}

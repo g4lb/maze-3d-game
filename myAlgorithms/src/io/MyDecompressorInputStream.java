@@ -14,14 +14,20 @@ public class MyDecompressorInputStream extends InputStream {
 	InputStream in;
 	int size ;
 	
+	public int getSize() {
+		return size;
+	}
+
 	public void close()throws IOException{
 		in.close();
 	}
 	
-	public MyDecompressorInputStream(InputStream input){
+	public MyDecompressorInputStream(InputStream input) throws IOException{
+		super();
 		this.in = input;
+		
 	}
-	
+
 	public MyDecompressorInputStream() throws FileNotFoundException, IOException {
 		in = new ObjectInputStream(new FileInputStream("out.txt"));
 	}

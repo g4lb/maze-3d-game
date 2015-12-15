@@ -29,7 +29,7 @@ public class BFS extends CommonSearcher {
 			
 			if(n.equals(s.getGoulState()))
 			{
-				System.out.println(this.getNumberOfNodesEvaluated());
+				//System.out.println(this.getNumberOfNodesEvaluated());
 				return backTrace(n,s.getInitialState());
 			}
 			

@@ -49,4 +49,5 @@ public interface Model {
 	void saveMaze(ArrayList<String> string) throws IOException;
 	void loadMaze(ArrayList<String> string) throws IOException;
 	void solveMaze(ArrayList<String> string);
+	void displaySolution(ArrayList<String> string);
 }
