@@ -119,6 +119,18 @@ public class MyView extends CommonView {
 		System.out.println(string);
 		
 	}
+
+	@Override
+	public void displayFileSize(String string) {
+		System.out.println(string);
+		
+	}
+
+	@Override
+	public void displayMazeSize(String string) {
+		System.out.println(string);
+		
+	}
 	
 
 	

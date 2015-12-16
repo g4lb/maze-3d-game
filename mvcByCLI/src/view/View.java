@@ -21,6 +21,8 @@ public interface View {
 	void displayMazeLoaded(String string);
 	void displaySolveMaze(String string);
 	void displaySolution(String string);
+	void displayFileSize(String string);
+	void displayMazeSize(String string);
 		
 		
 

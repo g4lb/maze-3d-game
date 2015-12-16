@@ -28,6 +28,7 @@ public class MyController extends CommonController {
 				
 			}
 		});
+		
 		this.hash.put("generateMaze", new Command() {
 			@Override
 			public void doCommand(ArrayList<String> string) {
@@ -76,6 +77,26 @@ public class MyController extends CommonController {
 				m.displaySolution(string);
 			}
 		});
+		this.hash.put("fileSize", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) throws IOException {
+				m.displayFileSize(string);
+			}
+		});
+		this.hash.put("mazeSize", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) throws IOException {
+				m.displayMazeSize(string);
+			}
+		});
+		this.hash.put("exit", new Command() {
+			@Override
+			public void doCommand(ArrayList<String> string) {
+				m.stop();
+				
+			}
+		});
+		
 }
 	/**
 	 * a solution method for the View part in MVC
@@ -141,6 +162,16 @@ public class MyController extends CommonController {
 	@Override
 	public void setSolution(String string) {
 		v.displaySolution(string);
+		
+	}
+	@Override
+	public void setFileSize(String string) {
+		v.displayFileSize(string);
+		
+	}
+	@Override
+	public void setMazeSize(String string) {
+		v.displayMazeSize(string);
 		
 	}
 

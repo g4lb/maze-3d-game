@@ -50,4 +50,7 @@ public interface Model {
 	void loadMaze(ArrayList<String> string) throws IOException;
 	void solveMaze(ArrayList<String> string);
 	void displaySolution(ArrayList<String> string);
+	void displayFileSize(ArrayList<String> string);
+	void displayMazeSize(ArrayList<String> string);
+	void stop();
 }

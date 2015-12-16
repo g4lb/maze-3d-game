@@ -45,7 +45,7 @@ public class CLI extends Thread{
 			 out.flush();
 			 System.out.println("please insert the name of command (key)");
 			 System.out.println("1)Dir\n2)generateMaze\n3)displayMaze\n4)showListOfMaze\n5)getCrossSection\n"
-			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze\n9)displaySolution");
+			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze\n9)displaySolution\n10)mazeSize\n10)fileSize");
 			 str = in.nextLine();
 			 s.add(0,str);
 			 try {
@@ -54,7 +54,9 @@ public class CLI extends Thread{
 				 continue;
 			 	}
 			 else if(s.get(0).equals("exit")){
-				 System.out.println("Bye Bye! ");
+				 hash.get(s.get(0)).doCommand(s);
+				 System.out.println("Bye Bye");
+				 System.exit(1);
 				 break;
 			 	}
 			 else if(s.get(0).equals("generateMaze")){
@@ -134,6 +136,24 @@ public class CLI extends Thread{
 				 ArrayList<String> arr = new ArrayList<String>();
 				 String str2;
 				 System.out.println("please select path");
+				 str2 = in.nextLine();
+				 arr.add(0,str2);
+				 hash.get(s.get(0)).doCommand(arr);
+				 continue;
+			 	}
+			 else if(s.get(0).equals("mazeSize")){
+				 ArrayList<String> arr = new ArrayList<String>();
+				 String str2;
+				 System.out.println("please enter the name of the maze");
+				 str2 = in.nextLine();
+				 arr.add(0,str2);
+				 hash.get(s.get(0)).doCommand(arr);
+				 continue;
+			 	}
+			 else if(s.get(0).equals("fileSize")){
+				 ArrayList<String> arr = new ArrayList<String>();
+				 String str2;
+				 System.out.println("please enter the name of the file");
 				 str2 = in.nextLine();
 				 arr.add(0,str2);
 				 hash.get(s.get(0)).doCommand(arr);

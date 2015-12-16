@@ -46,7 +46,7 @@ public class Maze3d implements Serializable{
 	 */
 	public Maze3d(byte[] array){
 		ArrayList<Byte> arr = new ArrayList<>();
-		for (int i = 1; i < array.length; i++) {
+		for (int i = 0; i < array.length; i++) {
 			arr.add(array[i]);
 		}
 		this.start = new Position(0,0,0);
@@ -83,10 +83,14 @@ public class Maze3d implements Serializable{
 			}
 			arr.remove(0);
 		}
-		for (int i = 0; i < getDimension()-1; i++) {
+		for (int i = 0; i < getDimension(); i++) {
 			for (int j = 0; j < getHeight(); j++) {
 				for (int j2 = 0; j2 < getWidth(); j2++) {
-					matrix[i][j][j2] = arr2.remove(0); 
+					if(arr2.isEmpty())
+						
+						break;
+					else
+						matrix[i][j][j2] = arr2.remove(0); 
 				}
 			}
 		}
@@ -526,11 +530,20 @@ public class Maze3d implements Serializable{
 							}
 						counter0++;
 						flag = 0;
+						}
 					}
 				}
 				
 			}
+		if(flag==1){
+			byteArry.add((byte) 1);
+			byteArry.add((byte) counter1);
 		}
+		else if(flag==0) {
+			byteArry.add((byte) 0);
+			byteArry.add((byte) counter0);
+		}
+		
 		byte[] barr = toByte(byteArry);
 		return barr ; 
 	}
@@ -596,7 +609,7 @@ public class Maze3d implements Serializable{
 		}
 		return true;
 	}
-	
+
 }
 
 

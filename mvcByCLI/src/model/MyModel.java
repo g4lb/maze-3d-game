@@ -1,7 +1,5 @@
 package model;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -62,7 +60,6 @@ public class MyModel extends CommonModel {
 		else 
 			ctr.setErrorToUser("wrong path!");
 	}
-	//to generate the is maze data mumber so we need to change this method
 	@Override
 	public void generateMaze(final ArrayList<String> s){
 		if(this.mazeHash.containsKey(s.get(0)))
@@ -74,7 +71,7 @@ public class MyModel extends CommonModel {
 		else if(!this.isInteger(s.get(3)))
 			ctr.setErrorToUser("generate matrix works with integers positive numbers only!");
 		else{
-		new Thread(new Runnable() {
+			this.threadPool.execute(new Runnable() {
 			@Override
 			public void run() {
 				
@@ -87,16 +84,18 @@ public class MyModel extends CommonModel {
 				Maze3d maze = generator.generate(x,y,z);
 				mazeHash.put(s.get(0), maze);
 				ctr.setGenerateMaze("The maze "+s.get(0)+" is ready");
-				//ctr.setReadyMaze("The maze "+s.get(0)+" is ready", maze);
+				while(true){
+					int zz=0;
+					zz+=5;
+				}
 			}
-		}).start();
+		});
 		}
 	}
 	
 	@Override
 	public void displayMaze(ArrayList<String> string) {
 		if(this.mazeHash.containsKey(string.get(0))){
-			//ctr.setReadyMaze(string.get(0),mazeHash.get(string.get(0)));
 			ctr.setPrint3dMaze(string.get(0),mazeHash.get(string.get(0)).getMatrix());
 		}
 		
@@ -177,7 +176,8 @@ public class MyModel extends CommonModel {
 		else {
 			OutputStream out = new MyCompressorOutputStream(new FileOutputStream(string.get(1)+".maz"));
 			out.write(mazeHash.get(string.get(0)).toByteArray());
-			savedHash.put(string.get(0), out);
+			Maze3d maze = mazeHash.get(string.get(0));
+			savedHash.put(string.get(1), maze);
 			out.flush();
 			out.close();
 			ctr.mazeSaved("the maze "+string.get(0)+" saved");
@@ -206,10 +206,8 @@ public class MyModel extends CommonModel {
 				ctr.setErrorToUser("the file is not exist");
 			else{
 			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(0)+".maz"));
-			
-			
-			byte[] b = new byte[1000];
-			System.out.println(b);
+
+			byte[] b = new byte[2000];
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);
@@ -229,9 +227,10 @@ public class MyModel extends CommonModel {
 			ctr.setErrorToUser("maze not exist");
 		else if(!string.get(1).equals("BFS")&&!string.get(1).equals("Astar"))
 			ctr.setErrorToUser("algorithm not exist!");
+		
 		else{
-			new Thread(new Runnable() {
-				
+			this.threadPool.execute(new Runnable() {
+			
 				@Override
 				public void run() {
 			generator.setMaze(mazeHash.get(string.get(0)));
@@ -251,7 +250,7 @@ public class MyModel extends CommonModel {
 			
 			
 				}
-			}).start();
+			});
 		}
 		
 	}
@@ -269,9 +268,50 @@ public class MyModel extends CommonModel {
 			
 		}
 		
-	}	
-	
+	}
 
+
+
+
+	@Override
+	public void displayFileSize(ArrayList<String> string) {
+		if(!mazeHash.containsKey(string.get(0)))
+			ctr.setErrorToUser("maze not exsist");
+		else{
+			Integer size = mazeHash.get(string.get(0)).toByteArray().length;
+			ctr.setFileSize(size.toString()+" bytes");
+		}
+		
+	}
+
+	@Override
+	public void displayMazeSize(ArrayList<String> string) {
+		if(!mazeHash.containsKey(string.get(0)))
+			ctr.setErrorToUser("maze not exsist");
+		else{
+			int x = mazeHash.get(string.get(0)).getWidth();
+			int y = mazeHash.get(string.get(0)).getHeight();
+			int z = mazeHash.get(string.get(0)).getDimension();
+			int size = x*y*z;
+			ctr.setMazeSize("the maze size is: "+ size);
+			
+		}
+		
+	}
+
+
+
+
+	@Override
+	public void stop() {
+		this.threadPool.shutdown();
+		this.threadPool.shutdownNow();
+		
+	}
+
+	
+	
+	
 		
 }
 

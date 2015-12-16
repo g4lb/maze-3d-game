@@ -28,6 +28,8 @@ public interface Controller {
 	void mazeLoaded(String string);
 	void solveMaze(String string);
 	void setSolution(String string);
+	void setFileSize(String string);
+	void setMazeSize(String string);
 
 
 	

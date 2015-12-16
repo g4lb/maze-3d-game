@@ -23,7 +23,6 @@ public class MyDecompressorInputStream extends InputStream {
 	}
 	
 	public MyDecompressorInputStream(InputStream input) throws IOException{
-		super();
 		this.in = input;
 		
 	}
