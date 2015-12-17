@@ -48,7 +48,8 @@ public class CLI extends Thread{
 
 	@Override
 	public void run(){
-		 Scanner in = new Scanner(System.in);
+		 @SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
 		 ArrayList<String> s= new ArrayList<>();
 		 String str;
 		

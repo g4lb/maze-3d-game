@@ -13,6 +13,10 @@ import java.util.ArrayList;
 public class Maze3d implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int dimension,height,width;
 	private Position correct, goal, start;
 	protected int [][][] matrix;
