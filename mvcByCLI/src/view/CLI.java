@@ -18,12 +18,23 @@ import controller.Command;
  * HashMap<String,Command> - every command has an uniqe key
  * 
  * run method - open a menu you can choose
- * 1)printPath
- * 2)generateMaze
- * 3)displayMaze
- * 4)showListOfMaze
+ * 1)Path - show all files in path
+ * 2)generateMaze - generate any type of Maze3d
+ * 3)displayMaze - display a maze3d
+ * 4)showListOfMaze - display all available maze
+ * 5)getCrossSection - getting a 2dMatrix by x,y or z
+ * 6)saveMaze - save maze3d to file
+ * 7)loadMaze - load maze3d from file
+ * 8)solveMaze - solve a maze3d by algorithm
+ * 9)displaySolution - display a alogrithm's solution - you must solve a maze before display
+ * 10)mazeSize - shows a maze size
+ * 11)fileSize - shows a file size
  * 
- * @author Gal Ben Evgi
+ * 
+ * 
+ * all this commands go to Controller->MyModel->Controller->View by MVC design
+ * 
+ * @author Gal Ben Evgi && Gal Malca
  *
  */
 public class CLI extends Thread{
@@ -45,7 +56,7 @@ public class CLI extends Thread{
 			 out.flush();
 			 System.out.println("please insert the name of command (key)");
 			 System.out.println("1)Dir\n2)generateMaze\n3)displayMaze\n4)showListOfMaze\n5)getCrossSection\n"
-			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze\n9)displaySolution\n10)mazeSize\n10)fileSize");
+			 		+ "6)saveMaze\n7)loadMaze\n8)solveMaze\n9)displaySolution\n10)mazeSize\n11)fileSize");
 			 str = in.nextLine();
 			 s.add(0,str);
 			 try {

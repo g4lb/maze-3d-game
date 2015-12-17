@@ -95,41 +95,54 @@ public class MyView extends CommonView {
 		}
 		
 	}
-
+	/**
+	 * this method get a message and display it for user
+	 * this method is a solution from Controller
+	 */
 	@Override
 	public void displayMazeSaved(String string) {
 		System.out.println(string);
 		
 	}
-
+	/**
+	 * this method get a message and display it for user
+	 * this method is a solution from Controller
+	 */
 	@Override
 	public void displayMazeLoaded(String string) {
 		System.out.println(string);
-		
 	}
-
+	/**
+	 * this method get a message and display it for user
+	 * this method is a solution from Controller
+	 */
 	@Override
 	public void displaySolveMaze(String string) {
 		System.out.println(string);
-		
 	}
-
+	/**
+	 * this method get a message and display it for user
+	 * this method is a solution from Controller
+	 */
 	@Override
 	public void displaySolution(String string) {
 		System.out.println(string);
-		
 	}
-
+	/**
+	 * this method get a message and display it for user
+	 * this method is a solution from Controller
+	 */
 	@Override
 	public void displayFileSize(String string) {
 		System.out.println(string);
-		
 	}
-
+	/**
+	 * this method get a message and display it for user
+	 * this method is a solution from Controller
+	 */
 	@Override
 	public void displayMazeSize(String string) {
 		System.out.println(string);
-		
 	}
 	
 
