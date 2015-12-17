@@ -11,9 +11,8 @@ import controller.Controller;
 
 /**
  * <h1> Common Model </h1>
- * This class in abstract class for class adapter design pattern
- * 
- * 
+ * This class is abstract class for "class adapter" design pattern.
+ *
  * @author Gal Ben Evgi & Gal Malca
  * @since 2015-12-17
  * @version 1.0
