@@ -7,9 +7,14 @@ import java.util.HashMap;
 
 /**
  * <h1> Class MyController </h1>
+ * This class getting a problem from View Class and send the problem to Model class
+ *  
  * 
- * @author Gal Ben Evgi
- *
+ * 
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
+ * 
  */
 public class MyController extends CommonController {
 
@@ -142,46 +147,49 @@ public class MyController extends CommonController {
 	@Override
 	public void crossSectionReady(int[][] mat) {
 		v.displayCrossSection(mat);
-		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void mazeSaved(String string) {
 		v.displayMazeSaved(string);
-		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void mazeLoaded(String string) {
-		v.displayMazeLoaded(string);
-		
+		v.displayMazeLoaded(string);	
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void solveMaze(String string) {
 		v.displaySolveMaze(string);
-		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void setSolution(String string) {
 		v.displaySolution(string);
-		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void setFileSize(String string) {
 		v.displayFileSize(string);
-		
 	}
+	/**
+	 * a solution method for the View part in MVC
+	 */
 	@Override
 	public void setMazeSize(String string) {
 		v.displayMazeSize(string);
-		
 	}
-
-
-
-
-	
-
-
-
 
 
 }

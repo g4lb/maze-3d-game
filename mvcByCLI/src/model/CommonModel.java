@@ -9,6 +9,15 @@ import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.search.Solution;
 import controller.Controller;
 
+/**
+ * <h1> Common Model </h1>
+ * This class in abstract class for class adapter design pattern
+ * 
+ * 
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
+ */
 public abstract class CommonModel implements Model {
 
 	Controller ctr;

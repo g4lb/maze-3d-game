@@ -34,8 +34,10 @@ import controller.Command;
  * 
  * all this commands go to Controller->MyModel->Controller->View by MVC design
  * 
- * @author Gal Ben Evgi && Gal Malca
- *
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
+ * 
  */
 public class CLI extends Thread{
 	

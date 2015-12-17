@@ -8,8 +8,11 @@ import controller.Controller;
  * with this data member we can:
  * 1)send objects to Controller
  * 2)generate a problem and solved it with Model via Controller
- * @author Gal Ben Evgi
- *
+ * 
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
+ * 
  */
 public abstract class CommonView implements View{
 

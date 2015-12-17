@@ -27,6 +27,8 @@ import io.MyDecompressorInputStream;
  * <h1> Class MyModel </h1>
  * this class is a model class for a 3d maze.
  * all the overRides are for maze3d game.
+ * 
+ * 
  * @author Gal Ben Evgi & Gal Malca
  * @since 2015-12-17
  * @version 1.0

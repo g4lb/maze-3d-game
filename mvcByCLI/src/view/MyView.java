@@ -9,8 +9,10 @@ import controller.Controller;
  * this class
  * 1)calculate(some problem) - send it for Controller
  * 2)display solution for user - get it from Controller
- * @author Gal Ben Evgi
- *
+ * 
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
  */
 public class MyView extends CommonView {
 

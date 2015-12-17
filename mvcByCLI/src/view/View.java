@@ -5,7 +5,12 @@ import java.util.ArrayList;
 /**
  * <h1> Class View </h1>
  * display all the solutions/messages from Controller
- * @author Gal Ben Evgi
+ * 
+ * 
+ * 
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
  *
  */
 public interface View {

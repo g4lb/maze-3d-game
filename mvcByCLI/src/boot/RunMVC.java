@@ -15,8 +15,9 @@ import view.View;
  * <p><a href="http://www.oracle.com/technetwork/articles/javase/index-142890.html">MVC</a> is a link to oracle website about MVC app design</p>
 
 
- * @author Gal Ben Evgi
- *
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
  */
 public class RunMVC {
 
