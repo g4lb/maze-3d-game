@@ -1,46 +1,55 @@
 package model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * <h1> Class Model </h1>
+ * the model is the main struct of the calculation and the activitis,
+ * when the view need to to something he's call the controllers and the controllers 
+ * call the medel to do it.
+ * when the model end his activity he's tell to the view by the controller.
  * 
- * 
- * @author Gal Ben Evgi
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
  *
  */
 public interface Model {
 	
 	/**
-	 * this method get a path and then she need to shows all files in any path in computer
+	 * this method get a path and then shows all the files in path by the client request.
 	 * @param path
 	 */
 	void dir(File path);
 	/**
-	 * this method get a arrayList of string that include: nameOfMaze,width,length,dim
-	 * and she need to generate a new maze3d with this parameters
-	 * @param string
+	 * this method get an arrayList of strings that include: nameOfMaze,width,length,dim
+	 * and generate a new 3d maze with this parameters.
+	 * @param ArrayList<String> for the name of the new maze and the size by x,y,z.
 	 */
 	void generateMaze(ArrayList<String> string);
 	/**
-	 * this method get a name of maze and she need to display the maze3d to user by name's maze
-	 * @param string
+	 * this method get a name of maze and display the 3d maze to user by name's maze
+	 * @param ArrayList<String> for the name of the maze
 	 */
 	void displayMaze(ArrayList<String> string);
 	/**
-	 * this method need to shows the list of maze that create by user
+	 * this method shows the list of mazes that create by user
 	 * @param string
 	 */
 	void showListOfMaze(ArrayList<String> string);
 	/**
 	 * this method has to check if the parameter s is a positive integer
-	 * @param s
+	 * @param Srting s
 	 * @return true/false
 	 */
 	boolean isInteger(String s);
+	/**
+	 * this method show the cross section of the maze axis.
+	 * @param ArrayList<string> for the name of the maze and for the axis (by order).
+	 * @throws IOException
+	 */
 	void getCrossSection(ArrayList<String> string);
 	/**
 	 * this method save the maze into a file to the project dir and use decompresor to zip the file.

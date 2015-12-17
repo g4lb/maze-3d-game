@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dSearchable;
@@ -24,24 +25,28 @@ import io.MyDecompressorInputStream;
 
 /**
  * <h1> Class MyModel </h1>
- * @author Gal Ben Evgi
- * the methods in class:
- * 1)get a problem from Controller - any problem
- * 2)solve the problem
- * 3)send the solution for Controller
+ * this class is a model class for a 3d maze.
+ * all the overRides are for maze3d game.
+ * @author Gal Ben Evgi & Gal Malca
+ * @since 2015-12-17
+ * @version 1.0
  */
 public class MyModel extends CommonModel {
 
 	
 	
-	
+	/**
+	 * the C'tor of the class.
+	 * @param Controller 
+	 */
 	public MyModel(Controller ctr) {
 		super(ctr);
 	}
 
-
-
-	
+	/**
+	 * this method get a path and then shows all the files in path by the client request.
+	 * @param path
+	 */
 	@Override
 	public void dir(File path) {
 		ArrayList<String> results = new ArrayList<String>();
@@ -60,6 +65,11 @@ public class MyModel extends CommonModel {
 		else 
 			ctr.setErrorToUser("wrong path!");
 	}
+	/**
+	 * this method get a name of maze and display the 3d maze to user by name's maze
+	 * the method use a new Thread to generate the maze and insert the maze to an hashMap of mazes.
+	 * @param ArrayList<String> for the name of the maze
+	 */
 	@Override
 	public void generateMaze(final ArrayList<String> s){
 		if(this.mazeHash.containsKey(s.get(0)))
@@ -84,15 +94,15 @@ public class MyModel extends CommonModel {
 				Maze3d maze = generator.generate(x,y,z);
 				mazeHash.put(s.get(0), maze);
 				ctr.setGenerateMaze("The maze "+s.get(0)+" is ready");
-				while(true){
-					int zz=0;
-					zz+=5;
-				}
 			}
 		});
 		}
 	}
-	
+
+	/**
+	 * this method get a name of maze and display the 3d maze to user by name's maze
+	 * @param ArrayList<String> for the name of the maze
+	 */
 	@Override
 	public void displayMaze(ArrayList<String> string) {
 		if(this.mazeHash.containsKey(string.get(0))){
@@ -103,7 +113,10 @@ public class MyModel extends CommonModel {
 			ctr.setErrorToUser("the maze " + string.get(0) + " is not exist!");
 		
 	}
-	
+	/**
+	 * this method send the list of mazes that create by user
+	 * @param ArrayList<string>
+	 */
 	@Override
 	public void showListOfMaze(ArrayList<String> string) {
 		if(this.mazeHash.isEmpty())
@@ -113,10 +126,12 @@ public class MyModel extends CommonModel {
 			ctr.setNamesOfMazes(list);
 		}
 	}
-
-
-
-	//name,{x,y,z},index
+	/**
+	 * this method show the cross section of the maze axis.
+	 * the method use maze.getCrossSection...
+	 * @param ArrayList<string> for the name of the maze and for the axis (by order).
+	 * @throws IOException
+	 */
 	@Override
 	public void getCrossSection(ArrayList<String> string) {
 		int flag=0;
@@ -148,7 +163,11 @@ public class MyModel extends CommonModel {
 		
 	}
 	
-
+	/**
+	 * this method has to check if the parameter s is a positive integer
+	 * @param Srting s
+	 * @return true/false
+	 */
 	@Override
 	public boolean isInteger(String s) {
 		   try { 
@@ -166,9 +185,11 @@ public class MyModel extends CommonModel {
 		    return true;
 	}
 
-
-
-
+	/**
+	 * this method save the maze into a file to the project dir and use decompresor to zip the file.
+	 * @param ArrayList<string> for the name of the maze and te new name for the file (by order).
+	 * @throws IOException
+	 */
 	@Override
 	public void saveMaze(ArrayList<String> string) throws IOException {
 		if(!mazeHash.containsKey(string.get(0)))
@@ -185,9 +206,13 @@ public class MyModel extends CommonModel {
 		}
 	}
 
-
-
-
+	/**
+	 * this method load the file of the maze and decompres him.
+	 * the method load the file from the project dir and becouse of this the player can save the maze
+	 * and play him any time.
+	 * @param ArrayList<string> for the name of the loaded maze and for the file name(by order)
+	 * @throws IOException
+	 */
 	@Override
 	public void loadMaze(ArrayList<String> string) throws IOException  {
 
@@ -218,9 +243,10 @@ public class MyModel extends CommonModel {
 		
 	}
 
-
-
-
+	/**
+	 * this method solve the maze by 1 of the algorithms Astar/BFS by the client request
+	 * @param ArrayList<string> for the name of the maze and for the algorithm.
+	 */
 	@Override
 	public void solveMaze(final ArrayList<String> string) {
 		if(!mazeHash.containsKey(string.get(0)))
@@ -255,24 +281,23 @@ public class MyModel extends CommonModel {
 		
 	}
 
-
-
-
+	/**
+	 * this method shoe the solution of the solveMaze method.
+	 * @param ArrayList<string> for the name of the maze 
+	 */
 	@Override
 	public void displaySolution(ArrayList<String> string) {
 		if(!soulHash.containsKey(string.get(0)))
 			ctr.setErrorToUser("maze not exist");
 		else{
 			ctr.setSolution(soulHash.get(string.get(0)).toString());
-			
-			
 		}
-		
 	}
 
-
-
-
+	/**
+	 * this method display file size.
+	 * @param ArrayList<string> for the file name 
+	 */
 	@Override
 	public void displayFileSize(ArrayList<String> string) {
 		if(!mazeHash.containsKey(string.get(0)))
@@ -284,6 +309,10 @@ public class MyModel extends CommonModel {
 		
 	}
 
+	/**
+	 * this method display size of maze.
+	 * @param ArrayList<string> for the maze name
+	 */
 	@Override
 	public void displayMazeSize(ArrayList<String> string) {
 		if(!mazeHash.containsKey(string.get(0)))
@@ -294,18 +323,27 @@ public class MyModel extends CommonModel {
 			int z = mazeHash.get(string.get(0)).getDimension();
 			int size = x*y*z;
 			ctr.setMazeSize("the maze size is: "+ size);
-			
 		}
-		
 	}
-
-
-
-
+	
+	/**
+	 * this method make a safty exit from the program
+	 */
 	@Override
 	public void stop() {
-		this.threadPool.shutdown();
-		this.threadPool.shutdownNow();
+		threadPool.shutdown();
+		boolean terminated = false;
+		while(!terminated)
+			try {
+				System.out.println("Giving processes attempt to end...");
+				terminated = threadPool.awaitTermination(5, TimeUnit.SECONDS);
+				System.out.println("Bye Bye");
+				System.exit(1);
+			} catch (InterruptedException e) {
+			
+				e.printStackTrace();
+			}
+				
 		
 	}
 
