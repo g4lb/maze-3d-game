@@ -43,7 +43,7 @@ public interface View {
 	 * getting a maze3d and display it for the user (getting from Presenter)
 	 * @param array
 	 */
-	void display3dmaze(String name,int[][][] arr);
+	void display3dmaze(int[][][] arr);
 	/**
 	 * getting a 2dMatrtix by any cross Section (x,y,z) and display it for the user (getting from Presenter)
 	 * @param array
@@ -82,7 +82,7 @@ public interface View {
 
 	void addObserver(Presenter p);
 
-	String getUserCommand();
+	ArrayList<String> getUserCommand();
 		
 		
 
