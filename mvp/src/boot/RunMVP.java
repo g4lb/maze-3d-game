@@ -1,9 +1,12 @@
 package boot;
 
+import java.util.Observer;
+
 import model.Model;
 import model.MyModel;
-import presenter.Presenter;
+import presenter.CommonPresenter;
 import presenter.MyPresenter;
+import presenter.Presenter;
 import view.MyView;
 import view.View;
 
@@ -24,9 +27,10 @@ public class RunMVP {
 	public static void main(String[] args) {
 		Model m = new MyModel();
 		View v = new MyView();
-		Presenter p = new MyPresenter(m,v);
+		Observer p = new MyPresenter(m,v);
 		v.addObserver(p);
 		m.addObserver(p);
+		
 		v.start();
 		
 		

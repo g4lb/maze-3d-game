@@ -69,7 +69,7 @@ public class CLI extends Thread{
 			 
 				 /**TODO check if command not exist**/
 			 if(userCommand.get(0).equals("exit")){
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("generateMaze")){
@@ -79,7 +79,7 @@ public class CLI extends Thread{
 				 str2 = in.nextLine();
 				 userCommand.add(i,str2);
 			 	 }
-				 notify();
+				 
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("displayMaze")){
@@ -87,7 +87,7 @@ public class CLI extends Thread{
 			 		System.out.println("Please select the name of wanted maze");
 			 		str2 = in.nextLine();
 			 		userCommand.add(1,str2);
-					notify();
+					notifyAll();
 			 		continue;
 			 		}
 			 else if(userCommand.get(0).equals("getCrossSection")){
@@ -97,7 +97,7 @@ public class CLI extends Thread{
 				 str2 = in.nextLine();
 				 userCommand.add(i,str2);
 			 	 }
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("saveMaze")){
@@ -107,7 +107,7 @@ public class CLI extends Thread{
 				 str2 = in.nextLine();
 				 userCommand.add(i,str2);
 			 	 }
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("loadMaze")){
@@ -117,7 +117,7 @@ public class CLI extends Thread{
 				 str2 = in.nextLine();
 				 userCommand.add(i,str2);
 			 	 }
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("solveMaze")){
@@ -127,7 +127,7 @@ public class CLI extends Thread{
 				 str2 = in.nextLine();
 				 userCommand.add(i,str2);
 			 	 }
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("displaySolution")){
@@ -135,7 +135,7 @@ public class CLI extends Thread{
 				 System.out.println("please select the name of maze");
 				 str2 = in.nextLine();
 				 userCommand.add(1,str2);
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("Dir")){
@@ -143,7 +143,7 @@ public class CLI extends Thread{
 				 System.out.println("please select path");
 				 str2 = in.nextLine();
 				 userCommand.add(1,str2);
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("mazeSize")){
@@ -151,7 +151,7 @@ public class CLI extends Thread{
 				 System.out.println("please enter the name of the maze");
 				 str2 = in.nextLine();
 				 userCommand.add(1,str2);
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
 			 else if(userCommand.get(0).equals("fileSize")){
@@ -159,10 +159,10 @@ public class CLI extends Thread{
 				 System.out.println("please enter the name of the file");
 				 str2 = in.nextLine();
 				 userCommand.add(1,str2);
-				 notify();
+				 notifyAll();
 				 continue;
 			 	}
-			 notify();
+			 notifyAll();
 			 		
 			 }
 			

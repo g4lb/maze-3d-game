@@ -17,7 +17,7 @@ import view.View;
  * @author Gal Ben Evgi & Gal Malca
  *
  */
-public abstract class CommonPresenter implements Observer,Presenter {
+public abstract class CommonPresenter implements Observer ,Presenter {
 
 	protected Model m;
 	protected View v;

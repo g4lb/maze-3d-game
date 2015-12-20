@@ -18,7 +18,7 @@ import presenter.Presenter;
  */
 public abstract class CommonView extends Observable implements View {
 
-
+	
 		
 
 	

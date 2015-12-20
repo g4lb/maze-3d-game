@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observer;
 
 import presenter.Presenter;
 
@@ -91,5 +92,6 @@ public interface Model {
 	 * this method make a safty exit from the program
 	 */
 	void stop();
-	void addObserver(Presenter p);
+	void addObserver(Observer p);
+
 }

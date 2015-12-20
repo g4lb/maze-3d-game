@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 import presenter.Presenter;
 
@@ -145,15 +146,18 @@ public class MyView extends CommonView {
 		System.out.println(string);
 	}
 
-	@Override
-	public void addObserver(Presenter p) {
-		addObserver(p);
-		
-	}
+	
 
 	@Override
 	public ArrayList<String> getUserCommand() {
 		return cli.getUserCommand();
+	}
+
+	
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
 	}
 	
 

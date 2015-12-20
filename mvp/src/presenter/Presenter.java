@@ -2,6 +2,7 @@ package presenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observer;
 
 import model.Model;
 import view.View;

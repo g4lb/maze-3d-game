@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 
 import algorithms.mazeGenerators.Maze3d;
@@ -388,13 +389,13 @@ public class MyModel extends CommonModel {
 		
 	}
 
-
-
 	@Override
-	public void addObserver(Presenter p) {
-		addObserver(p);
-		
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
 	}
+	
+
 		
 }
 
