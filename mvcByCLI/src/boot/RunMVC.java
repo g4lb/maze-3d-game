@@ -27,7 +27,12 @@ public class RunMVC {
 		View v = new MyView(ctr);
 		ctr.setModel(m);
 		ctr.setView(v);
+		
+		
+		
 		v.start();
+		
+		//galTest
 		
 		
 
