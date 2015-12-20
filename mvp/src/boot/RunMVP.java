@@ -25,7 +25,6 @@ public class RunMVP {
 		Model m = new MyModel();
 		View v = new MyView();
 		Presenter p = new MyPresenter(m,v);
-		p.setModel(m);
 		v.addObserver(p);
 		m.addObserver(p);
 		v.start();

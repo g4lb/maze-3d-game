@@ -145,8 +145,8 @@ public class MyPresenter extends CommonPresenter {
 	 * a solution method for the View part in MVC
 	 */
 	@Override
-	public void setPrint3dMaze(String name,int[][][] arr){
-		v.display3dmaze(name,arr);
+	public void setPrint3dMaze(int[][][] arr){
+		v.display3dmaze(arr);
 		
 	}
 	/**
@@ -201,12 +201,49 @@ public class MyPresenter extends CommonPresenter {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o == v){
-			String choice = v.getUserCommand();
-			switch (choice) {
+			ArrayList<String> arr = v.getUserCommand();
+			switch (arr.get(0)) {
 			case "Dir":
-				m.dir(new File(choice));
+				m.dir(new File(arr.get(1)));
 				break;
-
+			case "generateMaze":
+				m.generateMaze(arr);
+				break;
+			case "displayMaze":
+				m.displayMaze(arr);
+				break;
+			case "showListOfmaze":
+				m.showListOfMaze(arr);;
+				break;
+			case "getCrossSection":
+				m.getCrossSection(arr);
+				break;
+			case "saveMaze":
+				try {
+					m.saveMaze(arr);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "loadMaze":
+				try {
+					m.loadMaze(arr);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "solveMaze":
+				m.solveMaze(arr);;
+				break;
+			case "displaySolution":
+				m.displaySolution(arr);
+				break;
+			case "mazeSize":
+				m.displayMazeSize(arr);
+				break;
+			case "fileSize":
+				m.displayFileSize(arr);;
+				break;
 			default:
 				break;
 			}

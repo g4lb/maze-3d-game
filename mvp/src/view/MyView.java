@@ -19,7 +19,7 @@ public class MyView extends CommonView {
 
 	CLI cli;
 	
-	public MyView(Presenter ctr) {
+	public MyView() {
 		this.cli = new CLI();
 	}
 	
@@ -69,8 +69,7 @@ public class MyView extends CommonView {
 	 */
 
 	@Override
-	public void display3dmaze(String name,int[][][] arr) {
-		System.out.println("The maze: " + name);
+	public void display3dmaze(int[][][] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[i].length; j++) {
 				for (int j2 = 0; j2 < arr[i][j].length; j2++) {
@@ -153,8 +152,8 @@ public class MyView extends CommonView {
 	}
 
 	@Override
-	public String getUserCommand() {
-		return this.cli.getUserCommand();
+	public ArrayList<String> getUserCommand() {
+		return cli.getUserCommand();
 	}
 	
 

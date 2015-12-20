@@ -58,7 +58,7 @@ public interface Presenter  {
 	 * this method getting an 3D array of maze,name of maze and send it to View Class
 	 * @param name - maze3d's name, maze3d's 3D array
 	 */
-	void setPrint3dMaze(String name,int[][][] arr);
+	void setPrint3dMaze(int[][][] arr);
 	/**
 	 * this method getting an 2D array of maze by cross section (x,y or z) and send it to View Class
 	 * @param mat - maze3d's crossSection

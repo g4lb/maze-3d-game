@@ -28,7 +28,7 @@ public abstract class CommonModel extends Observable implements Model {
 	ExecutorService threadPool;
 	
 
-	public CommonModel(Presenter ctr2) {
+	public CommonModel() {
 		
 		this.mazeHash = new HashMap<String,Maze3d>();
 		this.savedHash = new HashMap<String,Maze3d>();
