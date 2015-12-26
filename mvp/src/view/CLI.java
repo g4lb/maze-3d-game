@@ -144,11 +144,9 @@ public class CLI extends CommonView{
 			 	}
 			 else if(userCommand.get(0).equals("solveMaze")){
 				 String str2;
-				 System.out.println("please select the name of maze and algorithm to solve");
-				 for (int i = 1; i < 3; i++){
+				 System.out.println("please select the name of maze");
 				 str2 = in.nextLine();
-				 userCommand.add(i,str2);
-			 	 }
+				 userCommand.add(1,str2);
 				 setChanged();
 				 notifyObservers();
 				 continue;

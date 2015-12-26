@@ -35,7 +35,7 @@ public abstract class CommonModel extends Observable implements Model {
 		this.savedHash = new HashMap<String,Maze3d>();
 		this.soulHash = new HashMap<String,Solution>();
 		this.mazeAndSHash = new HashMap<Maze3d,Solution>();
-		threadPool = Executors.newFixedThreadPool(10);
+		threadPool = Executors.newCachedThreadPool();
 	}
 
 

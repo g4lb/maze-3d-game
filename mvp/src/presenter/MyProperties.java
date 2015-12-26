@@ -15,31 +15,21 @@ public class MyProperties implements Serializable {
 	private static final long serialVersionUID = 3L;
 	
 	
-	int numOfThread;
 	String generateAlgo;
 	String solveAlgo;
 	String gameInterface;
 	
 	public MyProperties(){
-		numOfThread = 10;
 		generateAlgo = "DFS";
 		solveAlgo = "BFS";
 		gameInterface = "CLI";
 	}
-	public MyProperties(int numOfThread, String generateAlgo, String solveAlgo, String gameInterface) {
-		this.numOfThread = numOfThread;
+	public MyProperties(String generateAlgo, String solveAlgo, String gameInterface) {
 		this.generateAlgo = generateAlgo;
 		this.solveAlgo = solveAlgo;
 		this.gameInterface = gameInterface;
 	}
 	
-	public int getNumOfThread() {
-		return numOfThread;
-	}
-
-	public void setNumOfThread(int numOfThread) {
-		this.numOfThread = numOfThread;
-	}
 
 	public String getGenerateAlgo() {
 		return generateAlgo;

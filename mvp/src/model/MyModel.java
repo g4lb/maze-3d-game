@@ -52,7 +52,7 @@ public class MyModel extends CommonModel {
 	public MyModel(MyProperties proper)  {
 		res = new ArrayList<String>();
 		this.prop = proper;
-		loadFromZip();
+		//loadFromZip();
 		
 	}
 	
@@ -361,12 +361,6 @@ public class MyModel extends CommonModel {
 			setChanged();
 			notifyObservers();
 		}
-		else if(!string.get(2).equals("BFS")&&!string.get(2).equals("Astar")){
-			res.add("Error");
-			res.add("algorithm not exist!");
-			setChanged();
-			notifyObservers();
-		}
 		else{
 			res.add("solveMaze");
 			Future<Solution> mySolve = threadPool.submit(new Callable<Solution>() 
@@ -375,7 +369,7 @@ public class MyModel extends CommonModel {
 				@Override
 				public Solution call() throws Exception { //TODO GAL
 						generator.setMaze(mazeHash.get(string.get(1)));
-					if(string.get(2).equals("BFS")){
+					if(prop.getSolveAlgo().equals("BFS")){
 						Searcher s2 = new BFS();
 						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
 						soulHash.put(string.get(1),sol);
