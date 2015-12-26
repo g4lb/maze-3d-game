@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 
 import model.Model;
 import view.View;
@@ -20,101 +21,44 @@ import view.View;
  * @version 1.0
  * 
  */
-public class MyPresenter extends CommonPresenter {
+public class MyPresenter  implements Observer{
 
+	protected Model m;
+	protected View v;
+	HashMap<String,Command> hash;
+	
 	public MyPresenter(Model m, View v) {
 		this.m = m;
 		this.v = v;
+		hash = new HashMap<String,Command>();
+		//initCommands();
 	}
 	/**
-	 * all the commands for using MVC application design are here.
+	 * set method
+	 * A model
 	 */
-	@Override
-	public void initCommands() {
-		this.hash = new HashMap<String,Command>();
+	public void setModel(Model m) {
+		this.m = m;
+	}
+	/**
+	 * set method
+	 * A view
+	 */
+	public void setView(View v) {
+		this.v = v;
+	}
+	/**
+	 * get method
+	 * hashMap
+	 */
+	public HashMap<String, Command> getHash() {
+		return hash;
+	}
 	
-		
-		this.hash.put("Dir", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) {
-				m.dir(new File(string.get(0)));
-				
-			}
-		});
-		
-		this.hash.put("generateMaze", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) {
-				m.generateMaze(string);
-			}
-		});
-		this.hash.put("displayMaze", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) {
-				m.displayMaze(string);
-			}
-		});
-		this.hash.put("showListOfMaze", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) {
-				m.showListOfMaze(string);
-			}
-		});
-		this.hash.put("getCrossSection", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) {
-				m.getCrossSection(string);
-			}
-		});
-		this.hash.put("saveMaze", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) throws IOException {
-				m.saveMaze(string);
-			}
-		});
-		this.hash.put("loadMaze", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) throws IOException {
-				m.loadMaze(string);
-			}
-		});
-		this.hash.put("solveMaze", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) throws IOException {
-				m.solveMaze(string);
-			}
-		});
-		this.hash.put("displaySolution", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) throws IOException {
-				m.displaySolution(string);
-			}
-		});
-		this.hash.put("fileSize", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) throws IOException {
-				m.displayFileSize(string);
-			}
-		});
-		this.hash.put("mazeSize", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) throws IOException {
-				m.displayMazeSize(string);
-			}
-		});
-		this.hash.put("exit", new Command() {
-			@Override
-			public void doCommand(ArrayList<String> string) {
-				m.stop();
-				
-			}
-		});
-		
-}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setSolutionForDir(ArrayList<String> results) {
 		v.displayDir(results);
 		
@@ -122,21 +66,21 @@ public class MyPresenter extends CommonPresenter {
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override()
+	
 	public void setGenerateMaze(String str) {
 		v.displayMazeReady(str);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setNamesOfMazes(ArrayList<String> names) {
 		v.displayListOfNamesOfMaze(names);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setErrorToUser(String string) {
 		v.displayError(string);
 		
@@ -144,7 +88,7 @@ public class MyPresenter extends CommonPresenter {
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setPrint3dMaze(int[][][] arr){
 		v.display3dmaze(arr);
 		
@@ -152,54 +96,55 @@ public class MyPresenter extends CommonPresenter {
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void crossSectionReady(int[][] mat) {
 		v.displayCrossSection(mat);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void mazeSaved(String string) {
 		v.displayMazeSaved(string);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void mazeLoaded(String string) {
 		v.displayMazeLoaded(string);	
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void solveMaze(String string) {
 		v.displaySolveMaze(string);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setSolution(String string) {
 		v.displaySolution(string);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setFileSize(String string) {
 		v.displayFileSize(string);
 	}
 	/**
 	 * a solution method for the View part in MVC
 	 */
-	@Override
+	
 	public void setMazeSize(String string) {
 		v.displayMazeSize(string);
 	}
 	@Override
 	public void update(Observable o, Object arg) {
+		
 		if(o == v){
 			ArrayList<String> arr = v.getUserCommand();
 			switch (arr.get(0)) {
@@ -207,13 +152,22 @@ public class MyPresenter extends CommonPresenter {
 				m.dir(new File(arr.get(1)));
 				break;
 			case "generateMaze":
-				m.generateMaze(arr);
+				try {
+					m.generateMaze(arr);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				break;
 			case "displayMaze":
+				arr.remove(0);
 				m.displayMaze(arr);
 				break;
-			case "showListOfmaze":
-				m.showListOfMaze(arr);;
+			case "exit":
+				m.stop();
+				break;
+			case "showListOfMaze":
+				m.showListOfMaze(arr);
 				break;
 			case "getCrossSection":
 				m.getCrossSection(arr);
@@ -247,9 +201,63 @@ public class MyPresenter extends CommonPresenter {
 			default:
 				break;
 			}
+			}
+			if(o == m){
+				ArrayList<String> arr1 = m.getSolution();
+				switch (arr1.get(0)) {
+				case "Error":
+					v.displayError(arr1.get(1));
+					break;
+				case "Dir":
+					arr1.remove(0);
+					v.displayDir(arr1);
+					break;
+				case "generateMaze":
+					arr1.remove(0);
+					v.displayMazeReady(arr1.get(0));
+					break;
+				case "displayMaze":
+					v.display3dmaze(m.getData3());
+					break;
+				case "showListOfMaze":
+					arr1.remove(0);
+					v.displayListOfNamesOfMaze(arr1);;
+					break;
+				case "getCrossSection":
+					v.displayCrossSection(m.getData2());
+					break;
+				case "saveMaze":
+					arr1.remove(0);
+					v.displayMazeSaved(arr1.get(0));
+					break;
+				case "loadMaze":
+					arr1.remove(0);
+					v.displayMazeLoaded(arr1.get(0));
+					break;
+				case "solveMaze":
+					arr1.remove(0);
+					v.displaySolveMaze(arr1.get(0));
+					break;
+				case "displaySolution":
+					arr1.remove(0);
+					v.displaySolution(arr1.get(0));
+					break;
+				case "mazeSize":
+					arr1.remove(0);
+					v.displayMazeSize(arr1.get(0));
+					break;
+				case "fileSize":
+					arr1.remove(0);
+					v.displayFileSize(arr1.get(0));
+					break;
+				default:
+					break;
+				}
 		}
 		
 	}
+	
+	
 
-
+	
 }

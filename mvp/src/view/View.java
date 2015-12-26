@@ -3,8 +3,6 @@ package view;
 import java.util.ArrayList;
 import java.util.Observer;
 
-import presenter.Presenter;
-
 /**
  * <h1> Class View </h1>
  * display all the solutions/messages from Presenter
@@ -86,6 +84,7 @@ public interface View {
 	ArrayList<String> getUserCommand();
 
 	void addObserver(Observer p);
+
 		
 		
 

@@ -2,8 +2,6 @@ package view;
 
 import java.util.Observable;
 
-import presenter.Presenter;
-
 /**
  * <h1> Class CommonView </h1>
  * This class has the a data member by Presenter type
