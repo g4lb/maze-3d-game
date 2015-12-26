@@ -3,8 +3,8 @@ package model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import presenter.Presenter;
+import java.util.Observer;
+import java.util.concurrent.ExecutionException;
 
 /**
  * <h1> Class Model </h1>
@@ -29,8 +29,10 @@ public interface Model {
 	 * this method get an arrayList of strings that include: nameOfMaze,width,length,dim
 	 * and generate a new 3d maze with this parameters.
 	 * @param ArrayList<String> for the name of the new maze and the size by x,y,z.
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
 	 */
-	void generateMaze(ArrayList<String> string);
+	void generateMaze(ArrayList<String> string) throws InterruptedException;
 	/**
 	 * this method get a name of maze and display the 3d maze to user by name's maze
 	 * @param ArrayList<String> for the name of the maze
@@ -91,5 +93,9 @@ public interface Model {
 	 * this method make a safty exit from the program
 	 */
 	void stop();
-	void addObserver(Presenter p);
+	void addObserver(Observer p);
+	ArrayList<String> getSolution();
+	public int[][][] getData3();
+	public int[][] getData2();
+
 }

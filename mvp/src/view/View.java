@@ -1,8 +1,7 @@
 package view;
 
 import java.util.ArrayList;
-
-import presenter.Presenter;
+import java.util.Observer;
 
 /**
  * <h1> Class View </h1>
@@ -43,7 +42,7 @@ public interface View {
 	 * getting a maze3d and display it for the user (getting from Presenter)
 	 * @param array
 	 */
-	void display3dmaze(String name,int[][][] arr);
+	void display3dmaze(int[][][] arr);
 	/**
 	 * getting a 2dMatrtix by any cross Section (x,y,z) and display it for the user (getting from Presenter)
 	 * @param array
@@ -80,9 +79,12 @@ public interface View {
 	 */
 	void displayMazeSize(String string);
 
-	void addObserver(Presenter p);
 
-	String getUserCommand();
+
+	ArrayList<String> getUserCommand();
+
+	void addObserver(Observer p);
+
 		
 		
 
