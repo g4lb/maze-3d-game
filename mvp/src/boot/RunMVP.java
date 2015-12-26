@@ -2,9 +2,11 @@ package boot;
 
 import model.Model;
 import model.MyModel;
-import presenter.Presenter;
+import model.PropManager;
 import presenter.MyPresenter;
-import view.MyView;
+import presenter.MyProperties;
+import view.CLI;
+import view.GUI;
 import view.View;
 
 /**
@@ -22,11 +24,20 @@ import view.View;
 public class RunMVP {
 
 	public static void main(String[] args) {
-		Model m = new MyModel();
-		View v = new MyView();
-		Presenter p = new MyPresenter(m,v);
+		
+		MyProperties prop = new PropManager().loadProp();//TODO basic window with properties
+		Model m = new MyModel(prop);
+		View v ;
+		if(prop.getGameInterface().equals("CLI")){
+			v = new CLI();			
+		}
+		else{
+			v = new GUI();
+		}
+		MyPresenter p = new MyPresenter(m,v);
 		v.addObserver(p);
 		m.addObserver(p);
+		
 		v.start();
 		
 		

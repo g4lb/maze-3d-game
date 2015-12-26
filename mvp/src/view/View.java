@@ -1,8 +1,7 @@
 package view;
 
 import java.util.ArrayList;
-
-import presenter.Presenter;
+import java.util.Observer;
 
 /**
  * <h1> Class View </h1>
@@ -80,9 +79,12 @@ public interface View {
 	 */
 	void displayMazeSize(String string);
 
-	void addObserver(Presenter p);
+
 
 	ArrayList<String> getUserCommand();
+
+	void addObserver(Observer p);
+
 		
 		
 

@@ -8,7 +8,6 @@ import java.util.concurrent.Executors;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.search.Solution;
-import presenter.Presenter;
 
 /**
  * <h1> Common Model </h1>
@@ -25,6 +24,8 @@ public abstract class CommonModel extends Observable implements Model {
 	HashMap<String,Maze3d> mazeHash;
 	HashMap<String,Maze3d> savedHash;
 	HashMap<String,Solution> soulHash;
+	HashMap<Maze3d,Solution> mazeAndSHash;
+	
 	ExecutorService threadPool;
 	
 
@@ -33,7 +34,8 @@ public abstract class CommonModel extends Observable implements Model {
 		this.mazeHash = new HashMap<String,Maze3d>();
 		this.savedHash = new HashMap<String,Maze3d>();
 		this.soulHash = new HashMap<String,Solution>();
-		threadPool = Executors.newFixedThreadPool(10);
+		this.mazeAndSHash = new HashMap<Maze3d,Solution>();
+		threadPool = Executors.newCachedThreadPool();
 	}
 
 

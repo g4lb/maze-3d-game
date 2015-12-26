@@ -5,14 +5,22 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dSearchable;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import algorithms.mazeGenerators.Position;
+import algorithms.mazeGenerators.SimpleMaze3dGenerator;
 import algorithms.search.Astar;
 import algorithms.search.BFS;
 import algorithms.search.Heuristic;
@@ -21,7 +29,7 @@ import algorithms.search.Searcher;
 import algorithms.search.Solution;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
-import presenter.Presenter;
+import presenter.MyProperties;
 
 /**
  * <h1> Class MyModel </h1>
@@ -36,14 +44,33 @@ import presenter.Presenter;
 public class MyModel extends CommonModel {
 
 	ArrayList<String> res;
-	int[][][] data3;
-	int[][] data2;
+	int [][][] data3;
+	int [][] data2;
+	MyProperties prop;
 	
 	
-	public MyModel() {
+	public MyModel(MyProperties proper)  {
 		res = new ArrayList<String>();
+		this.prop = proper;
+		//loadFromZip();
+		
+	}
+	
+
+	public int[][][] getData3() {
+		return data3;
 	}
 
+	public int[][] getData2() {
+		return data2;
+	}
+
+	@Override
+	public ArrayList<String> getSolution() {
+		ArrayList<String> copy = new ArrayList<String>(res);
+		res.removeAll(res);
+		return copy;
+	}
 
 	/**
 	 * this method get a path and then shows all the files in path by the client request.
@@ -52,6 +79,8 @@ public class MyModel extends CommonModel {
 	@Override
 	public void dir(File path) {
 		ArrayList<String> results = new ArrayList<String>();
+		
+		results.add("Dir");
 		
 		//"/path/to/the/directory"
 		File[] files = path.listFiles();
@@ -63,11 +92,14 @@ public class MyModel extends CommonModel {
 		    }
 		}
 		res.addAll(results);
-		notify();
+		setChanged();
+		notifyObservers();
 		}
 		else {
+			res.add("Error");
 			res.add("wrong path!");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 	}
 	
@@ -78,41 +110,64 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void generateMaze(final ArrayList<String> s){
-		if(this.mazeHash.containsKey(s.get(0))){
+		if(this.mazeHash.containsKey(s.get(1))){
+			res.add("Error");
 			res.add("This Name of maze is already taken please choose another one");
-			notify();
-		}
-		else if(!this.isInteger(s.get(1))){
-			res.add("generate matrix works with integers positive numbers only!");
-			notify();
+			setChanged();
+			notifyObservers();
+			
 		}
 		else if(!this.isInteger(s.get(2))){
+			res.add("Error");
 			res.add("generate matrix works with integers positive numbers only!");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else if(!this.isInteger(s.get(3))){
+			res.add("Error");
 			res.add("generate matrix works with integers positive numbers only!");
-			notify();
+			setChanged();
+			notifyObservers();
+		}
+		else if(!this.isInteger(s.get(4))){
+			res.add("Error");
+			res.add("generate matrix works with integers positive numbers only!");
+			setChanged();
+			notifyObservers();
 			}
 		else{
-			this.threadPool.execute(new Runnable() {
-			@Override
-			public void run() {
+			res.add("generateMaze");
+			Future<Maze3d> myMaze = threadPool.submit(new Callable<Maze3d>() //TODO
+			{ 
+
+				@Override
+				public Maze3d call() throws Exception  { 
+				int x = Integer.parseInt(s.get(2));
+				int y = Integer.parseInt(s.get(3));
+				int z = Integer.parseInt(s.get(4));
+				if(prop.getGenerateAlgo().equals("DFS"))
+					generator = new MyMaze3dGenerator();
+				else
+					generator = new SimpleMaze3dGenerator();
 				
-				
-				int x = Integer.parseInt(s.get(1));
-				int y = Integer.parseInt(s.get(2));
-				int z = Integer.parseInt(s.get(3));
-				
-				generator = new MyMaze3dGenerator();
 				Maze3d maze = generator.generate(x,y,z);
-				mazeHash.put(s.get(0), maze);
-				res.add("The maze "+s.get(0)+" is ready");
-				notify();
+				return maze;
+				}
+				
+				
+				});
+			try{
+			mazeHash.put(s.get(1), myMaze.get());
 			}
-		});
+			catch(InterruptedException | ExecutionException e)
+			{
+				e.printStackTrace();
+			}
+			res.add("The maze "+s.get(1)+" is ready");
+			setChanged();
+			notifyObservers();
+			}
 		}
-	}
 
 	/**
 	 * this method get a name of maze and display the 3d maze to user by name's maze
@@ -121,13 +176,17 @@ public class MyModel extends CommonModel {
 	@Override
 	public void displayMaze(ArrayList<String> string) {
 		if(this.mazeHash.containsKey(string.get(0))){//TODO new
+			res.add("displayMaze");
 			data3 = (mazeHash.get(string.get(0)).getMatrix());
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		
 		else{
+			res.add("Error");
 			res.add("the maze " + string.get(0) + " is not exist!");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 	}
 	/**
@@ -137,12 +196,16 @@ public class MyModel extends CommonModel {
 	@Override
 	public void showListOfMaze(ArrayList<String> string) {
 		if(this.mazeHash.isEmpty()){
+			res.add("Error");
 			res.add("The List is empty");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else{
+			res.add("showListOfMaze");
 			res.addAll(this.mazeHash.keySet());
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 	}
 	/**
@@ -154,33 +217,43 @@ public class MyModel extends CommonModel {
 	@Override
 	public void getCrossSection(ArrayList<String> string) {
 		int flag=0;
-		if(!mazeHash.containsKey(string.get(0))){
-			res.add("Error: there is no maze who call "+string.get(0));
-			notify();
+		if(!mazeHash.containsKey(string.get(1))){
+			res.add("Error");
+			res.add("there is no maze who call "+string.get(1));
+			setChanged();
+			notifyObservers();
 		}
 		else{
-		generator.setMaze(mazeHash.get(string.get(0)));
-		if(string.get(1).equals("x")){
-			int x = Integer.parseInt(string.get(2));
+		generator.setMaze(mazeHash.get(string.get(1)));
+		if(string.get(2).equals("x")){
+			res.add("getCrossSection");
+			int x = Integer.parseInt(string.get(3));
 			data2 = generator.getCrossSectionByX(x);
-			notify();
+			setChanged();
+			notifyObservers();
 			flag=1;
 		}
-		if(string.get(1).equals("y")){
-			int y = Integer.parseInt(string.get(2));
+		if(string.get(2).equals("y")){
+			res.add("getCrossSection");
+			int y = Integer.parseInt(string.get(3));
 			data2 =generator.getCrossSectionByY(y);
-			notify();
+			setChanged();
+			notifyObservers();
 			flag=1;
 		}
-		if(string.get(1).equals("z")){
-			int z = Integer.parseInt(string.get(2));
+		if(string.get(2).equals("z")){
+			res.add("getCrossSection");
+			int z = Integer.parseInt(string.get(3));
 			data2 =generator.getCrossSectionByZ(z);
-			notify();
+			setChanged();
+			notifyObservers();
 			flag=1;
 		}
 		else if(flag==0)
 		res.add("Error");
-		notify();
+		res.add("Error with 2d cross section");
+		setChanged();
+		notifyObservers();
 		}
 		
 	}
@@ -214,19 +287,23 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void saveMaze(ArrayList<String> string) throws IOException {
-		if(!mazeHash.containsKey(string.get(0))){
+		if(!mazeHash.containsKey(string.get(1))){
+			res.add("Error");
 			res.add("maze not exist");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else {
-			OutputStream out = new MyCompressorOutputStream(new FileOutputStream(string.get(1)+".maz"));
-			out.write(mazeHash.get(string.get(0)).toByteArray());
-			Maze3d maze = mazeHash.get(string.get(0));
-			savedHash.put(string.get(1), maze);
+			res.add("saveMaze");
+			OutputStream out = new MyCompressorOutputStream(new FileOutputStream(string.get(2)+".maz"));
+			out.write(mazeHash.get(string.get(1)).toByteArray());
+			Maze3d maze = mazeHash.get(string.get(1));
+			savedHash.put(string.get(2), maze);
 			out.flush();
 			out.close();
-			res.add("the maze "+string.get(0)+" saved");
-			notify();
+			res.add("the maze "+string.get(1)+" saved");
+			setChanged();
+			notifyObservers();
 		}
 	}
 
@@ -239,7 +316,6 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void loadMaze(ArrayList<String> string) throws IOException  {
-
 			ArrayList<String> results = new ArrayList<String>();
 			String current = new java.io.File( "." ).getCanonicalPath();
 			File path = new File(current);
@@ -251,21 +327,24 @@ public class MyModel extends CommonModel {
 			        results.add(file.getName());
 			    }
 			}
-			if(!results.contains(string.get(0)+".maz")){
+			if(!results.contains(string.get(1)+".maz")){
+				res.add("Error");
 				res.add("the file is not exist");
-				notify();
+				setChanged();
+				notifyObservers();
 			}
 			else{
-			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(0)+".maz"));
-
+			res.add("loadMaze");
+			InputStream in = new MyDecompressorInputStream(new FileInputStream(string.get(1)+".maz"));
 			byte[] b = new byte[2000];
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);
 			loaded.printMatrix();
-			mazeHash.put(string.get(1), loaded);
-			res.add("the maze "+string.get(1)+" is loaded");
-			notify();
+			mazeHash.put(string.get(2), loaded);
+			res.add("the maze "+string.get(2)+" is loaded");
+			setChanged();
+			notifyObservers();
 		}
 		
 	}
@@ -276,42 +355,54 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void solveMaze(final ArrayList<String> string) {
-		if(!mazeHash.containsKey(string.get(0))){
+		if(!mazeHash.containsKey(string.get(1))){
+			res.add("Error");
 			res.add("maze not exist");
-			notify();
-		}
-		else if(!string.get(1).equals("BFS")&&!string.get(1).equals("Astar")){
-			res.add("algorithm not exist!");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else{
-			this.threadPool.execute(new Runnable() {
+			res.add("solveMaze");
+			Future<Solution> mySolve = threadPool.submit(new Callable<Solution>() 
+			{ 
 			
 				@Override
-				public void run() {
-			generator.setMaze(mazeHash.get(string.get(0)));
-			if(string.get(1).equals("BFS")){
-				Searcher s2 = new BFS();
-				Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
-				soulHash.put(string.get(0),sol);
-				res.add("the maze "+string.get(0)+" is solved");
-				notify();
-			}
-			else {
-				Heuristic<Position> h = new MazeAirDistance();
-				Searcher s2 = new Astar<>(h);
-				Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
-				soulHash.put(string.get(0),sol);
-				res.add("the maze "+string.get(0)+" is solved");
-				notify();
-			}
+				public Solution call() throws Exception { //TODO GAL
+						generator.setMaze(mazeHash.get(string.get(1)));
+					if(prop.getSolveAlgo().equals("BFS")){
+						Searcher s2 = new BFS();
+						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
+						soulHash.put(string.get(1),sol);
+						mazeAndSHash.put(mazeHash.get(string.get(1)), sol);
+						return sol;
+						}
+					else {
+						Heuristic<Position> h = new MazeAirDistance();
+						Searcher s2 = new Astar<>(h);
+						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
+						soulHash.put(string.get(1),sol);
+						mazeAndSHash.put(mazeHash.get(string.get(1)), sol);
+						return sol;
+
+				}
 			
 			
 				}
 			});
+			try{
+				soulHash.put(string.get(1), mySolve.get());
+				}
+				catch(InterruptedException | ExecutionException e)
+				{
+					e.printStackTrace();
+				}
+				res.add("the maze "+string.get(1)+" is solved");
+				setChanged();
+				notifyObservers();
+			}
 		}
-		
-	}
+	
+
 
 	/**
 	 * this method shoe the solution of the solveMaze method.
@@ -319,13 +410,17 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displaySolution(ArrayList<String> string) {
-		if(!soulHash.containsKey(string.get(0))){
+		if(!soulHash.containsKey(string.get(1))){
+			res.add("Error");
 			res.add("maze not exist");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else{
-			res.add(soulHash.get(string.get(0)).toString());
-			notify();
+			res.add("displaySolution");
+			res.add(soulHash.get(string.get(1)).toString());
+			setChanged();
+			notifyObservers();
 		}
 	}
 
@@ -335,14 +430,18 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displayFileSize(ArrayList<String> string) {
-		if(!mazeHash.containsKey(string.get(0))){
+		if(!mazeHash.containsKey(string.get(1))){
+			res.add("Error");
 			res.add("maze not exsist");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else{
-			Integer size = mazeHash.get(string.get(0)).toByteArray().length;
+			res.add("fileSize");
+			Integer size = mazeHash.get(string.get(1)).toByteArray().length;
 			res.add(size.toString()+" bytes");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		
 	}
@@ -353,17 +452,21 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displayMazeSize(ArrayList<String> string) {
-		if(!mazeHash.containsKey(string.get(0))){
+		if(!mazeHash.containsKey(string.get(1))){
+			res.add("Error");
 			res.add("maze not exsist");
-			notify();
+			setChanged();
+			notifyObservers();
 		}
 		else{
-			int x = mazeHash.get(string.get(0)).getWidth();
-			int y = mazeHash.get(string.get(0)).getHeight();
-			int z = mazeHash.get(string.get(0)).getDimension();
+			res.add("mazeSize");
+			int x = mazeHash.get(string.get(1)).getWidth();
+			int y = mazeHash.get(string.get(1)).getHeight();
+			int z = mazeHash.get(string.get(1)).getDimension();
 			int size = x*y*z;
-			res.add("the maze size is: "+ size);
-			notify();
+			res.add("the size of the maze is: "+ size+ " cells");
+			setChanged();
+			notifyObservers();
 		}
 	}
 	
@@ -372,27 +475,74 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void stop() {
+		
+		
 		threadPool.shutdown();
 		boolean terminated = false;
 		while(!terminated)
 			try {
+				//OutputStream out = new MyCompressorOutputStream(new FileOutputStream(string.get(2)+".maz"));
+				//FileOutputStream out = new FileOutputStream(new FileOutputStream(mazeAndSHash.)) 
+//				GZIPOutputStream zipOut = new GZIPOutputStream(new FileOutputStream("mazeSolutions" + ".zip"));
+//				ObjectOutputStream out = new ObjectOutputStream(zipOut);
+//				out.writeObject(mazeHash);	
+//				out.writeObject(mazeAndSHash);
+//				out.flush();
+//				out.close();
+				
+				saveToZip();
+				
 				System.out.println("Giving processes attempt to end...");
-				terminated = threadPool.awaitTermination(5, TimeUnit.SECONDS);
+				terminated = threadPool.awaitTermination(4, TimeUnit.SECONDS);
 				System.out.println("Bye Bye");
 				System.exit(1);
-			} catch (InterruptedException e) {
+				} catch (Exception e) {
 			
 				e.printStackTrace();
 			}
 				
 		
 	}
+	private void saveToZip()
+	{
+		try
+		{
+			ObjectOutputStream zipMaze = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("mazeSolutionFile.zip")));
+			zipMaze.writeObject(mazeAndSHash);
+			zipMaze.flush();
+			zipMaze.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	private void loadFromZip() {
+		ArrayList<String> results = new ArrayList<String>();
+		String current;
+		try {
+			current = new java.io.File( "." ).getCanonicalPath();
+			File path = new File(current);
+			File[] files = path.listFiles();
+			
 
-
-
-	@Override
-	public void addObserver(Presenter p) {
-		addObserver(p);
+			for (File file : files) {
+			    if (file.isFile()) {
+			        results.add(file.getName());
+			    }
+			}
+			if(results.contains("mazeSolutionFile.zip")){
+				ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(new FileInputStream("mazeSolutionFile.zip")));
+				//mazeAndSHash. =  (HashMap<Maze3d, Solution>) in.readObject(); 
+				String line = in.readObject().toString();
+				String parts[] = line.split("=");
+				
+				System.out.println(line);
+				in.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 		
