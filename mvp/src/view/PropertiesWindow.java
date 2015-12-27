@@ -31,7 +31,7 @@ public class PropertiesWindow extends BasicWindow {
 		ui.setText("unit interface");
 		ui.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		
-		open.addSelectionListener(new SelectionListener() {
+		ui.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
