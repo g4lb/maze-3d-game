@@ -3,6 +3,9 @@ package view;
 import java.util.ArrayList;
 
 public class GUI extends CommonView {
+	
+	PropertiesWindow prop;
+	
 
 	@Override
 	public void start() {

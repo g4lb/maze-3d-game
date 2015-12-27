@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * <h1> Solution Class </h1>
@@ -9,7 +10,12 @@ import java.util.ArrayList;
  * @version 1.0
  *
  */
-public class Solution {
+public class Solution implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2053065824902166212L;
 	
 	@SuppressWarnings("rawtypes")
 	private ArrayList<State> arr;
@@ -46,6 +52,14 @@ public class Solution {
 	@Override
 	public String toString() {
 		return this.arr.toString();
+	}
+	public Solution() {}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	@SuppressWarnings("rawtypes")
+	public void setArr(ArrayList<State> arr) {
+		this.arr = arr;
 	}
 
 }

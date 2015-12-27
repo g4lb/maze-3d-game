@@ -25,7 +25,7 @@ public class RunMVP {
 
 	public static void main(String[] args) {
 		
-		MyProperties prop = new PropManager().loadProp();//TODO basic window with properties
+		MyProperties prop = new PropManager().loadProp();
 		Model m = new MyModel(prop);
 		View v ;
 		if(prop.getGameInterface().equals("CLI")){

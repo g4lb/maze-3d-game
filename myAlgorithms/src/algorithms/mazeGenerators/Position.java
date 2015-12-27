@@ -1,5 +1,7 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /**
  * <h1> Position Class </h1>
  * this class describe a point in our 3D maze by x,y,z and pai(father).
@@ -8,8 +10,12 @@ package algorithms.mazeGenerators;
  * @version 1.0
  */
 
-public class Position {
+public class Position implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6025974450728343540L;
 	private int x, y, z;
 	private Position pai;
 	
@@ -46,6 +52,11 @@ public class Position {
 		this.y = p.getY();
 		this.z = p.getZ();
 	}
+	/**
+	 * constructor 
+	 * 
+	 */
+	public Position() {}
 	/**
 	 * return a copy of position.
 	 * @return position
@@ -130,6 +141,10 @@ public class Position {
 	 */
 	public void setX(int x) {
 		this.x = x;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

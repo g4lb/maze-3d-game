@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -52,7 +53,7 @@ public class MyModel extends CommonModel {
 	public MyModel(MyProperties proper)  {
 		res = new ArrayList<String>();
 		this.prop = proper;
-		//loadFromZip();
+		loadFromZip();
 		
 	}
 	
@@ -410,7 +411,14 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displaySolution(ArrayList<String> string) {
-		if(!soulHash.containsKey(string.get(1))){
+		if(mazeAndSHash.containsKey(mazeHash.get(string.get(1)))){
+			res.add("displaySolution");
+			Solution sol = mazeAndSHash.get(mazeHash.get(string.get(1)));
+			res.add(sol.toString());
+			setChanged();
+			notifyObservers();
+		}
+		else if(!soulHash.containsKey(string.get(1))){
 			res.add("Error");
 			res.add("maze not exist");
 			setChanged();
@@ -533,11 +541,7 @@ public class MyModel extends CommonModel {
 			}
 			if(results.contains("mazeSolutionFile.zip")){
 				ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(new FileInputStream("mazeSolutionFile.zip")));
-				//mazeAndSHash. =  (HashMap<Maze3d, Solution>) in.readObject(); 
-				String line = in.readObject().toString();
-				String parts[] = line.split("=");
-				
-				System.out.println(line);
+				mazeAndSHash =  (HashMap<Maze3d, Solution>) in.readObject();
 				in.close();
 			}
 		} catch (Exception e) {
