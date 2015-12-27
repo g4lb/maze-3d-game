@@ -5,17 +5,20 @@ import java.io.FileReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class PropertiesWindow extends BasicWindow {
 		
 		String fileName;
 		Text art;
+		Label unitI, algo, solve;
 	
 
 	public PropertiesWindow(String title, int width, int height) {
@@ -24,48 +27,84 @@ public class PropertiesWindow extends BasicWindow {
 
 	@Override
 	void initWidgets() {
+		shell.setLayout(new GridLayout(2,false));
 		
-		shell.setLayout(new GridLayout(1,false));
+		unitI = new Label(shell, SWT.None);
+		unitI.setText("Unit Interface:");
+		//unitI.setLayoutData(new GridData(SWT.TOP,SWT.FILL,false,false,1,1));
 		
-		Combo ui= new Combo(this.shell,SWT.PUSH);
-		ui.setText("unit interface");
-		ui.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		
+		final Combo ui= new Combo(this.shell,SWT.DROP_DOWN );
+		ui.setText("");
+		//ui.setLayoutData(new GridData(SWT.FILL,SWT.NONE,true,false,2,1));
+		String[] items = "GUI,CLI      ".split(",");
+		ui.setItems(items);
 		
 		ui.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			
-			FileDialog fd = new FileDialog(shell,SWT.OPEN);
-			fd.setText("open");
-			fd.setFilterPath("");
-			String[] filterExt = {"*.jpg","*.bmp","*.png","*.jpeg","*.*"};
-			fd.setFilterExtensions(filterExt);
-			fileName = fd.open();
 				
 			}
 			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 		
+		algo = new Label(shell, SWT.None);
+		algo.setText("Generate Algo:  ");
+		//algo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,3,1));
 		
-		art = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		art.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,3));
 		
-		Button convert= new Button(this.shell,SWT.PUSH);
-		convert.setText("convert to ASCII art");
-		convert.setLayoutData(new GridData(SWT.FILL,SWT.TOP,false,false,1,1));
+		final Combo ag= new Combo(this.shell,SWT.DROP_DOWN);
+		ag.setText("");
+		//ag.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,4,1));
+		String[] items1 = "DFS,Simple".split(",");
+		ag.setItems(items1);
 		
-		convert.addSelectionListener(new SelectionListener() {
+		ag.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});
+		
+		solve = new Label(shell, SWT.None);
+		solve.setText("Solve Algo:   ");
+		//solve.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,5,1));
+		
+		
+		final Combo sv= new Combo(this.shell,SWT.DROP_DOWN);
+		sv.setText("");
+		//sv.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,6,1));
+		String[] items2 = "DFS,Astar   ".split(",");
+		sv.setItems(items2);
+		
+		sv.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});
+		
+		Button ok= new Button(this.shell,SWT.PUSH);
+		ok.setText("ok");
+		//ok.setLayoutData(new GridData(SWT.LEFT,SWT.BOTTOM,true,true,7,1));
+		
+		ok.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-//				if(fileName!=null)
-//						//ctr.convert(fileName);
 			}
 			
 			@Override
@@ -73,11 +112,11 @@ public class PropertiesWindow extends BasicWindow {
 			}
 		});
 		
-		Button font= new Button(this.shell,SWT.PUSH);
-		font.setText("set font");
-		font.setLayoutData(new GridData(SWT.FILL,SWT.TOP,false,false,1,1));
+		Button cancel= new Button(this.shell,SWT.PUSH);
+		cancel.setText("cancel");
+		//cancel.setLayoutData(new GridData(SWT.RIGHT,SWT.TOP,true,true,1,2));
 		
-		font.addSelectionListener(new SelectionListener() {
+		cancel.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -91,6 +130,10 @@ public class PropertiesWindow extends BasicWindow {
 				
 			}
 		});
+		
+		
+		
+		
 	
 		
 	}
@@ -116,6 +159,9 @@ public class PropertiesWindow extends BasicWindow {
 		
 	}
 
-
+	public static void main(String[] args) {
+		PropertiesWindow p = new PropertiesWindow("properties", 185, 180);
+		p.run();
+	}
 
 }
