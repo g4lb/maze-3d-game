@@ -1,5 +1,7 @@
 package algorithms.search;
 
+import java.io.Serializable;
+
 /**
  * <h1> State class </h1>
  * this is the main class to our searches, this class make our searches generic by taking an object 
@@ -10,7 +12,11 @@ package algorithms.search;
  * @version 1.0
  * @param <T>
  */
-public class State<T> implements Comparable<State<T>>{
+public class State<T> implements Comparable<State<T>>, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7781849348563253695L;
 	private T state;
 	private T comeFrom;
 	private double cost;
@@ -107,6 +113,10 @@ public class State<T> implements Comparable<State<T>>{
 		return toString().hashCode();
 	}
 	
+	public State() {}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	
 
