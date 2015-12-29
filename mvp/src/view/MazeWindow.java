@@ -39,43 +39,43 @@ public class MazeWindow extends BasicWindow{
 	
 	@Override
 	void initWidgets() {
-		shell.setLayout(new GridLayout(1,false));
+		shell.setLayout(new GridLayout(4,true));
 		
 		final Button startButton=new Button(shell, SWT.PUSH);
 		startButton.setText("Start");
-		startButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		startButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false,false, 2, 1));
 				
 		
 		final Button stopButton=new Button(shell, SWT.PUSH);
 		stopButton.setText("Stop");
-		stopButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		stopButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 		stopButton.setEnabled(false);
 		
 		
 		final Button generate=new Button(shell, SWT.PUSH);
 		generate.setText("Generate");
-		generate.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		generate.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 		//generate.setEnabled(false);
 		
 		final Button displaySol=new Button(shell, SWT.PUSH);
 		displaySol.setText("Display Solution");
-		displaySol.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		displaySol.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 		//displaySol.setEnabled(false);
 		
 		final Button newPro=new Button(shell, SWT.PUSH);
 		newPro.setText("New Properties");
-		newPro.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		newPro.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 		//newPro.setEnabled(false);
 		
 		
 		final Button help=new Button(shell, SWT.PUSH);
 		help.setText("Help");
-		help.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		help.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 		//help.setEnabled(false);
 		
 		final Button exit=new Button(shell, SWT.PUSH);
 		exit.setText("Exit");
-		exit.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+		exit.setLayoutData(new GridData(SWT.FILL , SWT.None, true, false, 4, 1));
 		//exit.setEnabled(false);
 		
 		
@@ -83,7 +83,7 @@ public class MazeWindow extends BasicWindow{
 		
 		//MazeDisplayer maze=new Maze2D(shell, SWT.BORDER);		
 		final MazeDisplayer maze=new Maze3D(shell, SWT.BORDER);
-		maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+		maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 		
 		
 		
