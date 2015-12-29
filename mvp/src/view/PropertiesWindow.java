@@ -5,12 +5,10 @@ import java.io.FileReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -27,16 +25,16 @@ public class PropertiesWindow extends BasicWindow {
 
 	@Override
 	void initWidgets() {
-		shell.setLayout(new GridLayout(2,false));
+		shell.setLayout(new GridLayout(2,true));
 		
 		unitI = new Label(shell, SWT.None);
 		unitI.setText("Unit Interface:");
-		//unitI.setLayoutData(new GridData(SWT.TOP,SWT.FILL,false,false,1,1));
+		unitI.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		
 		
 		final Combo ui= new Combo(this.shell,SWT.DROP_DOWN );
 		ui.setText("");
-		//ui.setLayoutData(new GridData(SWT.FILL,SWT.NONE,true,false,2,1));
+		ui.setLayoutData(new GridData(SWT.FILL,SWT.NONE,true,false,2,1));
 		String[] items = "GUI,CLI      ".split(",");
 		ui.setItems(items);
 		
@@ -54,12 +52,12 @@ public class PropertiesWindow extends BasicWindow {
 		
 		algo = new Label(shell, SWT.None);
 		algo.setText("Generate Algo:  ");
-		//algo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,3,1));
+		algo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,3,1));
 		
 		
 		final Combo ag= new Combo(this.shell,SWT.DROP_DOWN);
 		ag.setText("");
-		//ag.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,4,1));
+		ag.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,4,1));
 		String[] items1 = "DFS,Simple".split(",");
 		ag.setItems(items1);
 		
@@ -77,12 +75,12 @@ public class PropertiesWindow extends BasicWindow {
 		
 		solve = new Label(shell, SWT.None);
 		solve.setText("Solve Algo:   ");
-		//solve.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,5,1));
+		solve.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,5,1));
 		
 		
 		final Combo sv= new Combo(this.shell,SWT.DROP_DOWN);
 		sv.setText("");
-		//sv.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,6,1));
+		sv.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,6,1));
 		String[] items2 = "DFS,Astar   ".split(",");
 		sv.setItems(items2);
 		
@@ -99,7 +97,7 @@ public class PropertiesWindow extends BasicWindow {
 		
 		Button ok= new Button(this.shell,SWT.PUSH);
 		ok.setText("ok");
-		//ok.setLayoutData(new GridData(SWT.LEFT,SWT.BOTTOM,true,true,7,1));
+		ok.setLayoutData(new GridData(SWT.LEFT,SWT.BOTTOM,false,false,1,1));
 		
 		ok.addSelectionListener(new SelectionListener() {
 			
@@ -114,7 +112,7 @@ public class PropertiesWindow extends BasicWindow {
 		
 		Button cancel= new Button(this.shell,SWT.PUSH);
 		cancel.setText("cancel");
-		//cancel.setLayoutData(new GridData(SWT.RIGHT,SWT.TOP,true,true,1,2));
+		cancel.setLayoutData(new GridData(SWT.RIGHT,SWT.BOTTOM,false,false,1,1));
 		
 		cancel.addSelectionListener(new SelectionListener() {
 			
@@ -160,7 +158,7 @@ public class PropertiesWindow extends BasicWindow {
 	}
 
 	public static void main(String[] args) {
-		PropertiesWindow p = new PropertiesWindow("properties", 185, 180);
+		PropertiesWindow p = new PropertiesWindow("properties", 250, 250);
 		p.run();
 	}
 
