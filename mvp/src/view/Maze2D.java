@@ -22,14 +22,14 @@ public class Maze2D extends MazeDisplayer{
 					   int width=getSize().x;
 					   int height=getSize().y;
 
-					   int w=width/mazeData[0].length;
-					   int h=height/mazeData.length;
+					   int w=width/mazeData[0][0].length;
+					   int h=height/mazeData[0].length;
 
 					   for(int i=0;i<mazeData.length;i++)
 					      for(int j=0;j<mazeData[i].length;j++){
 					          int x=j*w;
 					          int y=i*h;
-					          if(mazeData[i][j]!=0)
+					          if(mazeData[0][i][j]!=0)
 					              e.gc.fillRectangle(x,y,w,h);
 					      }
 					}
@@ -63,6 +63,13 @@ public class Maze2D extends MazeDisplayer{
 
 	@Override
 	public void moveRight() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void printSolution() {
 		// TODO Auto-generated method stub
 		
 	}

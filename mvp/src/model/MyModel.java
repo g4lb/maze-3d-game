@@ -45,9 +45,11 @@ import presenter.MyProperties;
 public class MyModel extends CommonModel {
 
 	ArrayList<String> res;
-	int [][][] data3;
+	byte[] data3;
 	int [][] data2;
 	MyProperties prop;
+	
+		
 	
 	
 	public MyModel(MyProperties proper)  {
@@ -57,8 +59,8 @@ public class MyModel extends CommonModel {
 		
 	}
 	
-
-	public int[][][] getData3() {
+	@Override
+	public byte[] getData3() {
 		return data3;
 	}
 
@@ -71,6 +73,10 @@ public class MyModel extends CommonModel {
 		ArrayList<String> copy = new ArrayList<String>(res);
 		res.removeAll(res);
 		return copy;
+	}
+	@Override
+	public Solution getSol(String string) {
+		return soulHash.get(string);
 	}
 
 	/**
@@ -178,7 +184,7 @@ public class MyModel extends CommonModel {
 	public void displayMaze(ArrayList<String> string) {
 		if(this.mazeHash.containsKey(string.get(0))){//TODO new
 			res.add("displayMaze");
-			data3 = (mazeHash.get(string.get(0)).getMatrix());
+			data3 = (mazeHash.get(string.get(0)).toByteArray());
 			setChanged();
 			notifyObservers();
 		}
@@ -411,9 +417,10 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displaySolution(ArrayList<String> string) {
-		if(mazeAndSHash.containsKey(mazeHash.get(string.get(1)))){
+		if(soulHash.containsKey(string.get(1))){
 			res.add("displaySolution");
 			Solution sol = mazeAndSHash.get(mazeHash.get(string.get(1)));
+			res.add(string.get(1));
 			res.add(sol.toString());
 			setChanged();
 			notifyObservers();
@@ -549,6 +556,15 @@ public class MyModel extends CommonModel {
 		}
 		
 	}
+
+
+
+
+
+
+
+
+
 		
 }
 

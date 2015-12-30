@@ -3,6 +3,8 @@ package view;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import algorithms.search.Solution;
+
 /**
  * <h1> Class View </h1>
  * display all the solutions/messages from Presenter
@@ -78,11 +80,12 @@ public interface View {
 	 * @param string
 	 */
 	void displayMazeSize(String string);
+	void MazeByByteArray(byte[] array);
 
 
 
 	ArrayList<String> getUserCommand();
-
+	void displaySolution(Solution sol);
 	void addObserver(Observer p);
 
 		

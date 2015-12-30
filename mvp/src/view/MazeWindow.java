@@ -16,8 +16,10 @@ public class MazeWindow extends BasicWindow{
 	Timer timer;
 	TimerTask task;
 	
+	
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
+		
 	}
 
 	private void randomWalk(MazeDisplayer maze){
@@ -51,38 +53,38 @@ public class MazeWindow extends BasicWindow{
 		stopButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 		stopButton.setEnabled(false);
 		
-		
 		final Button generate=new Button(shell, SWT.PUSH);
 		generate.setText("Generate");
 		generate.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-		//generate.setEnabled(false);
+
 		
 		final Button displaySol=new Button(shell, SWT.PUSH);
 		displaySol.setText("Display Solution");
 		displaySol.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-		//displaySol.setEnabled(false);
+
 		
 		final Button newPro=new Button(shell, SWT.PUSH);
 		newPro.setText("New Properties");
 		newPro.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-		//newPro.setEnabled(false);
+		
 		
 		
 		final Button help=new Button(shell, SWT.PUSH);
 		help.setText("Help");
 		help.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-		//help.setEnabled(false);
+		
 		
 		final Button exit=new Button(shell, SWT.PUSH);
 		exit.setText("Exit");
 		exit.setLayoutData(new GridData(SWT.FILL , SWT.None, true, false, 4, 1));
-		//exit.setEnabled(false);
+		
 		
 		
 		
 		
 		//MazeDisplayer maze=new Maze2D(shell, SWT.BORDER);		
 		final MazeDisplayer maze=new Maze3D(shell, SWT.BORDER);
+		
 		maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 		
 		
@@ -137,11 +139,22 @@ public class MazeWindow extends BasicWindow{
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 		
+		generate.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 	
-	public static void main(String[] args) {
-		MazeWindow win=new MazeWindow("maze example", 700, 500);
-		win.run();
-	}
+	
 
 }

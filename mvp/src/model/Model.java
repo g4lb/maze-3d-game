@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
+import algorithms.search.Solution;
+
 /**
  * <h1> Class Model </h1>
  * the model is the main struct of the calculation and the activitis,
@@ -95,7 +97,9 @@ public interface Model {
 	void stop();
 	void addObserver(Observer p);
 	ArrayList<String> getSolution();
-	public int[][][] getData3();
+	public byte[] getData3();
 	public int[][] getData2();
+	public Solution getSol(String string);
+	
 
 }

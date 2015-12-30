@@ -129,7 +129,7 @@ public class MyPresenter  implements Observer{
 		v.displaySolution(string);
 	}
 	/**
-	 * a solution method for the View part in MVC
+	 * a solution View part in MVC
 	 */
 	
 	public void setFileSize(String string) {
@@ -217,7 +217,7 @@ public class MyPresenter  implements Observer{
 					v.displayMazeReady(arr1.get(0));
 					break;
 				case "displayMaze":
-					v.display3dmaze(m.getData3());
+					v.MazeByByteArray(m.getData3());
 					break;
 				case "showListOfMaze":
 					arr1.remove(0);
@@ -240,7 +240,7 @@ public class MyPresenter  implements Observer{
 					break;
 				case "displaySolution":
 					arr1.remove(0);
-					v.displaySolution(arr1.get(0));
+					v.displaySolution(m.getSol(arr1.get(0)));
 					break;
 				case "mazeSize":
 					arr1.remove(0);
