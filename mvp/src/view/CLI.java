@@ -1,15 +1,10 @@
 package view;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observer;
 import java.util.Scanner;
-
-import presenter.Command;
 
 /**
  * 
@@ -55,7 +50,7 @@ public class CLI extends CommonView{
 
 	BufferedReader in;
 	PrintWriter out;
-	ArrayList<String> userCommand ;
+	ArrayList<String> userCommand;
 	
 	
 	public ArrayList<String> getUserCommand() {
@@ -330,6 +325,14 @@ public class CLI extends CommonView{
 	@Override
 	public void displayMazeSize(String string) {
 		System.out.println(string);
+	}
+
+
+
+	@Override
+	public void mazeByByteArray(byte[] data3) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

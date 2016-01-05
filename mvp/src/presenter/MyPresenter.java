@@ -217,7 +217,7 @@ public class MyPresenter  implements Observer{
 					v.displayMazeReady(arr1.get(0));
 					break;
 				case "displayMaze":
-					v.display3dmaze(m.getData3());
+					v.mazeByByteArray(m.getData3());
 					break;
 				case "showListOfMaze":
 					arr1.remove(0);

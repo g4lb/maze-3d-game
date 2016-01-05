@@ -17,6 +17,7 @@ public abstract class BasicWindow implements Runnable{
 	}
  	
  	abstract void initWidgets();
+ 	
 
 	@Override
 	public void run() {

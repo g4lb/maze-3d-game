@@ -15,7 +15,9 @@ import java.util.Observer;
  *
  */
 public interface View {
-
+	
+	ArrayList<String> getUserCommand();
+	void addObserver(Observer p);
 	void start();
 	
 	/**
@@ -78,12 +80,11 @@ public interface View {
 	 * @param string
 	 */
 	void displayMazeSize(String string);
+	void mazeByByteArray(byte[] data3);
 
 
 
-	ArrayList<String> getUserCommand();
 
-	void addObserver(Observer p);
 
 		
 		

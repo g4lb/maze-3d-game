@@ -30,12 +30,14 @@ public class Maze3D extends MazeDisplayer {
         e.gc.fillPolygon(r);
 		
 	}
+	
 	public Maze3D(Composite parent, int style) {
 		super(parent, style);
-		
 		final Color white=new Color(null, 255, 255, 255);
-		final Color black=new Color(null, 150,150,150);
+		final Color black=new Color(null, 150,150,150);	
 		setBackground(white);
+		
+		
 		addPaintListener(new PaintListener() {
 			
 			@Override
@@ -76,6 +78,7 @@ public class Maze3D extends MazeDisplayer {
 		});
 	}
 	
+
 	private void moveCharacter(int x,int y){
 		if(x>=0 && x<mazeData[0].length && y>=0 && y<mazeData.length && mazeData[y][x]==0){
 			characterX=x;

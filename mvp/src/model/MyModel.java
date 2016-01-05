@@ -45,7 +45,7 @@ import presenter.MyProperties;
 public class MyModel extends CommonModel {
 
 	ArrayList<String> res;
-	int [][][] data3;
+	byte[] data3;
 	int [][] data2;
 	MyProperties prop;
 	
@@ -58,7 +58,7 @@ public class MyModel extends CommonModel {
 	}
 	
 
-	public int[][][] getData3() {
+	public byte[] getData3() {
 		return data3;
 	}
 
@@ -178,7 +178,7 @@ public class MyModel extends CommonModel {
 	public void displayMaze(ArrayList<String> string) {
 		if(this.mazeHash.containsKey(string.get(0))){//TODO new
 			res.add("displayMaze");
-			data3 = (mazeHash.get(string.get(0)).getMatrix());
+			data3 = (mazeHash.get(string.get(0)).toByteArray());
 			setChanged();
 			notifyObservers();
 		}

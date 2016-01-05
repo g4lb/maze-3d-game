@@ -26,14 +26,14 @@ public class RunMVP {
 	public static void main(String[] args) {
 		
 		MyProperties prop = new PropManager().loadProp();
-		Model m = new MyModel(prop);
-		View v ;
-		if(prop.getGameInterface().equals("CLI")){
+		
+		View v = new GUI();
+		
+		if(v.getUserCommand().contains("CLI")){
 			v = new CLI();			
 		}
-		else{
-			v = new GUI();
-		}
+		
+		Model m = new MyModel(prop);
 		MyPresenter p = new MyPresenter(m,v);
 		v.addObserver(p);
 		m.addObserver(p);
