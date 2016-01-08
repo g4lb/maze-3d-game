@@ -30,6 +30,9 @@ public class PropertiesWindow extends BasicWindow {
 	void initWidgets() {
 		shell.setLayout(new GridLayout(2,true));
 		
+		
+		
+		
 		unitI = new Label(shell, SWT.None);
 		unitI.setText("Unit Interface:");
 		unitI.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
@@ -76,6 +79,7 @@ public class PropertiesWindow extends BasicWindow {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				
 				arr.add(ui.getText());
 				arr.add(ag.getText());
 				arr.add(sv.getText());

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
 import algorithms.mazeGenerators.Position;
-import algorithms.search.Solution;
 import algorithms.search.State;
 
 public class Maze3D extends MazeDisplayer {
@@ -18,6 +18,7 @@ public class Maze3D extends MazeDisplayer {
 //	public int characterZ=2;
 	Position correct,goul,start;
 	int flag = 0;
+	Image image ;
 //	public int exitX=0;
 //	public int exitY=2;
 //	public int exitZ=2;
@@ -38,6 +39,7 @@ public class Maze3D extends MazeDisplayer {
         e.gc.drawPolygon(fr);
         
         e.gc.fillPolygon(r);
+        e.gc.drawImage(image, 250, 250);
 		
 	}
 	public Maze3D(Composite parent, int style) {
@@ -46,7 +48,7 @@ public class Maze3D extends MazeDisplayer {
 		final Color white=new Color(null, 255, 255, 255);
 		final Color black=new Color(null, 150,150,150);
 		setBackground(white);
-		
+		image = new Image(this.getDisplay(), "C:\\Users\\Gal Ben Evgi\\Desktop\\MaggieSimpson3.gif");
 		start = new Position(0, 0, 0);
 		correct = new Position(0, 0, 0);
 		goul = new Position(0, 0, 0);
@@ -65,54 +67,63 @@ public class Maze3D extends MazeDisplayer {
 					
 				   e.gc.setForeground(new Color(null,0,0,0));
 				   e.gc.setBackground(new Color(null,0,0,0));
+				
 				   
 				  
 				   
 				   int width=getSize().x;
 				   int height=getSize().y;
 				   
+				
 				   
 				   int mx=width/2;
 
 				   double w=(double)width/mazeData[0][0].length;
 				   double h=(double)height/mazeData[0].length;
 
-				   for(int i=0;i<mazeData[0].length;i++){
-					   double w0=0.7*w +0.3*w*i/mazeData[0].length;
-					   double w1=0.7*w +0.3*w*(i+1)/mazeData[0].length;
-					   double start=mx-w0*mazeData[0][i].length/2;
-					   double start1=mx-w1*mazeData[0][i].length/2;
-				      for(int j=0;j<mazeData[0][i].length;j++){
+				   for(int i=0;i<mazeData[correct.getZ()].length;i++){
+					   double w0=0.7*w +0.3*w*i/mazeData[correct.getZ()].length;
+					   double w1=0.7*w +0.3*w*(i+1)/mazeData[correct.getZ()].length;
+					   double start=mx-w0*mazeData[correct.getZ()][i].length/2;
+					   double start1=mx-w1*mazeData[correct.getZ()][i].length/2;
+				      for(int j=0;j<mazeData[correct.getZ()][i].length;j++){
 				          double []dpoints={start+j*w0,i*h,start+j*w0+w0,i*h,start1+j*w1+w1,i*h+h,start1+j*w1,i*h+h};
 				          double cheight=h/2;
-				          if(mazeData[0][i][j]!=0)
+				          if(mazeData[correct.getZ()][i][j]!=0)
 				        	  paintCube(dpoints, cheight,e);
-				          
-				          if(i==correct.getY() && j==correct.getX()){
-							   e.gc.setBackground(new Color(null,200,0,0));
-							   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
-							   e.gc.setBackground(new Color(null,255,0,0));
-							   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
-							   e.gc.setBackground(new Color(null,0,0,0));				        	  
-				          }
-				          if(i==goul.getY() && j==goul.getX() && !goul.equals(correct)){
-							   e.gc.setBackground(new Color(null,0,255,0));
-							   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
-							   e.gc.setBackground(new Color(null,0,255,0));
-							   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
-							   e.gc.setBackground(new Color(null,0,0,0));				        	  
-				          }
+		
 				          if(flag==1){
 				        	  ArrayList<State> arr = solution.getArr();
 				        	  for(int k = 0;k<arr.size();k++){
-				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i, 0))){
-				        		  e.gc.setBackground(new Color(null,0,0,200));
+				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i,correct.getZ()))){				
+				        		  e.gc.setBackground(new Color(null,0,0,0));
 				        		  e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
-				        		  e.gc.setBackground(new Color(null,0,0,200));
+				        		  e.gc.setBackground(new Color(null,150,150,0));
 				        		  e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
-				        		  e.gc.setBackground(new Color(null,0,0,0));	
+				        		  e.gc.setBackground(new Color(null,0,0,0));
+				        		  
+
+				        		 
 				        		  }
-				          }}	
+				          }}
+				          if(i==goul.getY() && j==goul.getX() && goul.getZ()==correct.getZ() && !goul.equals(correct)){
+							   e.gc.setBackground(new Color(null,0,255,0));
+							   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
+							   e.gc.setBackground(new Color(null,0,255,0));
+							   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
+							   e.gc.setBackground(new Color(null,0,0,0));				        	  
+				          }
+				          if(i==correct.getY() && j==correct.getX()){
+							   e.gc.setBackground(new Color(null,200,0,0));
+							   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
+
+							   e.gc.setBackground(new Color(null,255,0,0));
+							   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
+							   e.gc.setBackground(new Color(null,0,0,0));
+							
+							 
+				          }
+				         
 				      }
 				   }
 				
@@ -120,13 +131,14 @@ public class Maze3D extends MazeDisplayer {
 		});
 	}
 	
-	private void moveCharacter(int x,int y){
-		if(x>=0 && x<mazeData[0].length && y>=0 && y<mazeData.length && mazeData[0][y][x]==0){
+
+	private void moveCharacter(int x,int y,int z){
+		//if(x>=0 && x<mazeData[z].length && y>=0 && y<mazeData.length && mazeData[z][y][x]==0){
 			correct.setX(x);
 			correct.setY(y);
-			correct.setZ(0);
+			correct.setZ(z);
 			redraw();
-		}
+		//}
 	}
 	@Override
 	public void printSolution() {
@@ -138,47 +150,86 @@ public class Maze3D extends MazeDisplayer {
 	 */
 	@Override
 	public void moveUp() {
-		int x=correct.getX();
-		int y=correct.getY();
-		y=y-1;
-		moveCharacter(x, y);
+		Position up = new Position(maze.getCorrect());
+		up.setZ(up.getZ()+1);
+		if(maze.cellValueReal(up)&&maze.cellValue(up)!=1)
+		{
+		correct.setZ(correct.getZ()+1);
+		moveCharacter(correct.getX(),correct.getY(),correct.getZ());
+		}
 	}
 	/* (non-Javadoc)
 	 * @see view.MazeDisplayer#moveDown()
 	 */
 	@Override
 	public void moveDown() {
-		int x=correct.getX();
-		int y=correct.getY();
-		y=y+1;
-		moveCharacter(x, y);
+		Position down = new Position(maze.getCorrect());
+		down.setZ(down.getZ()-1);
+		if(maze.cellValueReal(down)&&maze.cellValue(down)!=1)
+		{
+			correct.setZ(correct.getZ()-1);
+			moveCharacter(correct.getX(),correct.getY(),correct.getZ());
+		}
 	}
 	/* (non-Javadoc)
 	 * @see view.MazeDisplayer#moveLeft()
 	 */
 	@Override
 	public void moveLeft() {
-		int x=correct.getX();
-		int y=correct.getY();
-		x=x-1;
-		moveCharacter(x, y);
+		Position left = new Position(maze.getCorrect());
+		left.setX(left.getX()-1);
+		if(maze.cellValueReal(left)&&maze.cellValue(left)!=1)
+		{
+			correct.setX(correct.getX()-1);
+			moveCharacter(correct.getX(),correct.getY(),correct.getZ());
+		
+		}
+	
 	}
 	/* (non-Javadoc)
 	 * @see view.MazeDisplayer#moveRight()
 	 */
 	@Override
 	public void moveRight() {
-		int x=correct.getX();
-		int y=correct.getY();
-		x=x+1;
-		moveCharacter(x, y);
+		Position right = new Position(maze.getCorrect());
+		right.setX(right.getX()+1);
+		if(maze.cellValueReal(right)&&maze.cellValue(right)!=1)
+		{
+			correct.setX(correct.getX()+1);
+			moveCharacter(correct.getX(),correct.getY(),correct.getZ());
+		
+		}
+	
 	}
 	
 	@Override
-	public void setCharacterPosition(int row, int col) {
+	public void moveForword() {
+		Position forword = new Position(maze.getCorrect());
+		forword.setY(forword.getY()-1);
+		if(maze.cellValueReal(forword)&&maze.cellValue(forword)!=1)
+		{
+		correct.setY(correct.getY()-1);
+		moveCharacter(correct.getX(),correct.getY(),correct.getZ());
+		}
+	}
+	
+	@Override
+	public void moveBackward() {
+		Position backward = new Position(maze.getCorrect());
+		backward.setY(backward.getY()+1);
+		if(maze.cellValueReal(backward)&&maze.cellValue(backward)!=1)
+		{
+		correct.setY(correct.getY()+1);
+		moveCharacter(correct.getX(),correct.getY(), correct.getZ());
+		}
+	}
+	
+	@Override
+	public void setCharacterPosition(int row, int col,int floor) {
 		int x=correct.getX();
 		int y=correct.getY();
-		moveCharacter(col,row);
+		int z=correct.getZ();
+		moveCharacter(col,row,floor);
 	}
 
 }

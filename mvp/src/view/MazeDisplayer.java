@@ -46,6 +46,16 @@ public abstract class MazeDisplayer extends Canvas {
 		this.solution = solution;
 		
 	}
+	public void removeSol() {
+		try{
+		if(solution.getArr().size()>0){
+			while(!solution.getArr().isEmpty()){
+				solution.getArr().remove(0);
+			}
+		}}
+		catch (Exception e) {
+		}
+	}
 	public void setMaze(Maze3d maze1){
 		maze = maze1;
 		mazeData = maze.getMatrix();
@@ -56,7 +66,7 @@ public abstract class MazeDisplayer extends Canvas {
 		return maze.getMatrix();
 	}
 
-	public abstract  void setCharacterPosition(int row,int col);
+	public abstract  void setCharacterPosition(int row,int col,int floor);
 
 	public abstract void moveUp();
 
@@ -65,6 +75,14 @@ public abstract class MazeDisplayer extends Canvas {
 	public abstract  void moveLeft();
 
 	public  abstract void moveRight();
+	
 	public abstract void printSolution();
+
+	public abstract void moveForword();
+
+	public abstract void moveBackward();
+	
+	
+	
 
 }

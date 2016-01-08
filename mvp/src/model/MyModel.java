@@ -347,7 +347,7 @@ public class MyModel extends CommonModel {
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);
-			loaded.printMatrix();
+			//loaded.printMatrix();
 			mazeHash.put(string.get(2), loaded);
 			res.add("the maze "+string.get(2)+" is loaded");
 			setChanged();
@@ -375,7 +375,8 @@ public class MyModel extends CommonModel {
 			
 				@Override
 				public Solution call() throws Exception { //TODO GAL
-						generator.setMaze(mazeHash.get(string.get(1)));
+					generator = new MyMaze3dGenerator();
+					generator.setMaze(mazeHash.get(string.get(1)));
 					if(prop.getSolveAlgo().equals("BFS")){
 						Searcher s2 = new BFS();
 						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));

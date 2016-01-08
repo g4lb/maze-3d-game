@@ -38,7 +38,7 @@ public class Maze2D extends MazeDisplayer{
 
 
 	@Override
-	public void setCharacterPosition(int row, int col) {
+	public void setCharacterPosition(int row, int col,int floor) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -70,6 +70,20 @@ public class Maze2D extends MazeDisplayer{
 
 	@Override
 	public void printSolution() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void moveForword() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void moveBackward() {
 		// TODO Auto-generated method stub
 		
 	}

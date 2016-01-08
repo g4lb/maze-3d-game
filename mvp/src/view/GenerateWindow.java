@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class GenerateWindow extends BasicWindow {
@@ -22,32 +24,50 @@ public class GenerateWindow extends BasicWindow {
 
 	@Override
 	void initWidgets() {
-		shell.setLayout(new GridLayout(2,false));
+		shell.setLayout(new GridLayout(2,true));
 		
-		final Text mazeName=new Text(shell,SWT.Activate);
+		final Label mazeName=new Label(shell,SWT.NONE);
 		mazeName.setText("mazeName:");
-		arr.add(new Text(shell, SWT.BORDER).toString());
+		mazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		Text t = new Text(shell, SWT.BORDER);
+		t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		
-		final Text columns=new Text(shell,SWT.Activate);
+		
+		final Label columns=new Label(shell,SWT.NONE);
 		columns.setText("columns:");
-		arr.add(new Text(shell, SWT.BORDER).toString());
+		columns.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		final Text rows=new Text(shell,SWT.Activate);
+		Text t1 = new Text(shell, SWT.BORDER);
+		t1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Label rows=new Label(shell,SWT.NONE);
 		rows.setText("rows:");
-		arr.add(new Text(shell, SWT.BORDER).toString());
+		rows.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		final Text floors=new Text(shell,SWT.Activate);
+		Text t2 = new Text(shell, SWT.BORDER);
+		t2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Label floors=new Label(shell,SWT.NONE);
 		floors.setText("number of floors:");
-		arr.add(new Text(shell, SWT.BORDER).toString());
+		floors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		Text t3 = new Text(shell, SWT.BORDER);;
+		t3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		final Button ok = new Button(shell, SWT.PUSH);
 		ok.setText("OK");
+		ok.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 		
 		ok.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				arr.add(t.getText());
+				arr.add(t1.getText());
+				arr.add(t2.getText());
+				arr.add(t3.getText());
 				shell.close();
 			}
 			
@@ -61,6 +81,7 @@ public class GenerateWindow extends BasicWindow {
 		
 		final Button defualt = new Button(shell, SWT.PUSH);
 		defualt.setText("Defualt Options");
+		defualt.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false, 1, 1));
 		
 		defualt.addSelectionListener(new SelectionListener() {
 			
@@ -88,6 +109,9 @@ public class GenerateWindow extends BasicWindow {
 		this.run();
 		
 	}
-
+	public static void main(String[] args) {
+		GenerateWindow g = new GenerateWindow("sadf", 250, 250);
+		g.run();
+	}
 
 }

@@ -31,7 +31,7 @@ public class MyPresenter  implements Observer{
 		this.m = m;
 		this.v = v;
 		hash = new HashMap<String,Command>();
-		//initCommands();
+	
 	}
 	/**
 	 * set method

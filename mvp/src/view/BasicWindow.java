@@ -1,5 +1,8 @@
 package view;
 
+
+
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -14,9 +17,12 @@ public abstract class BasicWindow implements Runnable{
  		shell  = new Shell(display);
  		shell.setSize(width,height);
  		shell.setText(title);
+ 		
 	}
  	
  	abstract void initWidgets();
+ 	
+
 
 	@Override
 	public void run() {

@@ -348,7 +348,18 @@ public class CLI extends CommonView{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
+
+	@Override
+	public void displayMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 	
 
 }

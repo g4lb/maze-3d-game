@@ -1,5 +1,7 @@
 package boot;
 
+import java.util.ArrayList;
+
 import model.Model;
 import model.MyModel;
 import model.PropManager;
@@ -28,13 +30,14 @@ public class RunMVP {
 		
 		MyProperties prop = new PropManager().loadProp();
 		View v = new GUI();
+		ArrayList<String> arr = v.getUserCommand();
 		if(v.getUserCommand().get(0).equals("CLI")){
 			v = new CLI();			
 		}
-		if(!prop.getGenerateAlgo().equals(v.getUserCommand().get(1)))
-			prop.setGenerateAlgo(v.getUserCommand().get(1));
-		if(!prop.getSolveAlgo().equals(v.getUserCommand().get(2)))
-			prop.setSolveAlgo(v.getUserCommand().get(2));
+		if(!prop.getGenerateAlgo().equals(arr.get(1)))
+			prop.setGenerateAlgo(arr.get(1));
+		if(!prop.getSolveAlgo().equals(arr.get(2)))
+			prop.setSolveAlgo(arr.get(2));
 		
 		Model m = new MyModel(prop);
 		MyPresenter p = new MyPresenter(m,v);

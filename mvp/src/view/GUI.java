@@ -1,19 +1,36 @@
 package view;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.internal.opengl.win32.PIXELFORMATDESCRIPTOR;
+import org.eclipse.swt.internal.theme.Theme;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
-import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import algorithms.search.State;
 
@@ -28,6 +45,7 @@ public class GUI extends CommonView {
 	Timer timer;
 	TimerTask task;
 	String nameOfThisMaze;
+	String fileName;
 	
 	
 	public GUI() {
@@ -59,16 +77,13 @@ public class GUI extends CommonView {
 				{
 					shell.setLayout(new GridLayout(4,true));
 					
-					final Button startButton=new Button(shell, SWT.PUSH);
-					startButton.setText("Start");
-					startButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false,false, 2, 1));
-							
 					
-					final Button stopButton=new Button(shell, SWT.PUSH);
-					stopButton.setText("Stop");
-					stopButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-					stopButton.setEnabled(false);
+
+
+
+
 					
+
 					final Button generate=new Button(shell, SWT.PUSH);
 					generate.setText("Generate");
 					generate.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
@@ -82,77 +97,245 @@ public class GUI extends CommonView {
 					final Button newPro=new Button(shell, SWT.PUSH);
 					newPro.setText("New Properties");
 					newPro.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-					
-					
-					
-					final Button help=new Button(shell, SWT.PUSH);
-					help.setText("Help");
-					help.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-					
-					
-					final Button exit=new Button(shell, SWT.PUSH);
-					exit.setText("Exit");
-					exit.setLayoutData(new GridData(SWT.FILL , SWT.None, true, false, 4, 1));
+		
+					final Button solve=new Button(shell, SWT.PUSH);
+					solve.setText("Solve");
+					solve.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
 					
 					
 					
 					
-						
+				
 					maze=new Maze3D(shell, SWT.BORDER);
 					maze.setMaze(new Maze3d(1, 20, 20));
 					maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 					
-					
-					
-					
-					startButton.addSelectionListener(new SelectionListener() {
+					Menu menuBar = new Menu(shell, SWT.BAR);
+					Menu fileMenu = new Menu(menuBar);
+
+					MenuItem fileItem = new MenuItem(menuBar, SWT.CASCADE);
+				    fileItem.setText("File");
+				    fileItem.setMenu(fileMenu);
+				    
+				    
+				    MenuItem openItem = new MenuItem(fileMenu, SWT.NONE);
+				    openItem.setText("Open...");
+				    MenuItem saveItem = new MenuItem(fileMenu, SWT.NONE);
+				    saveItem.setText("Save");
+				    MenuItem exit = new MenuItem(fileMenu, SWT.NONE);
+				    exit.setText("Exit");
+
+				    shell.setMenuBar(menuBar);
+				    shell.open();
+				    
+				    saveItem.addSelectionListener(new SelectionListener() {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
-							timer=new Timer();
-							task=new TimerTask() {
+							
+							new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									userCommand.clear();
+									userCommand.add("saveMaze");
+									userCommand.add(nameOfThisMaze);
+									new BasicWindow("Save",250,100) {
+										
+										@Override
+										void initWidgets() {
+											
+											shell.setLayout(new GridLayout(2,true));
+											final Label filename=new Label(shell,SWT.NONE);
+											filename.setText("file Name:");
+											filename.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+											
+											Text t = new Text(shell, SWT.BORDER);
+											t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+											
+											final Button ok = new Button(shell, SWT.PUSH);
+											ok.setText("OK");
+											ok.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
+											
+											ok.addSelectionListener(new SelectionListener(){
+												
+												@Override
+												public void widgetSelected(SelectionEvent arg0) {
+																			
+													userCommand.add(t.getText());
+													shell.close();
+												}
+												
+												@Override
+												public void widgetDefaultSelected(SelectionEvent arg0) {	
+												}
+											});	
+										}}.run();
+											setChanged();
+											notifyObservers();
+								
+								}}).start();
+							
+						}
+					
+						@Override
+						public void widgetDefaultSelected(SelectionEvent arg0) {}
+					});
+					
+					openItem.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent arg0) {
+							new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									new BasicWindow("Load",250,100) {
+										
+										@Override
+										void initWidgets() {
+											shell.setLayout(new GridLayout(2,true));
+											final Label mazeName=new Label(shell,SWT.NONE);
+											mazeName.setText("maze Name:");
+											mazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+											
+											Text t = new Text(shell, SWT.BORDER);
+											t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+											
+											final Button ok = new Button(shell, SWT.PUSH);
+											ok.setText("OK");
+											ok.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
+											
+											ok.addSelectionListener(new SelectionListener(){
+												
+												@Override
+												public void widgetSelected(SelectionEvent arg0) {
+																			
+													nameOfThisMaze=t.getText();
+													FileDialog fd = new FileDialog(shell,SWT.OPEN);
+													fd.setText("Open");
+													fd.setFilterPath(""); //Correct folder
+													String[] filterExt = {"*.*"};
+													fd.setFilterExtensions(filterExt); //add to path
+													
+													fileName = fd.open(); //open the dialog - if the string is not null - nivhar kovetz	
+													
+													shell.close();
+												}
+												
+												@Override
+												public void widgetDefaultSelected(SelectionEvent arg0) {	
+												}
+											});	
+										}}.run();
+
+											String fname= fileName;
+									        String split[]  = fname.split("\\\\");
+									        String split2[] = split[split.length-1].split(".maz");
+									     			
+											userCommand.clear();
+											userCommand.add("loadMaze");
+											userCommand.add(split2[0]);
+											userCommand.add(nameOfThisMaze);
+											setChanged();
+											notifyObservers();
+											
+											userCommand.clear();
+											userCommand.add(0,"displayMaze");
+											userCommand.add(nameOfThisMaze);
+											setChanged();
+											notifyObservers();
+
+											timer = new Timer();
+											task = new TimerTask() {
+												
+												@Override
+												public void run() {
+													display.syncExec( new Runnable() {
+														public void run() {
+															maze.redraw();
+															maze.setFocus();
+														}
+													});
+												}
+											};
+											timer.scheduleAtFixedRate(task, 0, 10000);
+											
+										
+											
+											
+									}
+								
+											
+											
+									
+								
+							}
+							).start();
+							
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent arg0) {}
+					});
+				    
+					maze.addKeyListener(new KeyListener() {
+						
+						@Override
+						public void keyReleased(KeyEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void keyPressed(KeyEvent e) {
+							if (e.keyCode == SWT.PAGE_UP)
+							{
+								maze.moveUp();
+							}
+							if (e.keyCode == SWT.PAGE_DOWN)
+							{
+								maze.moveDown();
+							}
+							if (e.keyCode == SWT.ARROW_LEFT)
+							{
+								maze.moveLeft();
+							}
+							if (e.keyCode == SWT.ARROW_RIGHT)
+							{
+								maze.moveRight();
+							}
+							if (e.keyCode == SWT.ARROW_UP)
+							{
+								maze.moveForword();
+							}
+							if (e.keyCode == SWT.ARROW_DOWN)
+							{
+								maze.moveBackward();
+							}
+							timer = new Timer();
+							task = new TimerTask() {
+								
 								@Override
 								public void run() {
 									display.syncExec(new Runnable() {
 										@Override
 										public void run() {
-											//randomWalk(maze);
+											maze.redraw();
+											maze.forceFocus();
 										}
-									});
+									});	
 								}
-							};				
-							timer.scheduleAtFixedRate(task, 0, 100);				
-							startButton.setEnabled(false);
-							generate.setEnabled(false);
-							displaySol.setEnabled(false);
-							newPro.setEnabled(false);
-							help.setEnabled(false);
-							exit.setEnabled(false);
-							stopButton.setEnabled(true);
+							};
+							timer.scheduleAtFixedRate(task, 0, 10000);
+							if(maze.maze.getCorrect().equals(maze.maze.getGoal()))
+							{
+								displayMessage("you win!!");
+								
+							}
 						}
-						
-						@Override
-						public void widgetDefaultSelected(SelectionEvent arg0) {}
 					});
 					
-					stopButton.addSelectionListener(new SelectionListener() {
-						
-						@Override
-						public void widgetSelected(SelectionEvent arg0) {
-							task.cancel();
-							timer.cancel();
-							startButton.setEnabled(true);
-							generate.setEnabled(true);
-							displaySol.setEnabled(true);
-							newPro.setEnabled(true);
-							help.setEnabled(true);
-							exit.setEnabled(true);
-							stopButton.setEnabled(false);
-						}
-						
-						@Override
-						public void widgetDefaultSelected(SelectionEvent arg0) {}
-					});
 					
 					generate.addSelectionListener(new SelectionListener() {
 						
@@ -174,12 +357,12 @@ public class GUI extends CommonView {
 									display.syncExec( new Runnable() {
 										public void run() {
 											maze.redraw();
-											maze.forceFocus();
+											maze.setFocus();
 										}
 									});
 								}
 							};
-							timer.scheduleAtFixedRate(task, 0, 3);
+							timer.scheduleAtFixedRate(task, 0, 10000);
 						}
 						@Override
 						public void widgetDefaultSelected(SelectionEvent arg0) {}
@@ -212,19 +395,78 @@ public class GUI extends CommonView {
 									});
 								}
 							};
-							timer.scheduleAtFixedRate(task, 0, 5);	
+							timer.scheduleAtFixedRate(task, 0, 10000);	
 							};
 						
 						
 						@Override
-						public void widgetDefaultSelected(SelectionEvent arg0) {
-						}
+						public void widgetDefaultSelected(SelectionEvent arg0) {}
 					});
 					
+					exit.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent arg0) {
+							userCommand.clear();
+							userCommand.add("exit");
+							setChanged();
+							notifyObservers();
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent arg0) {}
+					});
+					
+					
+					newPro.addSelectionListener(new SelectionListener() {
+						
+						
+						@Override
+						public void widgetSelected(SelectionEvent arg0) {
+							userCommand.clear();
+							new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									GenerateWindow gw = new GenerateWindow("Generate Windows",250,250);
+									gw.run();
+									nameOfThisMaze = gw.arr.get(0);
+									userCommand = gw.arr;
+									userCommand.add(0,"generateMaze");
+									setChanged();
+									notifyObservers();
+									userCommand.remove(0);
+									
+									userCommand.add(0,"displayMaze");
+									setChanged();
+									notifyObservers();
+									timer = new Timer();
+									task = new TimerTask() {
+										@Override
+										public void run() {
+											display.syncExec( new Runnable() {
+												public void run() {
+													maze.redraw();
+													maze.forceFocus();
+												}
+											});
+										}
+									};
+									timer.scheduleAtFixedRate(task, 0, 10000);		
+								}
+							}).start();														
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
 				}
 				
 			}
-		}.run();;
+		}.run();
 		
 	}
 
@@ -236,8 +478,7 @@ public class GUI extends CommonView {
 
 	@Override
 	public void displayMazeReady(String str) {
-		// TODO Auto-generated method stub
-		
+		//TODO
 	}
 
 	@Override
@@ -248,7 +489,22 @@ public class GUI extends CommonView {
 
 	@Override
 	public void displayError(String string) {
-		// TODO Auto-generated method stub
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Display dis = new Display();
+				Shell shell = new Shell(dis);
+				MessageBox ms = new MessageBox(shell, SWT.ERROR);
+				ms.setMessage(string);
+				ms.setText("Error");
+				ms.open();
+				
+			}
+		}).start();
+				
+	
+		
 		
 	}
 
@@ -266,7 +522,19 @@ public class GUI extends CommonView {
 
 	@Override
 	public void displayMazeSaved(String string) {
-		// TODO Auto-generated method stub
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Display dis = new Display();
+				Shell shell = new Shell(dis);
+				MessageBox ms = new MessageBox(shell, SWT.OK);
+				ms.setMessage(string);
+				ms.setText("Message");
+				ms.open();
+				
+			}
+		}).start();
 		
 	}
 
@@ -308,6 +576,7 @@ public class GUI extends CommonView {
 	public void MazeByByteArray(byte[] array) {
 		Maze3d m = new Maze3d(array);
 		maze.setMaze(m);
+		maze.removeSol();
 		
 	}
 
@@ -317,6 +586,25 @@ public class GUI extends CommonView {
 		maze.printSolution();
 		
 	}
+
+	@Override
+	public void displayMessage(String string) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Display dis = new Display();
+				Shell shell = new Shell(dis);
+				MessageBox ms = new MessageBox(shell, SWT.OK);
+				ms.setMessage(string);
+				ms.setText("Message");
+				ms.open();
+				
+			}
+		}).start();
+		
+	}
+	
 
 
 }
