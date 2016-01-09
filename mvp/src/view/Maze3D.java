@@ -16,9 +16,14 @@ public class Maze3D extends MazeDisplayer {
 //	public int characterX=0;
 //	public int characterY=2;
 //	public int characterZ=2;
-	Position correct,goul,start;
+	Position correct,goal,start;
 	int flag = 0;
-	Image image ;
+	Image backgroundImg, playerImg, finishImg,solutionImg, wallImg, wallpaperImg ;
+	
+	
+	
+	
+
 //	public int exitX=0;
 //	public int exitY=2;
 //	public int exitZ=2;
@@ -39,43 +44,42 @@ public class Maze3D extends MazeDisplayer {
         e.gc.drawPolygon(fr);
         
         e.gc.fillPolygon(r);
-        e.gc.drawImage(image, 250, 250);
-		
+      
 	}
 	public Maze3D(Composite parent, int style) {
-		super(parent, style);
-		
+		super(parent, style);		
 		final Color white=new Color(null, 255, 255, 255);
 		final Color black=new Color(null, 150,150,150);
-		setBackground(white);
-		image = new Image(this.getDisplay(), "C:\\Users\\Gal Ben Evgi\\Desktop\\MaggieSimpson3.gif");
+		backgroundImg = new Image(this.getDisplay(),"./resources/legends.png");
+		playerImg = new Image(getDisplay(),"./resources/player.png");
+		solutionImg = new Image(getDisplay(),"./resources/solution.gif");
+		wallImg = new Image(getDisplay(), "./resources/wall.jpg");
+		wallpaperImg = new Image(getDisplay(), "./resources/wallpaper.jpg");
+		setBackgroundImage(backgroundImg);   
 		start = new Position(0, 0, 0);
 		correct = new Position(0, 0, 0);
-		goul = new Position(0, 0, 0);
+		goal = new Position(0, 0, 0);
 		
 		addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {	
 				try{
 				if(!maze.getGoal().equals(new Position(0, 0, 0))){
-					goul = maze.getGoal();
+					goal = maze.getGoal();
 					start = maze.getStart();
 					correct = maze.getCorrect();
+					setBackgroundImage(wallpaperImg);
 				}
 				}catch (Exception e2) {
 				}
-					
+				   
 				   e.gc.setForeground(new Color(null,0,0,0));
 				   e.gc.setBackground(new Color(null,0,0,0));
-				
 				   
-				  
-				   
+	
 				   int width=getSize().x;
 				   int height=getSize().y;
-				   
-				
-				   
+			
 				   int mx=width/2;
 
 				   double w=(double)width/mazeData[0][0].length;
@@ -89,39 +93,32 @@ public class Maze3D extends MazeDisplayer {
 				      for(int j=0;j<mazeData[correct.getZ()][i].length;j++){
 				          double []dpoints={start+j*w0,i*h,start+j*w0+w0,i*h,start1+j*w1+w1,i*h+h,start1+j*w1,i*h+h};
 				          double cheight=h/2;
-				          if(mazeData[correct.getZ()][i][j]!=0)
-				        	  paintCube(dpoints, cheight,e);
+				          if(mazeData[correct.getZ()][i][j]!=0){
+				        	  //paintCube(dpoints, cheight,e);
+				        	  e.gc.drawImage(wallImg, 0, 0, wallImg.getBounds().width,wallImg.getBounds().height,(int)dpoints[0],(int)dpoints[1]-(int)cheight/2,(int) (w0+w1)/2,(int)h);
+				          }
 		
+				          //for solution
 				          if(flag==1){
 				        	  ArrayList<State> arr = solution.getArr();
 				        	  for(int k = 0;k<arr.size();k++){
 				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i,correct.getZ()))){				
-				        		  e.gc.setBackground(new Color(null,0,0,0));
-				        		  e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
-				        		  e.gc.setBackground(new Color(null,150,150,0));
-				        		  e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
-				        		  e.gc.setBackground(new Color(null,0,0,0));
-				        		  
-
-				        		 
+				        		  e.gc.drawImage(solutionImg, 0, 0, solutionImg.getBounds().width,solutionImg.getBounds().height,(int)dpoints[0],(int)dpoints[1]-(int)cheight/2,(int) (w0+w1)/2,(int)h);
 				        		  }
 				          }}
-				          if(i==goul.getY() && j==goul.getX() && goul.getZ()==correct.getZ() && !goul.equals(correct)){
+				          //finishImg
+				          if(i==goal.getY() && j==goal.getX() && goal.getZ()==correct.getZ() && !goal.equals(correct)){
+				        	  
 							   e.gc.setBackground(new Color(null,0,255,0));
 							   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
 							   e.gc.setBackground(new Color(null,0,255,0));
 							   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
 							   e.gc.setBackground(new Color(null,0,0,0));				        	  
 				          }
-				          if(i==correct.getY() && j==correct.getX()){
-							   e.gc.setBackground(new Color(null,200,0,0));
-							   e.gc.fillOval((int)Math.round(dpoints[0]), (int)Math.round(dpoints[1]-cheight/2), (int)Math.round((w0+w1)/2), (int)Math.round(h));
-
-							   e.gc.setBackground(new Color(null,255,0,0));
-							   e.gc.fillOval((int)Math.round(dpoints[0]+2), (int)Math.round(dpoints[1]-cheight/2+2), (int)Math.round((w0+w1)/2/1.5), (int)Math.round(h/1.5));
-							   e.gc.setBackground(new Color(null,0,0,0));
-							
-							 
+				          //playerImg
+				          if(i==correct.getY() && j==correct.getX()&& !goal.equals(new Position(0, 0, 0))){
+				        	   e.gc.drawImage(playerImg, 0, 0, playerImg.getBounds().width,playerImg.getBounds().height,(int)dpoints[0],(int)dpoints[1]-(int)cheight/2,(int) (w0+w1)/2,(int)h);
+	
 				          }
 				         
 				      }
@@ -231,5 +228,13 @@ public class Maze3D extends MazeDisplayer {
 		int z=correct.getZ();
 		moveCharacter(col,row,floor);
 	}
+	@Override
+	public void walkToSolution() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+
 
 }

@@ -160,8 +160,6 @@ public class MyModel extends CommonModel {
 				Maze3d maze = generator.generate(x,y,z);
 				return maze;
 				}
-				
-				
 				});
 			try{
 			mazeHash.put(s.get(1), myMaze.get());
@@ -316,7 +314,7 @@ public class MyModel extends CommonModel {
 
 	/**
 	 * this method load the file of the maze and decompres him.
-	 * the method load the file from the project dir and becouse of this the player can save the maze
+	 * the method load the file from the project dir and becouse of this the playerImg can save the maze
 	 * and play him any time.
 	 * @param ArrayList<string> for the name of the loaded maze and for the file name(by order)
 	 * @throws IOException

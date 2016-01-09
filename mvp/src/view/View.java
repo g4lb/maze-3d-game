@@ -82,8 +82,6 @@ public interface View {
 	void displayMazeSize(String string);
 	void MazeByByteArray(byte[] array);
 	void displayMessage(String string);
-
-
 	ArrayList<String> getUserCommand();
 	void displaySolution(Solution sol);
 	void addObserver(Observer p);

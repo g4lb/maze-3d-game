@@ -65,7 +65,7 @@ public interface Model {
 	void saveMaze(ArrayList<String> string) throws IOException;
 	/**
 	 * this method load the file of the maze and decompres him.
-	 * the method load the file from the project dir and becouse of this the player can save the maze
+	 * the method load the file from the project dir and becouse of this the playerImg can save the maze
 	 * and play him any time.
 	 * @param ArrayList<string> for the name of the loaded maze and for the file name(by order)
 	 * @throws IOException

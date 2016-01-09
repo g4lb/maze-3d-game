@@ -1,8 +1,6 @@
 package view;
 
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -10,14 +8,8 @@ import java.util.TimerTask;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.MenuDetectEvent;
-import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.internal.opengl.win32.PIXELFORMATDESCRIPTOR;
-import org.eclipse.swt.internal.theme.Theme;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -32,7 +24,6 @@ import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Solution;
-import algorithms.search.State;
 
 public class GUI extends CommonView {
 	
@@ -106,7 +97,7 @@ public class GUI extends CommonView {
 					
 					
 				
-					maze=new Maze3D(shell, SWT.BORDER);
+					maze=new Maze2D(shell, SWT.BORDER);
 					maze.setMaze(new Maze3d(1, 20, 20));
 					maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 					
@@ -260,16 +251,9 @@ public class GUI extends CommonView {
 												}
 											};
 											timer.scheduleAtFixedRate(task, 0, 10000);
-											
-										
-											
-											
+			
 									}
-								
-											
-											
-									
-								
+	
 							}
 							).start();
 							
@@ -313,25 +297,9 @@ public class GUI extends CommonView {
 							{
 								maze.moveBackward();
 							}
-							timer = new Timer();
-							task = new TimerTask() {
-								
-								@Override
-								public void run() {
-									display.syncExec(new Runnable() {
-										@Override
-										public void run() {
-											maze.redraw();
-											maze.forceFocus();
-										}
-									});	
-								}
-							};
-							timer.scheduleAtFixedRate(task, 0, 10000);
-							if(maze.maze.getCorrect().equals(maze.maze.getGoal()))
+							if(maze.maze.getCorrect().equals(maze.maze.getGoal())&& !maze.maze.getCorrect().equals(maze.maze.getStart()))
 							{
-								displayMessage("you win!!");
-								
+							
 							}
 						}
 					});
@@ -382,20 +350,6 @@ public class GUI extends CommonView {
 							userCommand.add(nameOfThisMaze);
 							setChanged();
 							notifyObservers();
-							timer = new Timer();
-							task = new TimerTask() {
-								
-								@Override
-								public void run() {
-									display.syncExec( new Runnable() {
-										public void run() {
-											maze.redraw();
-											maze.forceFocus();
-										}
-									});
-								}
-							};
-							timer.scheduleAtFixedRate(task, 0, 10000);	
 							};
 						
 						
@@ -422,7 +376,7 @@ public class GUI extends CommonView {
 						
 						
 						@Override
-						public void widgetSelected(SelectionEvent arg0) {
+						public void widgetSelected(SelectionEvent arg0) {									
 							userCommand.clear();
 							new Thread(new Runnable() {
 								
@@ -441,11 +395,13 @@ public class GUI extends CommonView {
 									setChanged();
 									notifyObservers();
 									timer = new Timer();
+									
 									task = new TimerTask() {
 										@Override
 										public void run() {
 											display.syncExec( new Runnable() {
 												public void run() {
+													
 													maze.redraw();
 													maze.forceFocus();
 												}
@@ -462,6 +418,32 @@ public class GUI extends CommonView {
 							// TODO Auto-generated method stub
 							
 						}
+					});
+				solve.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent arg0) {
+							timer = new Timer();
+							task= new TimerTask() {
+								
+								@Override
+								public void run() {
+									display.asyncExec(new Runnable() {
+										
+										@Override
+										public void run() {	
+												maze.walkToSolution();
+												
+										}
+									});	
+								}
+							};
+							timer.scheduleAtFixedRate(task, 0, 1000);	
+						}
+						
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent arg0) {}
 					});
 				}
 				
