@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Observer;
 import java.util.Scanner;
 
+import algorithms.mazeGenerators.Maze3d;
+import algorithms.search.Solution;
 import presenter.Command;
 
 /**
@@ -331,7 +333,35 @@ public class CLI extends CommonView{
 	public void displayMazeSize(String string) {
 		System.out.println(string);
 	}
-	
+
+
+
+	@Override
+	public void MazeByByteArray(byte[] array) {
+		Maze3d loaded = new Maze3d(array);
+		loaded.printMatrix();
+		
+	}
+
+
+
+	@Override
+	public void displaySolution(Solution sol) {
+		System.out.println(sol);
+		
+	}
+
+
+
+	@Override
+	public void displayMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 	
 
 }

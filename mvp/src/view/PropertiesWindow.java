@@ -1,6 +1,7 @@
 package view;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -17,15 +18,20 @@ public class PropertiesWindow extends BasicWindow {
 		String fileName;
 		Text art;
 		Label unitI, algo, solve;
+		ArrayList<String> arr;
 	
 
 	public PropertiesWindow(String title, int width, int height) {
 		super(title, width, height);
+		arr = new ArrayList<String>();
 	}
 
 	@Override
 	void initWidgets() {
 		shell.setLayout(new GridLayout(2,true));
+		
+		
+		
 		
 		unitI = new Label(shell, SWT.None);
 		unitI.setText("Unit Interface:");
@@ -35,23 +41,13 @@ public class PropertiesWindow extends BasicWindow {
 		final Combo ui= new Combo(this.shell,SWT.DROP_DOWN );
 		ui.setText("");
 		ui.setLayoutData(new GridData(SWT.FILL,SWT.NONE,true,false,2,1));
-		String[] items = "GUI,CLI      ".split(",");
+		String[] items = "GUI,CLI".split(",");
 		ui.setItems(items);
 		
-		ui.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			
-				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});
+		
 		
 		algo = new Label(shell, SWT.None);
-		algo.setText("Generate Algo:  ");
+		algo.setText("Generate Algo:");
 		algo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,3,1));
 		
 		
@@ -61,39 +57,19 @@ public class PropertiesWindow extends BasicWindow {
 		String[] items1 = "DFS,Simple".split(",");
 		ag.setItems(items1);
 		
-		ag.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			
-				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});
+		
 		
 		solve = new Label(shell, SWT.None);
-		solve.setText("Solve Algo:   ");
+		solve.setText("Solve Algo:");
 		solve.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,5,1));
 		
 		
 		final Combo sv= new Combo(this.shell,SWT.DROP_DOWN);
 		sv.setText("");
 		sv.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,6,1));
-		String[] items2 = "DFS,Astar   ".split(",");
+		String[] items2 = "BFS,Astar".split(",");
 		sv.setItems(items2);
 		
-		sv.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});
 		
 		Button ok= new Button(this.shell,SWT.PUSH);
 		ok.setText("ok");
@@ -103,11 +79,15 @@ public class PropertiesWindow extends BasicWindow {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				
+				arr.add(ui.getText());
+				arr.add(ag.getText());
+				arr.add(sv.getText());
+				shell.close();
 			}
 			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-			}
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 		
 		Button cancel= new Button(this.shell,SWT.PUSH);
@@ -118,8 +98,10 @@ public class PropertiesWindow extends BasicWindow {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				arr.add("GUI");
+				arr.add("DFS");
+				arr.add("BFS");
+				shell.close();
 			}
 			
 			@Override

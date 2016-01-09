@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
+import algorithms.search.Solution;
+
 /**
  * <h1> Class Model </h1>
  * the model is the main struct of the calculation and the activitis,
@@ -63,7 +65,7 @@ public interface Model {
 	void saveMaze(ArrayList<String> string) throws IOException;
 	/**
 	 * this method load the file of the maze and decompres him.
-	 * the method load the file from the project dir and becouse of this the player can save the maze
+	 * the method load the file from the project dir and becouse of this the playerImg can save the maze
 	 * and play him any time.
 	 * @param ArrayList<string> for the name of the loaded maze and for the file name(by order)
 	 * @throws IOException
@@ -95,7 +97,9 @@ public interface Model {
 	void stop();
 	void addObserver(Observer p);
 	ArrayList<String> getSolution();
-	public int[][][] getData3();
+	public byte[] getData3();
 	public int[][] getData2();
+	public Solution getSol(String string);
+	
 
 }

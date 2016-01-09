@@ -45,9 +45,11 @@ import presenter.MyProperties;
 public class MyModel extends CommonModel {
 
 	ArrayList<String> res;
-	int [][][] data3;
+	byte[] data3;
 	int [][] data2;
 	MyProperties prop;
+	
+		
 	
 	
 	public MyModel(MyProperties proper)  {
@@ -57,8 +59,8 @@ public class MyModel extends CommonModel {
 		
 	}
 	
-
-	public int[][][] getData3() {
+	@Override
+	public byte[] getData3() {
 		return data3;
 	}
 
@@ -71,6 +73,10 @@ public class MyModel extends CommonModel {
 		ArrayList<String> copy = new ArrayList<String>(res);
 		res.removeAll(res);
 		return copy;
+	}
+	@Override
+	public Solution getSol(String string) {
+		return soulHash.get(string);
 	}
 
 	/**
@@ -154,8 +160,6 @@ public class MyModel extends CommonModel {
 				Maze3d maze = generator.generate(x,y,z);
 				return maze;
 				}
-				
-				
 				});
 			try{
 			mazeHash.put(s.get(1), myMaze.get());
@@ -178,7 +182,7 @@ public class MyModel extends CommonModel {
 	public void displayMaze(ArrayList<String> string) {
 		if(this.mazeHash.containsKey(string.get(0))){//TODO new
 			res.add("displayMaze");
-			data3 = (mazeHash.get(string.get(0)).getMatrix());
+			data3 = (mazeHash.get(string.get(0)).toByteArray());
 			setChanged();
 			notifyObservers();
 		}
@@ -310,7 +314,7 @@ public class MyModel extends CommonModel {
 
 	/**
 	 * this method load the file of the maze and decompres him.
-	 * the method load the file from the project dir and becouse of this the player can save the maze
+	 * the method load the file from the project dir and becouse of this the playerImg can save the maze
 	 * and play him any time.
 	 * @param ArrayList<string> for the name of the loaded maze and for the file name(by order)
 	 * @throws IOException
@@ -341,7 +345,7 @@ public class MyModel extends CommonModel {
 			in.read(b);
 			in.close();
 			Maze3d loaded = new Maze3d(b);
-			loaded.printMatrix();
+			//loaded.printMatrix();
 			mazeHash.put(string.get(2), loaded);
 			res.add("the maze "+string.get(2)+" is loaded");
 			setChanged();
@@ -369,7 +373,8 @@ public class MyModel extends CommonModel {
 			
 				@Override
 				public Solution call() throws Exception { //TODO GAL
-						generator.setMaze(mazeHash.get(string.get(1)));
+					generator = new MyMaze3dGenerator();
+					generator.setMaze(mazeHash.get(string.get(1)));
 					if(prop.getSolveAlgo().equals("BFS")){
 						Searcher s2 = new BFS();
 						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
@@ -411,9 +416,10 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displaySolution(ArrayList<String> string) {
-		if(mazeAndSHash.containsKey(mazeHash.get(string.get(1)))){
+		if(soulHash.containsKey(string.get(1))){
 			res.add("displaySolution");
 			Solution sol = mazeAndSHash.get(mazeHash.get(string.get(1)));
+			res.add(string.get(1));
 			res.add(sol.toString());
 			setChanged();
 			notifyObservers();
@@ -549,6 +555,15 @@ public class MyModel extends CommonModel {
 		}
 		
 	}
+
+
+
+
+
+
+
+
+
 		
 }
 
