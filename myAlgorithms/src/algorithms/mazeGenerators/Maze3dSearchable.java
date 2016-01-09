@@ -31,7 +31,7 @@ public class Maze3dSearchable implements Searchable<Position>{
 	 */
 	@Override
 	public State<Position> getInitialState() {
-		State<Position> initial = new State<Position>(maze.getStart());
+		State<Position> initial = new State<Position>(maze.getCorrect());
 		initial.setCost(0);
 		return initial;
 	}

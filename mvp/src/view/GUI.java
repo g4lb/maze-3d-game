@@ -1,6 +1,7 @@
 package view;
 
 
+import java.nio.channels.MulticastChannel;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Solution;
 
-public class GUI extends CommonView {
+public class GUI extends CommonView  {
 	
 	PropertiesWindow prop;
 	ArrayList<String> userCommand;
@@ -56,11 +57,11 @@ public class GUI extends CommonView {
 	
 	@Override
 	public void start() {
-		generateWindow = new GenerateWindow("generate", 250, 250);
+		generateWindow = new GenerateWindow("generate", 300, 250);
 		generateWindow.run();
 		userCommand = generateWindow.arr;
 		
-		new BasicWindow("Maze3d", 600, 500) {
+		new BasicWindow("Maze3d", 1030, 685) {
 			
 			
 			@Override
@@ -141,7 +142,7 @@ public class GUI extends CommonView {
 											filename.setText("file Name:");
 											filename.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 											
-											Text t = new Text(shell, SWT.BORDER);
+											final Text t = new Text(shell, SWT.BORDER);
 											t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 											
 											final Button ok = new Button(shell, SWT.PUSH);
@@ -190,7 +191,7 @@ public class GUI extends CommonView {
 											mazeName.setText("maze Name:");
 											mazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 											
-											Text t = new Text(shell, SWT.BORDER);
+											final Text t = new Text(shell, SWT.BORDER);
 											t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 											
 											final Button ok = new Button(shell, SWT.PUSH);
@@ -341,6 +342,12 @@ public class GUI extends CommonView {
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
 							userCommand.clear();
+							userCommand.add("setCorrect");
+							userCommand.add(nameOfThisMaze);
+							userCommand.add(maze.maze.getCorrect().toString());
+							setChanged();
+							notifyObservers();
+							userCommand.clear();
 							userCommand.add("solveMaze");
 							userCommand.add(nameOfThisMaze);
 							setChanged();
@@ -470,7 +477,7 @@ public class GUI extends CommonView {
 	}
 
 	@Override
-	public void displayError(String string) {
+	public void displayError(final String string) {
 		new Thread(new Runnable() {
 			
 			@Override
@@ -503,7 +510,7 @@ public class GUI extends CommonView {
 	}
 
 	@Override
-	public void displayMazeSaved(String string) {
+	public void displayMazeSaved(final String string) {
 		new Thread(new Runnable() {
 			
 			@Override
@@ -570,7 +577,7 @@ public class GUI extends CommonView {
 	}
 
 	@Override
-	public void displayMessage(String string) {
+	public void displayMessage(final String string) {
 		new Thread(new Runnable() {
 			
 			@Override

@@ -100,6 +100,8 @@ public interface Model {
 	public byte[] getData3();
 	public int[][] getData2();
 	public Solution getSol(String string);
+	void setCorrect(ArrayList<String> arr);
+	
 	
 
 }

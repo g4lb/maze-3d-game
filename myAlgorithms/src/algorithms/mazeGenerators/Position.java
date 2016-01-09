@@ -1,6 +1,7 @@
 package algorithms.mazeGenerators;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * <h1> Position Class </h1>

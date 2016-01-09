@@ -30,7 +30,7 @@ public class GenerateWindow extends BasicWindow {
 		mazeName.setText("mazeName:");
 		mazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Text t = new Text(shell, SWT.BORDER);
+		final Text t = new Text(shell, SWT.BORDER);
 		t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		
@@ -39,21 +39,21 @@ public class GenerateWindow extends BasicWindow {
 		columns.setText("columns:");
 		columns.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Text t1 = new Text(shell, SWT.BORDER);
+		final Text t1 = new Text(shell, SWT.BORDER);
 		t1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		final Label rows=new Label(shell,SWT.NONE);
 		rows.setText("rows:");
 		rows.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Text t2 = new Text(shell, SWT.BORDER);
+		final Text t2 = new Text(shell, SWT.BORDER);
 		t2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		final Label floors=new Label(shell,SWT.NONE);
 		floors.setText("number of floors:");
 		floors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Text t3 = new Text(shell, SWT.BORDER);;
+		final Text t3 = new Text(shell, SWT.BORDER);;
 		t3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		final Button ok = new Button(shell, SWT.PUSH);

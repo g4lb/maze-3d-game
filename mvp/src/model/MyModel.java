@@ -556,6 +556,19 @@ public class MyModel extends CommonModel {
 		
 	}
 
+	@Override
+	public void setCorrect(ArrayList<String> arr) {
+		String s =arr.get(2);
+		String str2 = s.substring(1,s.length()-1);
+		String [] items = str2.split(",");
+		int z = Integer.parseInt(items[0]);
+		int y = Integer.parseInt(items[1]);
+		int x = Integer.parseInt(items[2]);
+		Position p = new Position(x,y,z);
+		mazeHash.get(arr.get(1)).setCorrect(p);
+		
+	}
+
 
 
 
