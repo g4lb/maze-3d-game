@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class GenerateWindow extends BasicWindow {
@@ -110,8 +111,8 @@ public class GenerateWindow extends BasicWindow {
 		
 	}
 	public static void main(String[] args) {
-		GenerateWindow g = new GenerateWindow("sadf", 250, 250);
-		g.run();
+	//	GenerateWindow g = new GenerateWindow("sadf", 250, 250);
+	//	g.run();
 	}
 
 }

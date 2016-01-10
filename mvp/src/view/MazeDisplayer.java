@@ -4,7 +4,9 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import algorithms.search.State;
 
 
 // this is (1) the common type, and (2) a type of widget
@@ -62,7 +64,7 @@ public abstract class MazeDisplayer extends Canvas {
 	}
 
 		
-	public abstract void setCharacterPosition(int row,int col,int floor);
+	//public abstract void setCharacterPosition(int row,int col,int floor);
 
 	public abstract void moveUp();
 
@@ -78,7 +80,9 @@ public abstract class MazeDisplayer extends Canvas {
 
 	public abstract void moveBackward();
 
-	public abstract void walkToSolution();
+	public abstract void setCharacterPosition(State<Position> p);
+
+
 	
 	
 	

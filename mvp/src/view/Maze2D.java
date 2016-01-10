@@ -80,7 +80,7 @@ public class Maze2D extends MazeDisplayer{
 							ArrayList<State> arr = solution.getArr();
 				        	
 				        	  for(int k = 0;k<arr.size();k++){
-				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i,correct.getZ()))){				
+				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i,correct.getZ()))&&!solution.getArr().get(k).getState().equals(goal)){				
 				        		  e.gc.drawImage(solutionImg, 0, 0, solutionImg.getBounds().width,solutionImg.getBounds().height,x,y,w,h);
 				        		  }
 				          }}
@@ -103,23 +103,23 @@ public class Maze2D extends MazeDisplayer{
 				correct.setX(x);
 				correct.setY(y);
 				correct.setZ(z);
-				
-					
-						getDisplay().syncExec(new Runnable() {
-							
-							@Override
-							public void run() {
-								redraw();
-														
-							}});
-					
-			
+				redraw();
+				forceFocus();
+	
 		}
-	synchronized public void moveCharacter(State<Position> p){
+	public void moveCharacter(State<Position> p){
 		correct.setX(p.getState().getX());
 		correct.setY(p.getState().getY());
-		correct.setZ(p.getState().getZ());			
-		redraw();				
+		correct.setZ(p.getState().getZ());	
+		
+				System.out.println(correct+"corect");
+				redraw();
+				forceFocus();
+				
+			
+		
+		
+		
 	}
 		@Override
 		public void printSolution() {
@@ -208,29 +208,22 @@ public class Maze2D extends MazeDisplayer{
 		}
 		
 		@Override
-		public void setCharacterPosition(int row, int col,int floor) {
-//			int x=correct.getX();
-//			int y=correct.getY();
-//			int z=correct.getZ();
-			moveCharacter(col,row,floor);
+		public void setCharacterPosition(State<Position> p) {
+			try {
+				moveCharacter(p);
+				forceFocus();
+				System.out.println(p);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		@Override
-		public void walkToSolution(){
-		
-					for(int i = solution.getArr().size()-1;i >= 0;i--){
-						
-						State p = solution.getArr().get(i);
-						
-						try {
-							moveCharacter(p);
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}					
-				}
-		
-		}
-	
+//		@Override
+//		public void walkToSolution(State p){			
+//			moveCharacter(p);  
+//			}
 
+
+		
 	}
