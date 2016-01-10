@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.annotation.Generated;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -112,14 +110,7 @@ public class Maze2D extends MazeDisplayer{
 							@Override
 							public void run() {
 								redraw();
-								try {
-									
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
+														
 							}});
 					
 			
@@ -229,11 +220,16 @@ public class Maze2D extends MazeDisplayer{
 					for(int i = solution.getArr().size()-1;i >= 0;i--){
 						
 						State p = solution.getArr().get(i);
-						moveCharacter(p);
-					
+						
+						try {
+							moveCharacter(p);
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
 				}
 		
-			
 		}
 	
 

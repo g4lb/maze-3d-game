@@ -39,6 +39,7 @@ public abstract class MazeDisplayer extends Canvas {
 	public void setSolution(Solution solution) {
 		this.solution = solution;
 		
+		
 	}
 	public void removeSol() {
 		try{
