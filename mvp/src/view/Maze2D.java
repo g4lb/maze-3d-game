@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import javax.annotation.Generated;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
@@ -17,14 +18,16 @@ import algorithms.search.State;
 public class Maze2D extends MazeDisplayer{
 
 	
-	Position correct,goal,start;
+	Position correct,goal,start,walkToGoal;
 	int flag = 0  ;
 	Image backgroundImg, playerImg, finishImg,solutionImg, wallImg, wallpaperImg,goalImg;
 	int sizeOfSolution;
+	Timer timer;
+	TimerTask task;
 
 
 	 public Maze2D(Composite parent,int style){
-	        super(parent, style);	
+	        super(parent, SWT.DOUBLE_BUFFERED);	
 			//final Color white=new Color(null, 255, 255, 255);
 			//final Color black=new Color(null, 150,150,150);
 			backgroundImg = new Image(this.getDisplay(),"./resources/legends.png");
@@ -68,7 +71,11 @@ public class Maze2D extends MazeDisplayer{
 					          if(mazeData[correct.getZ()][i][j]!=0){					          
 					          	e.gc.drawImage(wallImg, 0, 0, wallImg.getBounds().width,wallImg.getBounds().height,x,y,w,h);
 				          }
-		
+					       //goalImg
+					       if(correct.equals(goal)&&!start.equals(correct)){					        
+						         e.gc.drawImage(goalImg, 0, 0, goalImg.getBounds().width,goalImg.getBounds().height, 0, 0, getSize().x, getSize().y);		
+						        	 
+							     }       
 				          //for solution
 				          if(flag==1){
 				        	  @SuppressWarnings("rawtypes")
@@ -87,12 +94,7 @@ public class Maze2D extends MazeDisplayer{
 				          if(i==correct.getY() && j==correct.getX()&& !goal.equals(new Position(0, 0, 0))){
 				        	   e.gc.drawImage(playerImg, 0, 0, playerImg.getBounds().width,playerImg.getBounds().height,x,y,w,h);
 				          }
-				          //goalImg
-				          if(correct.equals(goal)&&!start.equals(correct)){
-					        
-					        	 e.gc.drawImage(goalImg, 0, 0, goalImg.getBounds().width,goalImg.getBounds().height, x, y, getSize().x, getSize().y);
-					        	 setRedraw(false);
-						      }
+				          
 				        
 					      }}
 				});
@@ -103,17 +105,30 @@ public class Maze2D extends MazeDisplayer{
 				correct.setX(x);
 				correct.setY(y);
 				correct.setZ(z);
-				redraw();
+				
+					
+						getDisplay().syncExec(new Runnable() {
+							
+							@Override
+							public void run() {
+								redraw();
+								try {
+									
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}});
+					
+			
 		}
 	synchronized public void moveCharacter(State<Position> p){
-			correct.setX(p.getState().getX());
-			correct.setY(p.getState().getY());
-			correct.setZ(p.getState().getZ());
-			
-				redraw();	
-				getDisplay().wake();
-		
-		
+		correct.setX(p.getState().getX());
+		correct.setY(p.getState().getY());
+		correct.setZ(p.getState().getZ());			
+		redraw();				
 	}
 		@Override
 		public void printSolution() {
@@ -210,19 +225,16 @@ public class Maze2D extends MazeDisplayer{
 		}
 		@Override
 		public void walkToSolution(){
-			while(!solution.getArr().isEmpty()){
-				
-				State p = solution.getArr().remove(0);	
-				
-				moveCharacter(p);	
-				getDisplay().sleep(); 
-				
+		
+					for(int i = solution.getArr().size()-1;i >= 0;i--){
+						
+						State p = solution.getArr().get(i);
+						moveCharacter(p);
+					
+				}
+		
 			
 		}
-
-
-		}
-
-		
+	
 
 	}

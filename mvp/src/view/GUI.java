@@ -98,7 +98,7 @@ public class GUI extends CommonView  {
 					
 					
 				
-					maze=new Maze2D(shell, SWT.BORDER);
+					maze=new Maze2D(shell, SWT.BORDER | SWT.DOUBLE_BUFFERED);
 					maze.setMaze(new Maze3d(1, 20, 20));
 					maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 					
@@ -298,10 +298,7 @@ public class GUI extends CommonView  {
 							{
 								maze.moveBackward();
 							}
-							if(maze.maze.getCorrect().equals(maze.maze.getGoal())&& !maze.maze.getCorrect().equals(maze.maze.getStart()))
-							{
 							
-							}
 						}
 					});
 					
@@ -430,22 +427,9 @@ public class GUI extends CommonView  {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
-							timer = new Timer();
-							task= new TimerTask() {
-								
-								@Override
-								public void run() {
-									display.asyncExec(new Runnable() {
-										
-										@Override
-										public void run() {	
-												maze.walkToSolution();
-												
-										}
-									});	
-								}
-							};
-							timer.scheduleAtFixedRate(task, 0, 1000);	
+
+								maze.walkToSolution();					
+							
 						}
 						
 						
