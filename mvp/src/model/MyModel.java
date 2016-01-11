@@ -566,7 +566,7 @@ public class MyModel extends CommonModel {
 		int x = Integer.parseInt(items[2]);
 		Position p = new Position(x,y,z);
 		mazeHash.get(arr.get(1)).setCorrect(p);
-		
+		//
 	}
 
 

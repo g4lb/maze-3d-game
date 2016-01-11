@@ -430,8 +430,19 @@ public class GUI extends CommonView  {
 						public void widgetSelected(SelectionEvent arg0) {
 							
 							for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
-								State<Position> p = maze.solution.getArr().remove(i);
-								maze.setCharacterPosition(p);
+								final State<Position> p = maze.solution.getArr().remove(i);		
+								display.syncExec(new Runnable() {
+									
+									@Override
+									public void run() {
+										maze.setCharacterPosition(p);
+										maze.redraw();
+										
+									}
+								});
+										
+								
+								
 						
 							}
 						}	

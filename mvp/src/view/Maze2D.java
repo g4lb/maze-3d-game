@@ -113,8 +113,16 @@ public class Maze2D extends MazeDisplayer{
 		correct.setZ(p.getState().getZ());	
 		
 				System.out.println(correct+"corect");
-				redraw();
-				forceFocus();
+				getDisplay().asyncExec(new Runnable() {
+					
+					@Override
+					public void run() {
+						redraw();
+						forceFocus();
+						
+					}
+				});
+				
 				
 			
 		

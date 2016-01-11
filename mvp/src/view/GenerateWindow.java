@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class GenerateWindow extends BasicWindow {
-
+	
 	//ArrayList<Text> testlist;
 	ArrayList<String> arr;
 	
