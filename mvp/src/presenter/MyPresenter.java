@@ -198,6 +198,9 @@ public class MyPresenter  implements Observer{
 			case "fileSize":
 				m.displayFileSize(arr);;
 				break;
+			case "setCorrect":
+				m.setCorrect(arr);
+				break;
 			default:
 				break;
 			}

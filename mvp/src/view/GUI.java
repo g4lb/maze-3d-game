@@ -23,9 +23,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import algorithms.search.State;
 
-public class GUI extends CommonView {
+public class GUI extends CommonView  {
 	
 	PropertiesWindow prop;
 	ArrayList<String> userCommand;
@@ -56,11 +58,11 @@ public class GUI extends CommonView {
 	
 	@Override
 	public void start() {
-		generateWindow = new GenerateWindow("generate", 250, 250);
+		generateWindow = new GenerateWindow("generate", 300, 250);
 		generateWindow.run();
 		userCommand = generateWindow.arr;
 		
-		new BasicWindow("Maze3d", 600, 500) {
+		new BasicWindow("Maze3d", 1030, 685) {
 			
 			
 			@Override
@@ -97,7 +99,7 @@ public class GUI extends CommonView {
 					
 					
 				
-					maze=new Maze2D(shell, SWT.BORDER);
+					maze=new Maze2D(shell, SWT.BORDER | SWT.DOUBLE_BUFFERED);
 					maze.setMaze(new Maze3d(1, 20, 20));
 					maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 					
@@ -141,7 +143,7 @@ public class GUI extends CommonView {
 											filename.setText("file Name:");
 											filename.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 											
-											Text t = new Text(shell, SWT.BORDER);
+											final Text t = new Text(shell, SWT.BORDER);
 											t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 											
 											final Button ok = new Button(shell, SWT.PUSH);
@@ -190,7 +192,7 @@ public class GUI extends CommonView {
 											mazeName.setText("maze Name:");
 											mazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 											
-											Text t = new Text(shell, SWT.BORDER);
+											final Text t = new Text(shell, SWT.BORDER);
 											t.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 											
 											final Button ok = new Button(shell, SWT.PUSH);
@@ -297,10 +299,7 @@ public class GUI extends CommonView {
 							{
 								maze.moveBackward();
 							}
-							if(maze.maze.getCorrect().equals(maze.maze.getGoal())&& !maze.maze.getCorrect().equals(maze.maze.getStart()))
-							{
 							
-							}
 						}
 					});
 					
@@ -340,6 +339,12 @@ public class GUI extends CommonView {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
+							userCommand.clear();
+							userCommand.add("setCorrect");
+							userCommand.add(nameOfThisMaze);
+							userCommand.add(maze.maze.getCorrect().toString());
+							setChanged();
+							notifyObservers();
 							userCommand.clear();
 							userCommand.add("solveMaze");
 							userCommand.add(nameOfThisMaze);
@@ -423,24 +428,24 @@ public class GUI extends CommonView {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
-							timer = new Timer();
-							task= new TimerTask() {
-								
-								@Override
-								public void run() {
-									display.asyncExec(new Runnable() {
+							
+							for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
+								final State<Position> p = maze.solution.getArr().remove(i);		
+								display.syncExec(new Runnable() {
+									
+									@Override
+									public void run() {
+										maze.setCharacterPosition(p);
+										maze.redraw();
 										
-										@Override
-										public void run() {	
-												maze.walkToSolution();
-												
-										}
-									});	
-								}
-							};
-							timer.scheduleAtFixedRate(task, 0, 1000);	
-						}
+									}
+								});
+										
+								
+								
 						
+							}
+						}	
 						
 						@Override
 						public void widgetDefaultSelected(SelectionEvent arg0) {}
@@ -470,7 +475,7 @@ public class GUI extends CommonView {
 	}
 
 	@Override
-	public void displayError(String string) {
+	public void displayError(final String string) {
 		new Thread(new Runnable() {
 			
 			@Override
@@ -503,7 +508,7 @@ public class GUI extends CommonView {
 	}
 
 	@Override
-	public void displayMazeSaved(String string) {
+	public void displayMazeSaved(final String string) {
 		new Thread(new Runnable() {
 			
 			@Override
@@ -570,7 +575,7 @@ public class GUI extends CommonView {
 	}
 
 	@Override
-	public void displayMessage(String string) {
+	public void displayMessage(final String string) {
 		new Thread(new Runnable() {
 			
 			@Override

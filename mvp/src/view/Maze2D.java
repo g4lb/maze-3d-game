@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.annotation.Generated;
-
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
@@ -17,14 +16,16 @@ import algorithms.search.State;
 public class Maze2D extends MazeDisplayer{
 
 	
-	Position correct,goal,start;
+	Position correct,goal,start,walkToGoal;
 	int flag = 0  ;
 	Image backgroundImg, playerImg, finishImg,solutionImg, wallImg, wallpaperImg,goalImg;
 	int sizeOfSolution;
+	Timer timer;
+	TimerTask task;
 
 
 	 public Maze2D(Composite parent,int style){
-	        super(parent, style);	
+	        super(parent, SWT.DOUBLE_BUFFERED);	
 			//final Color white=new Color(null, 255, 255, 255);
 			//final Color black=new Color(null, 150,150,150);
 			backgroundImg = new Image(this.getDisplay(),"./resources/legends.png");
@@ -68,14 +69,18 @@ public class Maze2D extends MazeDisplayer{
 					          if(mazeData[correct.getZ()][i][j]!=0){					          
 					          	e.gc.drawImage(wallImg, 0, 0, wallImg.getBounds().width,wallImg.getBounds().height,x,y,w,h);
 				          }
-		
+					       //goalImg
+					       if(correct.equals(goal)&&!start.equals(correct)){					        
+						         e.gc.drawImage(goalImg, 0, 0, goalImg.getBounds().width,goalImg.getBounds().height, 0, 0, getSize().x, getSize().y);		
+						        	 
+							     }       
 				          //for solution
 				          if(flag==1){
 				        	  @SuppressWarnings("rawtypes")
 							ArrayList<State> arr = solution.getArr();
 				        	
 				        	  for(int k = 0;k<arr.size();k++){
-				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i,correct.getZ()))){				
+				        		  if(solution.getArr().get(k).getState().equals(new Position(j,i,correct.getZ()))&&!solution.getArr().get(k).getState().equals(goal)){				
 				        		  e.gc.drawImage(solutionImg, 0, 0, solutionImg.getBounds().width,solutionImg.getBounds().height,x,y,w,h);
 				        		  }
 				          }}
@@ -87,12 +92,7 @@ public class Maze2D extends MazeDisplayer{
 				          if(i==correct.getY() && j==correct.getX()&& !goal.equals(new Position(0, 0, 0))){
 				        	   e.gc.drawImage(playerImg, 0, 0, playerImg.getBounds().width,playerImg.getBounds().height,x,y,w,h);
 				          }
-				          //goalImg
-				          if(correct.equals(goal)&&!start.equals(correct)){
-					        
-					        	 e.gc.drawImage(goalImg, 0, 0, goalImg.getBounds().width,goalImg.getBounds().height, x, y, getSize().x, getSize().y);
-					        	 setRedraw(false);
-						      }
+				          
 				        
 					      }}
 				});
@@ -104,14 +104,28 @@ public class Maze2D extends MazeDisplayer{
 				correct.setY(y);
 				correct.setZ(z);
 				redraw();
+				forceFocus();
+	
 		}
-	synchronized public void moveCharacter(State<Position> p){
-			correct.setX(p.getState().getX());
-			correct.setY(p.getState().getY());
-			correct.setZ(p.getState().getZ());
+	public void moveCharacter(State<Position> p){
+		correct.setX(p.getState().getX());
+		correct.setY(p.getState().getY());
+		correct.setZ(p.getState().getZ());	
+		
+				System.out.println(correct+"corect");
+				getDisplay().asyncExec(new Runnable() {
+					
+					@Override
+					public void run() {
+						redraw();
+						forceFocus();
+						
+					}
+				});
+				
+				
 			
-				redraw();	
-				getDisplay().wake();
+		
 		
 		
 	}
@@ -202,27 +216,22 @@ public class Maze2D extends MazeDisplayer{
 		}
 		
 		@Override
-		public void setCharacterPosition(int row, int col,int floor) {
-//			int x=correct.getX();
-//			int y=correct.getY();
-//			int z=correct.getZ();
-			moveCharacter(col,row,floor);
+		public void setCharacterPosition(State<Position> p) {
+			try {
+				moveCharacter(p);
+				forceFocus();
+				System.out.println(p);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		@Override
-		public void walkToSolution(){
-			while(!solution.getArr().isEmpty()){
-				
-				State p = solution.getArr().remove(0);	
-				
-				moveCharacter(p);	
-				getDisplay().sleep(); 
-				
-			
-		}
+//		@Override
+//		public void walkToSolution(State p){			
+//			moveCharacter(p);  
+//			}
 
-
-		}
 
 		
-
 	}

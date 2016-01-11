@@ -221,15 +221,11 @@ public class Maze3D extends MazeDisplayer {
 		}
 	}
 	
+
+
+	
 	@Override
-	public void setCharacterPosition(int row, int col,int floor) {
-		int x=correct.getX();
-		int y=correct.getY();
-		int z=correct.getZ();
-		moveCharacter(col,row,floor);
-	}
-	@Override
-	public void walkToSolution() {
+	public void setCharacterPosition(State<Position> p) {
 		// TODO Auto-generated method stub
 		
 	}
