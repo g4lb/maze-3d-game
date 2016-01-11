@@ -32,6 +32,7 @@ public class GUI extends CommonView  {
 	PropertiesWindow prop;
 	ArrayList<String> userCommand;
 	GenerateWindow generateWindow;
+	ConnectionWindow connectionWindow;
 	MazeWindow mazeWindow;
 	int [][][] clearMaze; 
 	MazeDisplayer maze;
@@ -42,8 +43,11 @@ public class GUI extends CommonView  {
 	
 	
 	public GUI() {
-		prop = new PropertiesWindow("Properties", 250, 250);
 		userCommand = new ArrayList<String>();
+		connectionWindow = new ConnectionWindow("Connect To Server", 250,250);
+		connectionWindow.run();
+		userCommand = connectionWindow.getArr();
+		prop = new PropertiesWindow("Properties", 250, 250);
 		prop.run();
 		userCommand = prop.arr;
 		clearMaze = new int[1][20][20];
