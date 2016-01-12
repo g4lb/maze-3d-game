@@ -104,28 +104,16 @@ public class Maze2D extends MazeDisplayer{
 				correct.setY(y);
 				correct.setZ(z);
 				redraw();
-				forceFocus();
 	
 		}
 	public void moveCharacter(State<Position> p){
 		correct.setX(p.getState().getX());
 		correct.setY(p.getState().getY());
-		correct.setZ(p.getState().getZ());	
-		
-				System.out.println(correct+"corect");
-				getDisplay().asyncExec(new Runnable() {
-					
-					@Override
-					public void run() {
-						redraw();	
-					}
-				});
-				
-				
-			
+		correct.setZ(p.getState().getZ());			
 		
 		
-		
+
+		redraw();
 	}
 		@Override
 		public void printSolution() {
@@ -214,22 +202,19 @@ public class Maze2D extends MazeDisplayer{
 		}
 		
 		@Override
-		public void setCharacterPosition(State<Position> p) {
-			try {
-				moveCharacter(p);
-				forceFocus();
-				System.out.println(p);
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		public void setCharacterPosition(int row, int col,int floor) {
+//			int x=correct.getX();
+//			int y=correct.getY();
+//			int z=correct.getZ();
+			moveCharacter(col,row,floor);
 		}
-//		@Override
-//		public void walkToSolution(State p){			
-//			moveCharacter(p);  
-//			}
-
-
-		
+		@Override
+		public void walkToSolution(){	
+		for(int i = solution.getArr().size()-1;i >= 0;i--){			
+			State p = solution.getArr().get(i);		
+			moveCharacter(p);
+	
+			
+			   }
+			}
 	}
