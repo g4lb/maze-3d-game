@@ -23,9 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
-import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
-import algorithms.search.State;
 
 public class GUI extends CommonView  {
 	
@@ -42,14 +40,16 @@ public class GUI extends CommonView  {
 	String fileName;
 	
 	
-	public GUI() {
+		public GUI() {
 		userCommand = new ArrayList<String>();
-		connectionWindow = new ConnectionWindow("Connect To Server", 250,250);
+		connectionWindow = new ConnectionWindow("Connect to server", 250, 250);
 		connectionWindow.run();
 		userCommand = connectionWindow.getArr();
 		prop = new PropertiesWindow("Properties", 250, 250);
 		prop.run();
-		userCommand = prop.arr;
+		userCommand.add(prop.arr.get(0));
+		userCommand.add(prop.arr.get(1));
+		userCommand.add(prop.arr.get(2));
 		clearMaze = new int[1][20][20];
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < 20; j++) {
@@ -62,6 +62,8 @@ public class GUI extends CommonView  {
 	
 	@Override
 	public void start() {
+		userCommand.remove(0);
+		userCommand.remove(0);
 		generateWindow = new GenerateWindow("generate", 300, 250);
 		generateWindow.run();
 		userCommand = generateWindow.arr;
@@ -72,6 +74,7 @@ public class GUI extends CommonView  {
 			@Override
 			void initWidgets() {
 				{
+
 					shell.setLayout(new GridLayout(4,true));
 					
 					
@@ -432,19 +435,11 @@ public class GUI extends CommonView  {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
+
+								maze.walkToSolution();					
 							
-							for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
-								final State<Position> p = maze.solution.getArr().remove(i);		
-								
-										maze.setCharacterPosition(p);
-									
-								
-										
-								
-								
+						}
 						
-							}
-						}	
 						
 						@Override
 						public void widgetDefaultSelected(SelectionEvent arg0) {}
