@@ -128,10 +128,12 @@ public class MyPresenter  implements Observer{
 					//	out.writeObject(arr1);
 					break;
 				case "solveMaze":
-						//out.writeObject(arr1);
+					arr1.remove(0);
+					m.displaySolution(arr1);
 					break;
 				case "displaySolution":
-						//out.writeObject(arr1);
+					data = m.getSol(arr1.get(1));
+					ch.writeWithOut(data);
 					break;
 				default:
 					break;

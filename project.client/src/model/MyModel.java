@@ -1,8 +1,9 @@
 package model;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,17 +24,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import javax.security.auth.callback.LanguageCallback;
+
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dSearchable;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import algorithms.mazeGenerators.Position;
-import algorithms.mazeGenerators.SimpleMaze3dGenerator;
 import algorithms.search.Astar;
 import algorithms.search.BFS;
 import algorithms.search.Heuristic;
 import algorithms.search.MazeAirDistance;
 import algorithms.search.Searcher;
 import algorithms.search.Solution;
+import algorithms.search.State;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
 import presenter.MyProperties;
@@ -180,7 +183,6 @@ public class MyModel extends CommonModel {
 								e.printStackTrace();
 								maze = new Maze3d(0,0,0);
 							}
-				
 				return maze;
 				}
 				});
@@ -390,32 +392,73 @@ public class MyModel extends CommonModel {
 			notifyObservers();
 		}
 		else{
-			res.add("solveMaze");
+			res.add("solveMaze");	
 			Future<Solution> mySolve = threadPool.submit(new Callable<Solution>() 
 			{ 
 			
 				@Override
 				public Solution call() throws Exception { //TODO GAL
-					generator = new MyMaze3dGenerator();
-					generator.setMaze(mazeHash.get(string.get(1)));
-					if(prop.getSolveAlgo().equals("BFS")){
-						Searcher s2 = new BFS();
-						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
-						soulHash.put(string.get(1),sol);
-						mazeAndSHash.put(mazeHash.get(string.get(1)), sol);
-						return sol;
-						}
-					else {
-						Heuristic<Position> h = new MazeAirDistance();
-						Searcher s2 = new Astar<>(h);
-						Solution sol = s2.search(new Maze3dSearchable(generator.getMaze()));
-						soulHash.put(string.get(1),sol);
-						mazeAndSHash.put(mazeHash.get(string.get(1)), sol);
-						return sol;
+					
 
-				}
-			
-			
+					PrintWriter arrayToServer=new PrintWriter(myServer.getOutputStream());															
+					arrayToServer.println(string);					
+					arrayToServer.flush();		
+					Solution sol = new Solution();
+					String line,line2;
+						try{
+							
+						
+							BufferedReader inFromServer=new BufferedReader(new InputStreamReader(myServer.getInputStream()));
+
+							
+							ArrayList<String> arr = new ArrayList<>();
+							line = inFromServer.readLine();							
+							line2 = new String(line.substring(4, line.length()-1));
+							StringBuilder sb2 = new StringBuilder();
+							StringBuilder sb = new StringBuilder(line2);
+
+							
+							
+							
+							String []parts = sb.toString().split(",");
+							for (String string : parts) {
+								arr.add(string);
+							}
+							
+							for (int i = 0; i < arr.size(); i++) {
+								if(arr.get(i).startsWith("["))
+									arr.set(i,arr.get(i).substring(1));
+								if(arr.get(i).startsWith(" ["))
+									arr.set(i,arr.get(i).substring(2));
+								if(arr.get(i).endsWith("]"))
+									arr.set(i,arr.get(i).substring(0,arr.get(i).length()-1));
+							}
+							if(arr.get(0).contains("["))
+							{
+								arr.set(0, arr.get(0).substring(arr.get(0).length()-1));
+							}
+							
+							
+							ArrayList<State> sarr = new ArrayList<>();
+							for (int i = 0; i < arr.size(); i+=3) {
+								int x = Integer.parseInt(arr.get(i+2));
+								int y = Integer.parseInt(arr.get(i+1));
+								int z = Integer.parseInt(arr.get(i));
+								State<Position> state = new State<Position>(new Position(x, y, z));
+								sarr.add(state);
+							}
+							
+							sol = new Solution(sarr);
+							
+							
+							soulHash.put(string.get(1), sol);
+							}catch(Exception e)
+							{
+								e.printStackTrace();
+								sol = new Solution(new ArrayList<State>());
+							}
+						
+						return sol;
 				}
 			});
 			try{
@@ -441,9 +484,7 @@ public class MyModel extends CommonModel {
 	public void displaySolution(ArrayList<String> string) {
 		if(soulHash.containsKey(string.get(1))){
 			res.add("displaySolution");
-			Solution sol = mazeAndSHash.get(mazeHash.get(string.get(1)));
 			res.add(string.get(1));
-			res.add(sol.toString());
 			setChanged();
 			notifyObservers();
 		}
@@ -528,6 +569,15 @@ public class MyModel extends CommonModel {
 //				out.close();
 				
 				saveToZip();
+				PrintWriter arrayToServer;
+				try {
+					arrayToServer = new PrintWriter(myServer.getOutputStream());
+					
+					arrayToServer.println("exit");					
+					arrayToServer.flush();	
+				} catch (IOException e) {
+					e.printStackTrace();
+				}						
 				
 				System.out.println("Giving processes attempt to end...");
 				terminated = threadPool.awaitTermination(4, TimeUnit.SECONDS);
@@ -589,7 +639,16 @@ public class MyModel extends CommonModel {
 		int x = Integer.parseInt(items[2]);
 		Position p = new Position(x,y,z);
 		mazeHash.get(arr.get(1)).setCorrect(p);
-		//
+		PrintWriter arrayToServer;
+		try {
+			arrayToServer = new PrintWriter(myServer.getOutputStream());
+			
+			arrayToServer.println(arr);					
+			arrayToServer.flush();	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}															
+		
 	}
 
 

@@ -54,7 +54,7 @@ public class BFS extends CommonSearcher {
 					//}
 				}
 			}
-		return  new Solution(null);
+		return  new Solution();
 	}
 	/**
 	 * return the back trace from the goal state by the come from method

@@ -1,18 +1,25 @@
 package model;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import algorithms.search.Solution;
+import io.MyCompressorOutputStream;
 import presenter.MyPresenter;
 
 public class MyClientHandler extends Observable implements ClientHandler {
 	
+
 	private ObjectOutputStream out;
 	MyPresenter p;
 	ArrayList<String> userCommand;
@@ -28,6 +35,17 @@ public class MyClientHandler extends Observable implements ClientHandler {
 	}
 	
 	public void writeWithOut(Object o) {
+		if(o.getClass().equals(Solution.class))
+		{
+			
+		
+			String s = o.toString();
+			PrintWriter outToClient = new PrintWriter(out);
+			outToClient.println(s);
+			outToClient.flush();
+			
+		}
+		else
 		try {
 			out.writeObject(o);
 		} catch (IOException e) {
@@ -40,12 +58,8 @@ public class MyClientHandler extends Observable implements ClientHandler {
 		BufferedReader in = new BufferedReader(new InputStreamReader(inFromClient));
 		try {
 			out = new ObjectOutputStream(outToClient);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		String line,line2;
 		ArrayList<String> arr = new ArrayList<>();
-		try{
 			while(!(line = in.readLine()).equals("exit")) {
 				line2 = line.substring(1);
 				StringBuilder sb = new StringBuilder(line2);
@@ -59,13 +73,12 @@ public class MyClientHandler extends Observable implements ClientHandler {
 				userCommand.addAll(arr);
 				setChanged();	
 				notifyObservers();
+				arr.clear();
 				userCommand.clear();
-				out.writeObject(p.getData());				
 				out.flush();
 				
 
 			}
-			out.flush();
 		}catch(Exception e){}
 
 	}

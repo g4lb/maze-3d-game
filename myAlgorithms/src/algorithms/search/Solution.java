@@ -20,6 +20,10 @@ public class Solution implements Serializable{
 	@SuppressWarnings("rawtypes")
 	private ArrayList<State> arr;
 	
+	
+	public Solution(Solution sol) {
+		this.arr = sol.arr;
+	}
 	/**
 	 * the cunstractor
 	 * @param ArryList<state> arr1

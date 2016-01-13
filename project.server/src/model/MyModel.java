@@ -402,7 +402,7 @@ public class MyModel extends CommonModel {
 				{
 					e.printStackTrace();
 				}
-				res.add("the maze "+string.get(1)+" is solved");
+				res.add(string.get(1));
 				setChanged();
 				notifyObservers();
 			}
@@ -416,15 +416,15 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void displaySolution(ArrayList<String> string) {
-		if(soulHash.containsKey(string.get(1))){
+		if(soulHash.containsKey(string.get(0))){
 			res.add("displaySolution");
-			Solution sol = mazeAndSHash.get(mazeHash.get(string.get(1)));
-			res.add(string.get(1));
+			Solution sol = mazeAndSHash.get(mazeHash.get(string.get(0)));
+			res.add(string.get(0));
 			res.add(sol.toString());
 			setChanged();
 			notifyObservers();
 		}
-		else if(!soulHash.containsKey(string.get(1))){
+		else if(!soulHash.containsKey(string.get(0))){
 			res.add("Error");
 			res.add("maze not exist");
 			setChanged();
@@ -432,7 +432,7 @@ public class MyModel extends CommonModel {
 		}
 		else{
 			res.add("displaySolution");
-			res.add(soulHash.get(string.get(1)).toString());
+			res.add(soulHash.get(string.get(0)).toString());
 			setChanged();
 			notifyObservers();
 		}
@@ -558,15 +558,16 @@ public class MyModel extends CommonModel {
 
 	@Override
 	public void setCorrect(ArrayList<String> arr) {
-		String s =arr.get(2);
-		String str2 = s.substring(1,s.length()-1);
-		String [] items = str2.split(",");
-		int z = Integer.parseInt(items[0]);
-		int y = Integer.parseInt(items[1]);
-		int x = Integer.parseInt(items[2]);
+		String s1 =arr.get(2);
+		String s2 = arr.get(3);
+		String s3 = arr.get(4);
+		String s7 = s1.substring(1);
+		Character c = s3.charAt(0);
+		int z = Integer.parseInt(s7);
+		int y = Integer.parseInt(s2);
+		int x = Integer.parseInt(c.toString());
 		Position p = new Position(x,y,z);
 		mazeHash.get(arr.get(1)).setCorrect(p);
-		//
 	}
 
 
