@@ -65,6 +65,7 @@ public class MyPresenter  implements Observer{
 			ArrayList<String> arr = ch.getUserCommand();
 			
 			switch (arr.get(0)) {
+
 			case "generateMaze":
 				try {
 					m.generateMaze(arr);

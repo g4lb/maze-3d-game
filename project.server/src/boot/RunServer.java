@@ -16,13 +16,14 @@ public class RunServer {
 	public static void main(String[] args) throws InterruptedException {
 		MyProperties prop = new PropManager().loadProp();
 		Model m = new MyModel(prop);
-		final View v = new ServerGui();
+		View v = new ServerGui();
 		ClientHandler ch =new MyClientHandler();
 		MyPresenter p = new MyPresenter(m,v,ch);
 		m.addObserver(p);	
 		ch.addObserver(p);
-		v.addObserver(p);
-		MyServer server = new MyServer(5555,ch);
+		v.addObserver(p);		
+		MyServer server = new MyServer(5555,ch,v);
+		System.out.println("server is alive");
 		server.startServer();
 		Thread.sleep(30*1000);
 		server.stop();

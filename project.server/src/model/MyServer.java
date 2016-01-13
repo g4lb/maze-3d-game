@@ -8,17 +8,33 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import view.ServerGui;
+import view.View;
+
 public class MyServer {
 	
 	int port;
 	ClientHandler ch;
 	ExecutorService threadPool;
 	boolean terminated = true;
+	int numberOfClients;
+	ServerGui gui;
 	
-	public MyServer(int port,ClientHandler ch) {
+	public MyServer(int port,ClientHandler ch,View v) {
+		numberOfClients = 0;
 		this.port = port;
 		this.ch = ch;
 		threadPool = Executors.newFixedThreadPool(10);
+		this.gui = (ServerGui) v;
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				gui.start();
+				
+			}
+		}).start();
+		
 	}
 	
 	public void startServer(){
@@ -36,8 +52,14 @@ public class MyServer {
 								System.out.println("client is alive");
 								InputStream inFromClient = someClient.getInputStream();
 								OutputStream outToClient = someClient.getOutputStream();	
-								ch.handleClient(inFromClient, outToClient);
+								numberOfClients++;
+								gui.addClient(someClient);
+								gui.countClient(numberOfClients);
+								ch.handleClient(inFromClient, outToClient);							
 								someClient.close();
+								numberOfClients--;
+								gui.countClient(numberOfClients);
+								gui.removeClient(someClient);
 							}catch (IOException e){
 								e.printStackTrace();
 							}
