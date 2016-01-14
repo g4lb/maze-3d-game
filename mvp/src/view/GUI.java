@@ -44,9 +44,6 @@ public class GUI extends CommonView  {
 	
 	public GUI() {
 		userCommand = new ArrayList<String>();
-		connectionWindow = new ConnectionWindow("Connect To Server", 250,250);
-		connectionWindow.run();
-		userCommand = connectionWindow.getArr();
 		prop = new PropertiesWindow("Properties", 250, 250);
 		prop.run();
 		userCommand = prop.arr;
@@ -430,21 +427,23 @@ public class GUI extends CommonView  {
 					});
 				solve.addSelectionListener(new SelectionListener() {
 						
-						@Override
-						public void widgetSelected(SelectionEvent arg0) {
-							
-							for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
-								final State<Position> p = maze.solution.getArr().remove(i);		
-								
-										maze.setCharacterPosition(p);
-									
-								
-										
-								
-								
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
+						final State<Position> p = maze.solution.getArr().remove(i);
 						
+						display.timerExec(1000, new Runnable() {
+							
+							@Override
+							public void run() {
+								maze.setCharacterPosition(p);
+								display.timerExec(1000, this);									
 							}
-						}	
+						});
+						
+						}
+
+					}	
 						
 						@Override
 						public void widgetDefaultSelected(SelectionEvent arg0) {}

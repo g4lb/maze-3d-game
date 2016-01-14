@@ -23,7 +23,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import algorithms.search.State;
 
 public class GUI extends CommonView  {
 	
@@ -433,12 +435,23 @@ public class GUI extends CommonView  {
 					});
 				solve.addSelectionListener(new SelectionListener() {
 						
-						@Override
-						public void widgetSelected(SelectionEvent arg0) {
-
-								maze.walkToSolution();					
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
+						final State<Position> p = maze.solution.getArr().remove(i);
+						
+						display.timerExec(1000, new Runnable() {
 							
+							@Override
+							public void run() {
+								maze.setCharacterPosition(p);
+								display.timerExec(1000, this);									
+							}
+						});
+						
 						}
+
+					}
 						
 						
 						@Override
