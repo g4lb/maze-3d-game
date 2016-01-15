@@ -89,21 +89,23 @@ public class GUI extends CommonView  {
 					final Button generate=new Button(shell, SWT.PUSH);
 					generate.setText("Generate");
 					generate.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
+					generate.setEnabled(true);
 					
 					
 					final Button displaySol=new Button(shell, SWT.PUSH);
 					displaySol.setText("Display Solution");
 					displaySol.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-
+					displaySol.setEnabled(false);
 					
 					final Button newPro=new Button(shell, SWT.PUSH);
 					newPro.setText("New Properties");
 					newPro.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-		
+					newPro.setEnabled(true);
+					
 					final Button solve=new Button(shell, SWT.PUSH);
 					solve.setText("Solve");
 					solve.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-					
+					solve.setEnabled(false);
 					
 					
 					
@@ -317,6 +319,9 @@ public class GUI extends CommonView  {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
+							generate.setEnabled(false);
+							displaySol.setEnabled(true);
+							solve.setEnabled(false);
 							nameOfThisMaze = userCommand.get(0);
 							userCommand.add(0,"generateMaze");
 							setChanged();
@@ -348,6 +353,8 @@ public class GUI extends CommonView  {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
+							solve.setEnabled(true);
+							generate.setEnabled(false);
 							userCommand.clear();
 							userCommand.add("setCorrect");
 							userCommand.add(nameOfThisMaze);
@@ -390,7 +397,9 @@ public class GUI extends CommonView  {
 						
 						
 						@Override
-						public void widgetSelected(SelectionEvent arg0) {									
+						public void widgetSelected(SelectionEvent arg0) {		
+							displaySol.setEnabled(false);
+							solve.setEnabled(false);
 							userCommand.clear();
 							new Thread(new Runnable() {
 								
@@ -434,9 +443,11 @@ public class GUI extends CommonView  {
 						}
 					});
 				solve.addSelectionListener(new SelectionListener() {
-						
+										
 					@Override
 					public void widgetSelected(SelectionEvent arg0) {
+						generate.setEnabled(false);
+						displaySol.setEnabled(false);
 						for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
 						final State<Position> p = maze.solution.getArr().remove(i);
 						

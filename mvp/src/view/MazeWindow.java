@@ -82,8 +82,7 @@ public class MazeWindow extends BasicWindow{
 		
 		
 		
-		//MazeDisplayer maze=new Maze2D(shell, SWT.BORDER);		
-		final MazeDisplayer maze=new Maze3D(shell, SWT.BORDER);
+		final MazeDisplayer maze=new Maze2D(shell, SWT.BORDER);
 		
 		maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,4,1));
 		

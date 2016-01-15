@@ -32,7 +32,6 @@ public class GUI extends CommonView  {
 	PropertiesWindow prop;
 	ArrayList<String> userCommand;
 	GenerateWindow generateWindow;
-	ConnectionWindow connectionWindow;
 	MazeWindow mazeWindow;
 	int [][][] clearMaze; 
 	MazeDisplayer maze;
@@ -42,11 +41,13 @@ public class GUI extends CommonView  {
 	String fileName;
 	
 	
-	public GUI() {
+		public GUI() {
 		userCommand = new ArrayList<String>();
 		prop = new PropertiesWindow("Properties", 250, 250);
 		prop.run();
-		userCommand = prop.arr;
+		userCommand.add(prop.arr.get(0));
+		userCommand.add(prop.arr.get(1));
+		userCommand.add(prop.arr.get(2));
 		clearMaze = new int[1][20][20];
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < 20; j++) {
@@ -59,6 +60,8 @@ public class GUI extends CommonView  {
 	
 	@Override
 	public void start() {
+		userCommand.remove(0);
+		userCommand.remove(0);
 		generateWindow = new GenerateWindow("generate", 300, 250);
 		generateWindow.run();
 		userCommand = generateWindow.arr;
@@ -69,6 +72,7 @@ public class GUI extends CommonView  {
 			@Override
 			void initWidgets() {
 				{
+
 					shell.setLayout(new GridLayout(4,true));
 					
 					
@@ -81,21 +85,23 @@ public class GUI extends CommonView  {
 					final Button generate=new Button(shell, SWT.PUSH);
 					generate.setText("Generate");
 					generate.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
+					generate.setEnabled(true);
 					
 					
 					final Button displaySol=new Button(shell, SWT.PUSH);
 					displaySol.setText("Display Solution");
 					displaySol.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-
+					displaySol.setEnabled(false);
 					
 					final Button newPro=new Button(shell, SWT.PUSH);
 					newPro.setText("New Properties");
 					newPro.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-		
+					newPro.setEnabled(true);
+					
 					final Button solve=new Button(shell, SWT.PUSH);
 					solve.setText("Solve");
 					solve.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 2, 1));
-					
+					solve.setEnabled(false);
 					
 					
 					
@@ -309,6 +315,9 @@ public class GUI extends CommonView  {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
+							generate.setEnabled(false);
+							displaySol.setEnabled(true);
+							solve.setEnabled(false);
 							nameOfThisMaze = userCommand.get(0);
 							userCommand.add(0,"generateMaze");
 							setChanged();
@@ -340,6 +349,8 @@ public class GUI extends CommonView  {
 						
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
+							solve.setEnabled(true);
+							generate.setEnabled(false);
 							userCommand.clear();
 							userCommand.add("setCorrect");
 							userCommand.add(nameOfThisMaze);
@@ -382,7 +393,9 @@ public class GUI extends CommonView  {
 						
 						
 						@Override
-						public void widgetSelected(SelectionEvent arg0) {									
+						public void widgetSelected(SelectionEvent arg0) {		
+							displaySol.setEnabled(false);
+							solve.setEnabled(false);
 							userCommand.clear();
 							new Thread(new Runnable() {
 								
@@ -426,9 +439,11 @@ public class GUI extends CommonView  {
 						}
 					});
 				solve.addSelectionListener(new SelectionListener() {
-						
+										
 					@Override
 					public void widgetSelected(SelectionEvent arg0) {
+						generate.setEnabled(false);
+						displaySol.setEnabled(false);
 						for(int i = maze.solution.getArr().size()-1;i >= 0;i--){
 						final State<Position> p = maze.solution.getArr().remove(i);
 						
@@ -443,7 +458,8 @@ public class GUI extends CommonView  {
 						
 						}
 
-					}	
+					}
+						
 						
 						@Override
 						public void widgetDefaultSelected(SelectionEvent arg0) {}
