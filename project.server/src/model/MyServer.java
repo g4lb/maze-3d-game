@@ -26,16 +26,9 @@ public class MyServer {
 		this.ch = ch;
 		threadPool = Executors.newFixedThreadPool(10);
 		this.gui = (ServerGui) v;
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				gui.start();
-				
-			}
-		}).start();
-		
 	}
+		
+
 	
 	public void startServer(){
 		try {

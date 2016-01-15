@@ -24,8 +24,8 @@ public class RunServer {
 		v.addObserver(p);		
 		MyServer server = new MyServer(5555,ch,v);
 		System.out.println("server is alive");
-		server.startServer();
-		Thread.sleep(30*1000);
+		server.start();
+		v.start();
 		server.stop();
 
 	}

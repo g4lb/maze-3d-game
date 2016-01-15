@@ -145,7 +145,7 @@ public class ServerGui extends CommonView {
 	}
 
 	@Override
-	public void addClient(Socket socket) {
+	public void addClient(final Socket socket) {
 		clientsTable.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -160,7 +160,7 @@ public class ServerGui extends CommonView {
 	}
 	public void countClient(int x) {
 		this.numberOfClients = x;
-		Integer y = numberOfClients;
+		final Integer y = numberOfClients;
 		statusText.getDisplay().syncExec(new Runnable() {
 			
 			@Override
@@ -171,7 +171,7 @@ public class ServerGui extends CommonView {
 		
 	}
 	@Override
-	public void removeClient(Socket socket) {
+	public void removeClient(final Socket socket) {
 	clientsTable.getDisplay().syncExec(new Runnable() {
 			
 			@Override
