@@ -4,11 +4,9 @@ Basic overview of a 3-dimensional game project, built over MVP architecture. Foc
 Check out the overview video: https://www.youtube.com/watch?v=UpaHGkk1fj0
 
 
-
+![My image](https://s23.postimg.org/rnwjv50yj/Capture.png)
 
 ![My image](http://imageshack.com/a/img923/6798/XDqutH.jpg)
-
-![My image](https://s23.postimg.org/rnwjv50yj/Capture.png)
 
 
 ![My image](http://imageshack.com/a/img923/3646/lSFrSW.jpg)
